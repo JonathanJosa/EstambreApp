@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">EstambreApp</string>
+    <string name="super_juegos">Super Juegos</string>
+    <string name="mindfulness">mindfulness</string>
+    <string name="activities">activities</string>
+    <string name="exit">exit</string>
+    <string name="atras">atras</string>
+    <string name="siguiente">siguiente</string>
+    <string name="jugar">jugar</string>
+    <string name="menu_juegos">menu juegos</string>
+    <string name="todo">TODO</string>
+    <string name="home">home</string>
+    <string name="nextgame">nextGame</string>
+    <string name="repetir">repetir</string>
+</resources>
