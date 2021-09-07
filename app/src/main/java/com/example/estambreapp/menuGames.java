@@ -24,13 +24,17 @@ public class menuGames extends AppCompatActivity {
             (new fullScreenConfig()).hideSystemUI(getWindow().getDecorView());
     }
 
+
     public void moveMenuHome(View _v){ startActivity(new Intent(this, gamesHome.class)); }
-    public void startGame(View v){ }
+    public void startGame(View v){ startActivity(new Intent(this, gameInstructions.class).putExtra("game", v.getContentDescription().toString())); }
 
     private void createButtons(String[] games){
         for(String gameName:games){
             System.out.println((String) gameName);
             //Crear botones
+            //imageBackground -> "juego_" + gameName.toLowerCase()
+            //ContentDescription -> Debe tener el nombre del juego
+            //onClick -> startGame
         }
     }
 }

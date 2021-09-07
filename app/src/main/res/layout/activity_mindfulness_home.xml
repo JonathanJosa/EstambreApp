@@ -40,7 +40,7 @@
         android:id="@+id/imageButton4"
         android:layout_width="124dp"
         android:layout_height="116dp"
-        android:layout_marginStart="288dp"
+        android:layout_marginStart="304dp"
         android:backgroundTint="#00FFFFFF"
         android:contentDescription="@string/activities"
         android:onClick="moveActivities"
@@ -48,7 +48,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.527"
+        app:layout_constraintVertical_bias="0.52"
         app:srcCompat="@drawable/next_boton"
         tools:ignore="SpeakableTextPresentCheck" />
 
