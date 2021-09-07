@@ -5,32 +5,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import java.util.Properties;
+public class BlackSheepActivity extends AppCompatActivity {
 
-public class ovejaNegra extends AppCompatActivity {
-
-    propertiesGames gameProperties = new propertiesGames("ovejaNegra");
+    GamesModel gameProperties = new GamesModel("BlackSheep");
     //Declarar metodo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_oveja_negra);
+        setContentView(R.layout.activity_black_sheep);
         //gameProperties.getDifficulty(); obtener dificultad
         //gameProperties.startTimeCount(); Iniciar conteo de tiempo de reaccion
         //gameProperties.endGame(); Terminar conteo de tiempo/Juego terminado o ganado
+        //gameProperties.penalty(1.0); Penalty de puntaje
         endGame();
     }
 
     @Override
     public void onWindowFocusChanged(boolean focused){
         super.onWindowFocusChanged(focused);
-        if(focused) (new fullScreenConfig()).hideSystemUI(getWindow().getDecorView());
+        if(focused) new ScreenConfig(getWindow().getDecorView());
     }
 
     private void endGame(){
         //moreContent
-        startActivity(new Intent(this, nextGame.class).putExtra("game","ovejaNegra"));
+        startActivity(new Intent(this, GameOptionsActivity.class).putExtra("game","BlackSheep"));
     }
 
 }

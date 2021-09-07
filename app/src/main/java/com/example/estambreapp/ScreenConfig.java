@@ -2,7 +2,12 @@ package com.example.estambreapp;
 
 import android.view.View;
 
-public class fullScreenConfig {
+public class ScreenConfig {
+
+    public ScreenConfig(View decorWindow){
+        hideSystemUI(decorWindow);
+    }
+
     public void hideSystemUI(View decorWindow) {
         decorWindow.setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE
                 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -14,4 +19,6 @@ public class fullScreenConfig {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE
                 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
     }
+
+
 }

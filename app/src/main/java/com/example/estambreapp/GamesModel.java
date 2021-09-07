@@ -1,13 +1,13 @@
 package com.example.estambreapp;
 
-public class propertiesGames {
+public class GamesModel {
 
     String gameName;
     Double time = (double) 0.0;
     Double finalTime = (double) 0.0;
     Double difficulty = (double) 50.0;
 
-    public propertiesGames(String game){
+    public GamesModel(String game){
         gameName = game;
 
         //Create if not declared
@@ -28,13 +28,12 @@ public class propertiesGames {
 
     private void saveLastGame(){
         //finalTime
-        Double situableTime = (new gamesController()).getSituableTime(gameName);
+        Double situableTime = (new GamesControllerModel()).getSituableTime(gameName);
         //difficulty * 1.2
         //calculateAdjustDifficulty()
 
         //Delete last item
         //Save on preferences
-
     }
 
     public double getDifficulty(){ return difficulty; }

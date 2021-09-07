@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gameInstructions">
+    tools:context=".GameInstructionsActivity">
 
     <ImageView
         android:id="@+id/backgroundImage"
@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.195"
-        app:srcCompat="@drawable/instructions_ovejanegra" />
+        app:srcCompat="@drawable/instructions_blacksheep" />
 
     <ImageButton
         android:id="@+id/imageButton9"

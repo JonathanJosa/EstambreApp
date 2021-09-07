@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-public class gameInstructions extends AppCompatActivity {
+public class GameInstructionsActivity extends AppCompatActivity {
 
     String gameName;
 
@@ -20,17 +20,17 @@ public class gameInstructions extends AppCompatActivity {
         gameName = getIntent().getStringExtra("game");
         ((ImageView) findViewById(R.id.backgroundImage)).setImageResource(getResources().getIdentifier("instructions_"+ gameName.toLowerCase(), "drawable", getPackageName()));
 
-        ((View) this.getWindow().getDecorView()).setBackgroundColor( Color.parseColor((new gamesController()).getColorGame(gameName)) );
+        ((View) this.getWindow().getDecorView()).setBackgroundColor(Color.parseColor((new GamesControllerModel()).getColorGame(gameName)));
     }
 
     @Override
     public void onWindowFocusChanged(boolean focused){
         super.onWindowFocusChanged(focused);
-        if(focused) (new fullScreenConfig()).hideSystemUI(getWindow().getDecorView());
+        if(focused) new ScreenConfig(getWindow().getDecorView());
     }
 
-    public void startGame(View _v) throws ClassNotFoundException { startActivity(new Intent(this, Class.forName("com.example.estambreapp." + gameName))); }
+    public void startGame(View _v) throws ClassNotFoundException { startActivity(new Intent(this, Class.forName("com.example.estambreapp." + gameName + "Activity"))); }
 
-    public void moveHomeGames(View _v){ startActivity(new Intent(this, gamesHome.class)); }
+    public void moveHomeGames(View _v){ startActivity(new Intent(this, GamesHomeActivity.class)); }
 
 }

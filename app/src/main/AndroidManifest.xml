@@ -10,40 +10,40 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EstambreApp">
         <activity
-            android:name=".impostor"
+            android:name=".ImpostorActivity"
             android:exported="true" />
         <activity
-            android:name=".mapNumbers"
+            android:name=".MapNumbersActivity"
             android:exported="true" />
         <activity
-            android:name=".mazeCoins"
+            android:name=".MazeCoinsActivity"
             android:exported="true" />
         <activity
-            android:name=".ovejaNegra"
+            android:name=".BlackSheepActivity"
             android:exported="true" />
         <activity
-            android:name=".nextGame"
+            android:name=".GameOptionsActivity"
             android:exported="true" />
         <activity
-            android:name=".gameInstructions"
+            android:name=".GameInstructionsActivity"
             android:exported="true" />
         <activity
-            android:name=".menuGames"
+            android:name=".GamesMenuActivity"
             android:exported="true" />
         <activity
-            android:name=".activitiesMindfulness"
+            android:name=".MindfulnessSessionActivity"
             android:exported="true" />
         <activity
-            android:name=".mindfulnessHome"
+            android:name=".MindfulnessActivity"
             android:exported="true" />
         <activity
-            android:name=".gamesHome"
+            android:name=".GamesHomeActivity"
             android:exported="true" />
         <activity
-            android:name=".home"
+            android:name=".HomeActivity"
             android:exported="true" />
         <activity
-            android:name=".loadAplication"
+            android:name=".LoadingAppActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

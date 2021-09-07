@@ -4,24 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C2F784"
-    tools:context=".menuGames">
+    android:background="#70C1FF"
+    tools:context=".LoadingAppActivity">
 
-    <ImageButton
-        android:id="@+id/imageButton13"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:backgroundTint="#00FFFFFF"
-        android:contentDescription="@string/home"
-        android:onClick="moveMenuHome"
-        android:rotation="90"
+        android:contentDescription="@string/todo"
         android:scaleType="centerInside"
+        android:src="@drawable/estambre_portada"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.039"
-        app:srcCompat="@drawable/arrow"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
