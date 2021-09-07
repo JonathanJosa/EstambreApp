@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-public class nextGame extends AppCompatActivity {
+public class GameOptionsActivity extends AppCompatActivity {
 
     String nextGame;
     String lastGame;
@@ -17,26 +17,26 @@ public class nextGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_next_game);
+        setContentView(R.layout.activity_game_options);
         lastGame = (String) getIntent().getStringExtra("game");
-        nextGame = (new gamesController()).getRandomGame(lastGame);
+        nextGame = (new GamesControllerModel()).getRandomGame(lastGame);
         setContextWindow(nextGame);
     }
 
     @Override
     public void onWindowFocusChanged(boolean focused){
         super.onWindowFocusChanged(focused);
-        if(focused) (new fullScreenConfig()).hideSystemUI(getWindow().getDecorView());
+        if(focused) new ScreenConfig(getWindow().getDecorView());
     }
 
     private void setContextWindow(String gameName){
-        ((View) this.getWindow().getDecorView()).setBackgroundColor( Color.parseColor((new gamesController()).getColorGame(gameName)) );
+        ((View) this.getWindow().getDecorView()).setBackgroundColor( Color.parseColor((new GamesControllerModel()).getColorGame(gameName)) );
         ((ImageView) findViewById(R.id.nextGameImage)).setImageResource(getResources().getIdentifier("load_" + gameName.toLowerCase(), "drawable", getPackageName()));
     }
 
-    public void exit(View _v){ startActivity(new Intent(this, gamesHome.class)); }
-    public void replay(View _v) throws ClassNotFoundException { startActivity(new Intent(this, Class.forName("com.example.estambreapp." + lastGame))); }
-    public void nextGame(View _v) throws ClassNotFoundException { startActivity(new Intent(this, Class.forName("com.example.estambreapp." + nextGame))); }
+    public void exit(View _v){ startActivity(new Intent(this, GamesHomeActivity.class)); }
+    public void replay(View _v) throws ClassNotFoundException { startActivity(new Intent(this, Class.forName("com.example.estambreapp." + lastGame + "Activity"))); }
+    public void nextGame(View _v) throws ClassNotFoundException { startActivity(new Intent(this, Class.forName("com.example.estambreapp." + nextGame + "Activity"))); }
 
     private Runnable waitingInstance = new Runnable() {
         @Override

@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class home extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,11 +17,10 @@ public class home extends AppCompatActivity {
     @Override
     public void onWindowFocusChanged(boolean focused){
         super.onWindowFocusChanged(focused);
-        if(focused)
-            (new fullScreenConfig()).hideSystemUI(getWindow().getDecorView());
+        if(focused) new ScreenConfig(getWindow().getDecorView());
     }
 
-    public void moveMindfulness(View v){ startActivity(new Intent(this, mindfulnessHome.class)); }
-    public void moveGames(View v){ startActivity(new Intent(this, gamesHome.class)); }
+    public void moveMindfulness(View v){ startActivity(new Intent(this, MindfulnessActivity.class)); }
+    public void moveGames(View v){ startActivity(new Intent(this, GamesHomeActivity.class)); }
 
 }
