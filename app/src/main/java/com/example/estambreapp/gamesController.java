@@ -7,8 +7,7 @@ public class gamesController {
     //Si ven esto, son gays
 
     String[] gamesArray = new String[]{"ovejaNegra", "mapNumbers", "impostor", "mazeCoins"};
-    String[] colorGame = new String[]{"#F0D9FF", "#3DB2FF", "#CEE5D0", "#2F3136"};
-    Double[] situableTime = new Double[]{1.0, 1.0, 1.0, 1.0};
+    String[] colorGame = new String[]{"F0D9FF", "3DB2FF", "CEE5D0", "2F3136"};
 
     public String[] getAllGames(){ return gamesArray; }
 
@@ -18,6 +17,5 @@ public class gamesController {
     }
 
     public String getColorGame(String game){ return colorGame[(int) Arrays.asList(gamesArray).indexOf(game)]; }
-    public Double getSituableTime(String game){ return situableTime[(int) Arrays.asList(gamesArray).indexOf(game)]; }
 
 }
