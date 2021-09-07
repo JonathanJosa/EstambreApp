@@ -18,11 +18,9 @@ public class gameInstructions extends AppCompatActivity {
         setContentView(R.layout.activity_game_instructions);
 
         gameName = getIntent().getStringExtra("game");
-        ((ImageView) findViewById(R.id.backgroundImage)).setImageResource(getResources().getIdentifier("instructions_"+ gameName, "drawable", getPackageName()));
+        ((ImageView) findViewById(R.id.backgroundImage)).setImageResource(getResources().getIdentifier("instructions_"+ gameName.toLowerCase(), "drawable", getPackageName()));
 
         ((View) this.getWindow().getDecorView()).setBackgroundColor( Color.parseColor((new gamesController()).getColorGame(gameName)) );
-
-        ifNotDeclaredDifficult();
     }
 
     @Override
@@ -30,8 +28,6 @@ public class gameInstructions extends AppCompatActivity {
         super.onWindowFocusChanged(focused);
         if(focused) (new fullScreenConfig()).hideSystemUI(getWindow().getDecorView());
     }
-
-    private void ifNotDeclaredDifficult(){  }
 
     public void startGame(View _v) throws ClassNotFoundException { startActivity(new Intent(this, Class.forName("com.example.estambreapp." + gameName))); }
 

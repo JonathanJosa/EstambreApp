@@ -25,6 +25,7 @@ public class gamesHome extends AppCompatActivity {
     public void moveMenuGames(View _v){ startActivity(new Intent(this, menuGames.class)); }
 
     public void startGames(View _v) throws ClassNotFoundException {
-        startActivity(new Intent(this, Class.forName("com.example.estambreapp." + ((String) (new gamesController()).getRandomGame(" ")))));
+        startActivity(new Intent(this, gameInstructions.class).putExtra("game", (String) (new gamesController()).getRandomGame(" ")));
+        //startActivity(new Intent(this, Class.forName("com.example.estambreapp." + ((String) (new gamesController()).getRandomGame(" ")))));
     }
 }
