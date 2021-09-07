@@ -8,7 +8,7 @@ public class gamesController {
 
     String[] gamesArray = new String[]{"ovejaNegra", "mapNumbers", "impostor", "mazeCoins"};
     String[] colorGame = new String[]{"#F0D9FF", "#3DB2FF", "#CEE5D0", "#2F3136"};
-    Double[] situableTime = new Double[]{1.0, 1.0, 1.0, 1.0};
+    Double[] situableTime = new Double[]{3.0, 10.0, 1.0, 1.0}; //seconds
 
     public String[] getAllGames(){ return gamesArray; }
 
