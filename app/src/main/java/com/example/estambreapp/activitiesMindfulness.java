@@ -12,7 +12,7 @@ public class activitiesMindfulness extends AppCompatActivity {
 
     ImageView background;
     View nullView;
-    Handler handler;
+    //Handler handler;
     int[] durations = new int[]{6000, 16000, 16000, 5000, 5000};
     int imageNo = 1;
 
@@ -41,7 +41,7 @@ public class activitiesMindfulness extends AppCompatActivity {
         if(imageNo + change < 1){ return; }
         background.setImageResource(getResources().getIdentifier("act"+ (imageNo + change), "drawable", getPackageName()));
         imageNo += change;
-        autoChange((long) durations[imageNo-1]);
+        //autoChange((long) durations[imageNo-1]);
     }
 
 }

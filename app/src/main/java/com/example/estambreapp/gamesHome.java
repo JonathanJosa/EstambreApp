@@ -26,6 +26,5 @@ public class gamesHome extends AppCompatActivity {
 
     public void startGames(View _v) throws ClassNotFoundException {
         startActivity(new Intent(this, gameInstructions.class).putExtra("game", (String) (new gamesController()).getRandomGame(" ")));
-        //startActivity(new Intent(this, Class.forName("com.example.estambreapp." + ((String) (new gamesController()).getRandomGame(" ")))));
     }
 }

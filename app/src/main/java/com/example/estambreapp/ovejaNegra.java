@@ -15,13 +15,18 @@ public class ovejaNegra extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oveja_negra);
-        startActivity(new Intent(this, nextGame.class).putExtra("game","ovejaNegra"));
+        endGame();
     }
 
     @Override
     public void onWindowFocusChanged(boolean focused){
         super.onWindowFocusChanged(focused);
         if(focused) (new fullScreenConfig()).hideSystemUI(getWindow().getDecorView());
+    }
+
+    private void endGame(){
+        //moreContent
+        startActivity(new Intent(this, nextGame.class).putExtra("game","ovejaNegra"));
     }
 
 }

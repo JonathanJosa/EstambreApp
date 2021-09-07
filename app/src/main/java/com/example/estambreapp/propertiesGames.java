@@ -14,7 +14,7 @@ public class propertiesGames {
 
 
         //if declared
-        //difficulty = promoted(getAllAdjustDifficulty());
+        //difficulty = promedio(getAllAdjustDifficulty());
     }
 
     private void ifNotDeclared(){
@@ -29,7 +29,7 @@ public class propertiesGames {
     private void saveLastGame(){
         //finalTime
         Double situableTime = (new gamesController()).getSituableTime(gameName);
-        //difficulty * 1.1
+        //difficulty * 1.2
         //calculateAdjustDifficulty()
 
         //Delete last item
