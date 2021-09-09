@@ -1,17 +1,21 @@
 package com.example.estambreapp;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -20,6 +24,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.HashMap;
 
 public class ImpostorActivity extends AppCompatActivity {
 
@@ -40,7 +46,8 @@ public class ImpostorActivity extends AppCompatActivity {
     }
 
     private void createTableButtons() {
-
+        indicationsTitle.setText("Encuentra las imágenes que NO se repiten");
+        tableButtons.removeAllViews();
         int numRows = impostorModel.getTableButtonsSize()[0];
         int numColumns = impostorModel.getTableButtonsSize()[1];
         int[][] matrixImages = impostorModel.getImagesMatrix();
@@ -64,7 +71,7 @@ public class ImpostorActivity extends AppCompatActivity {
 
                 button.setBackgroundResource(matrixImages[row][column]); // Assign image to button
 
-                button.setOnClickListener(clickButton(row, column)); // Activates when button clicked
+                button.setOnClickListener(clickButton(row, column, button)); // Activates when button clicked
 
                 tableRow.addView(button);
             }
@@ -72,12 +79,13 @@ public class ImpostorActivity extends AppCompatActivity {
 
     }
 
-    private View.OnClickListener clickButton(int row, int column) {
+    private View.OnClickListener clickButton(int row, int column, Button button) {
         return (new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(impostorModel.positionsIndividualImages.get(row+"-"+column) != null) {
                     messageButtonClicked(true);
+                    button.setBackgroundResource(R.drawable.impostor_check);
                     if(impostorModel.positionsIndividualImages.get(row+"-"+column) == 1) {
                         impostorModel.numOfIndividualImages--; // Decrease number of individual images to find
                         impostorModel.positionsIndividualImages.put(row + "-" + column, 2);
@@ -99,7 +107,16 @@ public class ImpostorActivity extends AppCompatActivity {
     }
 
     private void onSelectedAllCorrectImages(){
-        indicationsTitle.setText("Exceleeente compañere");
+        indicationsTitle.setText("!Bien hecho!\nEncontraste todas las imágenes");
+        Toast.makeText(this, "Excelente compañer@", Toast.LENGTH_SHORT).show();
+        impostorModel.numOfGamesPlayed++;
+        impostorModel.positionsIndividualImages = new HashMap<>(); // Restart the map
+        if(impostorModel.numOfGamesPlayed == 3) endGame();
+        else (new Handler()).postDelayed(() -> createTableButtons(), 3000); // Create the new table
+    }
+
+    private void endGame() { // Go to GameOptionsActivity
+        (new Handler()).postDelayed(() -> startActivity(new Intent(this, GameOptionsActivity.class)), 3000);
     }
 
     @Override

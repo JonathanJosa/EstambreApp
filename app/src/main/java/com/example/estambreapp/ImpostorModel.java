@@ -17,6 +17,8 @@ public class ImpostorModel {
 
     public int numOfIndividualImages; // Indicates how many images appear only once
 
+    public int numOfGamesPlayed = 0;
+
     public int[] getTableButtonsSize(){
         return new int[]{ 5, 4 }; // Hardcoded for experimentation purposes
     }
