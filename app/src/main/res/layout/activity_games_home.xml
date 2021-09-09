@@ -41,7 +41,7 @@
     <ImageButton
         android:id="@+id/imageButton7"
         android:layout_width="290dp"
-        android:layout_height="120dp"
+        android:layout_height="110dp"
         android:backgroundTint="#00FFFFFF"
         android:contentDescription="@string/jugar"
         android:onClick="startGames"
@@ -58,14 +58,17 @@
     <ImageButton
         android:id="@+id/imageButton8"
         android:layout_width="290dp"
-        android:layout_height="120dp"
+        android:layout_height="110dp"
+        android:backgroundTint="#00FFFFFF"
         android:contentDescription="@string/menu_juegos"
         android:onClick="moveMenuGames"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton7"
-        app:srcCompat="@drawable/play"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/lista_juegos"
         tools:ignore="SpeakableTextPresentCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>
