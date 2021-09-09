@@ -16,12 +16,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ImpostorActivity extends AppCompatActivity {
 
-    TableLayout tableButtons;
     ImpostorModel impostorModel;
+    TextView indicationsTitle;
+    TableLayout tableButtons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class ImpostorActivity extends AppCompatActivity {
 
         impostorModel = new ImpostorModel();
 
+        indicationsTitle = findViewById(R.id.indicationsTxt);
         tableButtons = findViewById(R.id.impostorTableButtons);
         createTableButtons(); // Calling the function for the creation of the Button Matrix
     }
@@ -56,22 +59,10 @@ public class ImpostorActivity extends AppCompatActivity {
                         TableRow.LayoutParams.MATCH_PARENT,
                         1.0f
                 )); // Making the column expand and use the complete size of the vertical space
-                /*
-                int newWidth = button.getWidth();
-                button.setMinWidth(newWidth);
-                button.setMaxWidth(newWidth);
-                int newHeight = button.getHeight();
-                button.setMinHeight(newHeight);
-                button.setMaxHeight(newHeight);
-                Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), matrixImages[row][column]);
-                Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
-                Resources resource = getResources();
-                */
-                button.setWidth(20);
-                button.setBackgroundResource(matrixImages[row][column]);
-                //button.setBackground(new BitmapDrawable(resource, scaledBitmap));
 
-                button.setOnClickListener(clickButton(row, column));
+                button.setBackgroundResource(matrixImages[row][column]); // Assign image to button
+
+                button.setOnClickListener(clickButton(row, column)); // Activates when button clicked
 
                 tableRow.addView(button);
             }
@@ -83,14 +74,16 @@ public class ImpostorActivity extends AppCompatActivity {
         return (new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                messageButtonClicked(row, column);
+                if(impostorModel.positionsIndividualImages.get(row+"-"+column) != null) messageButtonClicked(true);
+                else messageButtonClicked(false);
+
             }
         });
     }
 
-    private void messageButtonClicked(int posX, int posY) {
+    private void messageButtonClicked(boolean correctButton) {
         // Function that shows the pop-up message (Java obligated me to create a separate function)
-        Toast.makeText(this, "Button cliked in position: " + posX + "," + posY,
+        Toast.makeText(this, (correctButton ? "Bien hecho :)" : "Esa está repetida :("),
                 Toast.LENGTH_SHORT).show();
     }
 

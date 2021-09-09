@@ -3,10 +3,14 @@ package com.example.estambreapp;
 import android.util.Pair;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class ImpostorModel {
+
+    public Map<String, Integer> positionsIndividualImages = new HashMap<>();
 
     public int[] getTableButtonsSize(){
         return new int[]{ 5, 4 }; // Hardcoded for experimentation purposes
@@ -63,18 +67,23 @@ public class ImpostorModel {
         System.out.println("Final array: " + timesImagesAppear);
 
         // Finally, generate the images matrix in which every position indicates de image that should go inside
+        ArrayList<Pair<Integer, Integer>> modifiedTimesImagesAppear = timesImagesAppear;
         int[][] matrixImages = new int[rows][columns];
         int randomImagePos;
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < columns; j++){
-                randomImagePos = (int) (Math.random()*timesImagesAppear.size());
-                matrixImages[i][j] = timesImagesAppear.get(randomImagePos).first; // Set value to image
-                timesImagesAppear.set(randomImagePos, new Pair<>(matrixImages[i][j],
-                        timesImagesAppear.get(randomImagePos).second-1)); // Decrease by 1 the number of times it appears
-                if(timesImagesAppear.get(randomImagePos).second == 0) timesImagesAppear.remove(randomImagePos);
+                randomImagePos = (int) (Math.random()*modifiedTimesImagesAppear.size());
+                if(timesImagesAppear.get(randomImagePos).second == 1 &&
+                        timesImagesAppear.get(randomImagePos).first == modifiedTimesImagesAppear.get(randomImagePos).first)
+                    positionsIndividualImages.put(i + "-" + j, 1);
+                matrixImages[i][j] = modifiedTimesImagesAppear.get(randomImagePos).first; // Set value to image
+                modifiedTimesImagesAppear.set(randomImagePos, new Pair<>(matrixImages[i][j],
+                        modifiedTimesImagesAppear.get(randomImagePos).second-1)); // Decrease by 1 the number of times it appears
+                if(modifiedTimesImagesAppear.get(randomImagePos).second == 0) modifiedTimesImagesAppear.remove(randomImagePos);
             }
         }
 
+        System.out.println(positionsIndividualImages);
         return matrixImages;
     }
 }
