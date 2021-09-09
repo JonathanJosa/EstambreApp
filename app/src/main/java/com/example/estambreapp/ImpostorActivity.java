@@ -19,14 +19,16 @@ public class ImpostorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_impostor);
 
-        tableButtons = (TableLayout) findViewById(R.id.impostorTableButtons);
-        createTableButtons();
+        impostorModel = new ImpostorModel();
+
+        tableButtons = findViewById(R.id.impostorTableButtons);
+        createTableButtons(); // Calling the function for the creation of the Button Matrix
     }
 
     private void createTableButtons() {
-        // --- Error, no accede a la clase ---
-        int numRows = 2; // (int) impostorModel.getTableButtonsSize()[0];
-        int numColumns = 3; // (int) impostorModel.getTableButtonsSize()[1];
+
+        int numRows = impostorModel.getTableButtonsSize()[0];
+        int numColumns = impostorModel.getTableButtonsSize()[1];
 
         for(int row = 0; row < numRows; row++){
             TableRow tableRow = new TableRow(this);
@@ -52,13 +54,11 @@ public class ImpostorActivity extends AppCompatActivity {
 
     }
 
-    private View.OnClickListener clickButton(int rows, int columns) {
-        //final int FINAL_ROWS = rows;
-        //final int FINAL_COLUMNS = columns;
+    private View.OnClickListener clickButton(int row, int column) {
         return (new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                messageButtonClicked(rows, columns);
+                messageButtonClicked(row, column);
             }
         });
     }
