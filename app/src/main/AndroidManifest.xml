@@ -16,7 +16,7 @@
             android:name=".MapNumbersActivity"
             android:exported="true" />
         <activity
-            android:name=".MazeCoinsActivity"
+            android:name=".InfinityMazeActivity"
             android:exported="true" />
         <activity
             android:name=".BlackSheepActivity"

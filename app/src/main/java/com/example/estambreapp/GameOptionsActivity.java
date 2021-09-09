@@ -34,7 +34,9 @@ public class GameOptionsActivity extends AppCompatActivity {
     }
 
     private void setContextWindow(String gameName){
-        ((View) this.getWindow().getDecorView()).setBackgroundColor( Color.parseColor((new GamesControllerModel()).getColorGame(gameName)) );
+        String color = (new GamesControllerModel()).getColorGame(gameName);
+        color = "#2F3136".equals(color) ? "#A0CED9" : color;
+        ((View) this.getWindow().getDecorView()).setBackgroundColor( Color.parseColor(color));
         ((ImageView) findViewById(R.id.nextGameImage)).setImageResource(getResources().getIdentifier("load_" + gameName.toLowerCase(), "drawable", getPackageName()));
     }
 

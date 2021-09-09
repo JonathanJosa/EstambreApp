@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C2F784"
+    android:background="#A0CED9"
     android:scrollbarSize="0dp"
     tools:context=".GamesMenuActivity">
 

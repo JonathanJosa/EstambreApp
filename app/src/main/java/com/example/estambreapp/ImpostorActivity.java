@@ -107,7 +107,7 @@ public class ImpostorActivity extends AppCompatActivity {
     }
 
     private void onSelectedAllCorrectImages(){
-        indicationsTitle.setText("!Bien hecho!\nEncontraste todas las imágenes");
+        indicationsTitle.setText("¡Bien hecho!\nEncontraste todas las imágenes");
         Toast.makeText(this, "Excelente compañer@", Toast.LENGTH_SHORT).show();
         impostorModel.numOfGamesPlayed++;
         impostorModel.positionsIndividualImages = new HashMap<>(); // Restart the map

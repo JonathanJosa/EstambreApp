@@ -4,12 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MazeCoinsActivity extends AppCompatActivity {
+public class InfinityMazeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maze_coins);
+        setContentView(R.layout.activity_infinity_maze);
     }
 
     @Override
