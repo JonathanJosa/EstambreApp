@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -12,15 +13,18 @@ public class GameOptionsActivity extends AppCompatActivity {
 
     String nextGame;
     String lastGame;
-    Intent changeScreen;
+    View nullView;
+    Handler handlerChange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_options);
+        handlerChange = new Handler();
         lastGame = (String) getIntent().getStringExtra("game");
         nextGame = (new GamesControllerModel()).getRandomGame(lastGame);
         setContextWindow(nextGame);
+        handlerChange.postDelayed(waitingInstance, 5000);
     }
 
     @Override
@@ -34,14 +38,20 @@ public class GameOptionsActivity extends AppCompatActivity {
         ((ImageView) findViewById(R.id.nextGameImage)).setImageResource(getResources().getIdentifier("load_" + gameName.toLowerCase(), "drawable", getPackageName()));
     }
 
-    public void exit(View _v){ startActivity(new Intent(this, GamesHomeActivity.class)); }
-    public void replay(View _v) throws ClassNotFoundException { startActivity(new Intent(this, Class.forName("com.example.estambreapp." + lastGame + "Activity"))); }
-    public void nextGame(View _v) throws ClassNotFoundException { startActivity(new Intent(this, Class.forName("com.example.estambreapp." + nextGame + "Activity"))); }
+    private void deleteWaitingInstance(){ handlerChange.removeCallbacks(waitingInstance); }
+
+    public void exit(View _v){ deleteWaitingInstance(); startActivity(new Intent(this, GamesHomeActivity.class)); }
+    public void replay(View _v) throws ClassNotFoundException { deleteWaitingInstance(); startActivity(new Intent(this, Class.forName("com.example.estambreapp." + lastGame + "Activity"))); }
+    public void nextGame(View _v) throws ClassNotFoundException { deleteWaitingInstance(); startActivity((new Intent(this, GameInstructionsActivity.class)).putExtra("game", nextGame)); }
 
     private Runnable waitingInstance = new Runnable() {
         @Override
         public void run() {
-            startActivity(changeScreen);
+            try {
+                nextGame(nullView);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     };
 }
