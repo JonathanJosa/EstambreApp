@@ -31,7 +31,7 @@ public class MindfulnessSessionActivity extends AppCompatActivity {
         if(focused) new ScreenConfig(getWindow().getDecorView());
     }
 
-    public void exit(View _v){ startActivity(new Intent(this, MindfulnessActivity.class)); }
+    public void exit(View _v){ handlerChange.removeCallbacks(waitingInstance); startActivity(new Intent(this, MindfulnessActivity.class)); }
 
     public void changeButton(View v){ changeActivity("atras".equals(v.getContentDescription().toString()) ? -1 : 1); }
 
@@ -39,7 +39,7 @@ public class MindfulnessSessionActivity extends AppCompatActivity {
 
     private void changeActivity(int change){
         handlerChange.removeCallbacks(waitingInstance);
-        if(imageNo + change > 5){ exit(nullView); return;}
+        if(imageNo + change > 5){ exit(nullView); return; }
         if(imageNo + change < 1){ change = 0; }
         imageNo += change;
         autoChange((long) durations[imageNo-1]);
