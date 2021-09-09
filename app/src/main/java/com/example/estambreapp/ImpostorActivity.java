@@ -12,6 +12,8 @@ import android.graphics.ColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
@@ -74,8 +76,17 @@ public class ImpostorActivity extends AppCompatActivity {
         return (new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(impostorModel.positionsIndividualImages.get(row+"-"+column) != null) messageButtonClicked(true);
+                if(impostorModel.positionsIndividualImages.get(row+"-"+column) != null) {
+                    messageButtonClicked(true);
+                    if(impostorModel.positionsIndividualImages.get(row+"-"+column) == 1) {
+                        impostorModel.numOfIndividualImages--; // Decrease number of individual images to find
+                        impostorModel.positionsIndividualImages.put(row + "-" + column, 2);
+                        if (impostorModel.numOfIndividualImages == 0)// If player selected all individual images
+                            onSelectedAllCorrectImages();
+                    }
+                }
                 else messageButtonClicked(false);
+                System.out.println("Images left: " + impostorModel.numOfIndividualImages);
 
             }
         });
@@ -85,6 +96,10 @@ public class ImpostorActivity extends AppCompatActivity {
         // Function that shows the pop-up message (Java obligated me to create a separate function)
         Toast.makeText(this, (correctButton ? "Bien hecho :)" : "Esa está repetida :("),
                 Toast.LENGTH_SHORT).show();
+    }
+
+    private void onSelectedAllCorrectImages(){
+        indicationsTitle.setText("Exceleeente compañere");
     }
 
     @Override
