@@ -12,4 +12,7 @@
     <string name="home">home</string>
     <string name="nextgame">nextGame</string>
     <string name="repetir">repetir</string>
+    <string name="nextsong">nextSong</string>
+    <string name="presong">preSong</string>
+    <string name="pause">pause</string>
 </resources>

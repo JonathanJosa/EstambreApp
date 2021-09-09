@@ -8,17 +8,17 @@
 
     <ImageView
         android:id="@+id/nextGameImage"
-        android:layout_width="412dp"
-        android:layout_height="554dp"
+        android:layout_width="wrap_content"
+        android:layout_height="491dp"
         android:backgroundTint="#03FFFFFF"
         android:contentDescription="@string/todo"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.066"
         app:srcCompat="@drawable/load_impostor" />
 
     <ImageButton
@@ -41,32 +41,35 @@
 
     <ImageButton
         android:id="@+id/imageButton12"
-        android:layout_width="357dp"
-        android:layout_height="122dp"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
         android:backgroundTint="#00FFFFFF"
         android:contentDescription="@string/repetir"
         android:onClick="replay"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.886"
+        app:layout_constraintVertical_bias="0.961"
         app:srcCompat="@drawable/playagain"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="178dp"
-        android:layout_height="174dp"
-        android:background="#00FFFFFF"
+    <ImageButton
+        android:id="@+id/imageButton17"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:backgroundTint="#00FFFFFF"
         android:contentDescription="@string/nextgame"
         android:onClick="nextGame"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.456"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintVertical_bias="0.803"
+        app:srcCompat="@drawable/next_game" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
