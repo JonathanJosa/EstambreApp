@@ -1,7 +1,16 @@
 package com.example.estambreapp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +38,7 @@ public class ImpostorActivity extends AppCompatActivity {
 
         int numRows = impostorModel.getTableButtonsSize()[0];
         int numColumns = impostorModel.getTableButtonsSize()[1];
+        int[][] matrixImages = impostorModel.getImagesMatrix();
 
         for(int row = 0; row < numRows; row++){
             TableRow tableRow = new TableRow(this);
@@ -37,6 +47,7 @@ public class ImpostorActivity extends AppCompatActivity {
                     TableLayout.LayoutParams.MATCH_PARENT,
                     1.0f
             )); // Making the row expand and use the complete size of the horizontal space
+            tableRow.setPadding(1,70,1,1);
             tableButtons.addView(tableRow); // Creating a new row in the table
             for(int column = 0; column < numColumns; column++){
                 Button button = new Button(this);
@@ -45,6 +56,20 @@ public class ImpostorActivity extends AppCompatActivity {
                         TableRow.LayoutParams.MATCH_PARENT,
                         1.0f
                 )); // Making the column expand and use the complete size of the vertical space
+                /*
+                int newWidth = button.getWidth();
+                button.setMinWidth(newWidth);
+                button.setMaxWidth(newWidth);
+                int newHeight = button.getHeight();
+                button.setMinHeight(newHeight);
+                button.setMaxHeight(newHeight);
+                Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), matrixImages[row][column]);
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
+                Resources resource = getResources();
+                */
+                button.setWidth(20);
+                button.setBackgroundResource(matrixImages[row][column]);
+                //button.setBackground(new BitmapDrawable(resource, scaledBitmap));
 
                 button.setOnClickListener(clickButton(row, column));
 
