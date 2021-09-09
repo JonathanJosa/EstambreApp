@@ -12,6 +12,7 @@
     <string name="home">home</string>
     <string name="nextgame">nextGame</string>
     <string name="repetir">repetir</string>
+    <string name="encuentra_las_im_genes_que_no_se_repiten">Encuentra las imágenes que NO se repiten</string>
     <string name="nextsong">nextSong</string>
     <string name="presong">preSong</string>
     <string name="pause">pause</string>
