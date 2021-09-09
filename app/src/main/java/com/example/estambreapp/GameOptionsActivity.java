@@ -42,7 +42,7 @@ public class GameOptionsActivity extends AppCompatActivity {
 
     public void exit(View _v){ deleteWaitingInstance(); startActivity(new Intent(this, GamesHomeActivity.class)); }
     public void replay(View _v) throws ClassNotFoundException { deleteWaitingInstance(); startActivity(new Intent(this, Class.forName("com.example.estambreapp." + lastGame + "Activity"))); }
-    public void nextGame(View _v) throws ClassNotFoundException { deleteWaitingInstance(); startActivity(new Intent(this, Class.forName("com.example.estambreapp." + nextGame + "Activity"))); }
+    public void nextGame(View _v) throws ClassNotFoundException { deleteWaitingInstance(); startActivity((new Intent(this, GameInstructionsActivity.class)).putExtra("game", nextGame)); }
 
     private Runnable waitingInstance = new Runnable() {
         @Override
