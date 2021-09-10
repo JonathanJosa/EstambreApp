@@ -2,6 +2,8 @@ package com.example.estambreapp;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class SongsApiManager {
@@ -27,7 +29,7 @@ public class SongsApiManager {
         }
     }
 
-    public void nextSong( MediaPlayer mediaPlayer, Context context){
+    public void nextSong( MediaPlayer mediaPlayer, Context context, ImageButton button) {
 
         musicIndex = calculateIndexNextSong( musicIndex++ );
 
@@ -41,12 +43,12 @@ public class SongsApiManager {
             mediaPlayer.reset();
             prepareMediaPlayer(mediaPlayer, context);
             mediaPlayer.start();
-            //imagePlayPause.setImageResource(R.drawable.ic_baseline_pause);
+            button.setImageResource(R.drawable.pause);
         }
 
     }
 
-    public void  prevSong(MediaPlayer mediaPlayer, Context context){
+    public void prevSong(MediaPlayer mediaPlayer, Context context, ImageButton button){
 
         if(mediaPlayer.isPlaying() && mediaPlayer.getCurrentPosition() <= 5000 ){
 
@@ -67,8 +69,37 @@ public class SongsApiManager {
             mediaPlayer.reset();
             prepareMediaPlayer( mediaPlayer, context );
             mediaPlayer.start();
-            //imagePlayPause.setImageResource(R.drawable.ic_baseline_pause);
+            button.setImageResource(R.drawable.pause);
         }
+    }
+
+
+    public void pausePlay(MediaPlayer mediaPlayer, Context context, ImageButton button){
+
+        if(mediaPlayer.isPlaying()){
+
+            mediaPlayer.pause();
+            button.setImageResource(R.drawable.play);
+
+        } else {
+
+            mediaPlayer.start();
+            button.setImageResource(R.drawable.pause);
+
+        }
+    }
+
+    public void killMediaPlayer( MediaPlayer mediaPlayer, ImageButton button ){
+
+        mediaPlayer.pause();
+        mediaPlayer.stop();
+        mediaPlayer.reset();
+        mediaPlayer.release();
+        mediaPlayer = null;
+
+        if(mediaPlayer.isPlaying())
+            button.setImageResource(R.drawable.pause);
+
     }
 
 

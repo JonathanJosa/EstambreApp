@@ -7,13 +7,13 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 
 public class MindfulnessActivity extends AppCompatActivity {
 
     public MediaPlayer mediaPlayer;
-    SongsApiManager songsApiManager;
-
-
+    public SongsApiManager songsApiManager;
+    public ImageButton playPauseButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,14 +21,13 @@ public class MindfulnessActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mindfulness);
 
 
+        playPauseButton = findViewById(R.id.imageButton16);
         mediaPlayer = new MediaPlayer();
-
+        songsApiManager = new SongsApiManager();
         Context context = getApplicationContext();
 
         songsApiManager.prepareMediaPlayer(mediaPlayer, context);
         mediaPlayer.start();
-
-
 
     }
 
@@ -38,13 +37,13 @@ public class MindfulnessActivity extends AppCompatActivity {
         if(focused) new ScreenConfig(getWindow().getDecorView());
     }
 
-    public void moveHome(View _v){ startActivity(new Intent(this, HomeActivity.class)); }
-    public void moveActivities(View _v){ startActivity(new Intent(this, MindfulnessSessionActivity.class)); }
+    public void moveHome(View _v){  songsApiManager.killMediaPlayer(mediaPlayer, playPauseButton); startActivity(new Intent(this, HomeActivity.class)); }
+    public void moveActivities(View _v){  songsApiManager.killMediaPlayer(mediaPlayer, playPauseButton); startActivity(new Intent(this, MindfulnessSessionActivity.class)); }
 
-    public void pressPlayBack(View _v){  }
-    public void pressPlayNext(View _v){  }
-    public void pressPausePlay(View v){
-        v.setBackgroundResource(getResources().getIdentifier(v.getContentDescription().toString(), "drawable", getPackageName()));
+    public void pressPlayBack(View v){ songsApiManager.prevSong(mediaPlayer, getApplicationContext(), playPauseButton); }
+    public void pressPlayNext(View v){  songsApiManager.nextSong(mediaPlayer, getApplicationContext(), playPauseButton); }
+    public void pressPausePlay(View v) {
+        songsApiManager.pausePlay(mediaPlayer, getApplicationContext(), playPauseButton);
         v.setContentDescription("play".equals(v.getContentDescription().toString()) ? "pause" : "play");
     }
 
