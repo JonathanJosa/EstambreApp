@@ -1,23 +1,12 @@
 package com.example.estambreapp;
 
-import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
@@ -27,11 +16,16 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
+
 public class ImpostorActivity extends AppCompatActivity {
 
     ImpostorModel impostorModel;
     TextView indicationsTitle;
     TableLayout tableButtons;
+    KonfettiView konfettiView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +33,7 @@ public class ImpostorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_impostor);
 
         impostorModel = new ImpostorModel();
+        konfettiView = findViewById(R.id.konfettiAnimation);
 
         indicationsTitle = findViewById(R.id.indicationsTxt);
         tableButtons = findViewById(R.id.impostorTableButtons);
@@ -47,6 +42,7 @@ public class ImpostorActivity extends AppCompatActivity {
 
     private void createTableButtons() {
         indicationsTitle.setText("Encuentra las imágenes que NO se repiten");
+        indicationsTitle.setTypeface(null, Typeface.NORMAL);
         tableButtons.removeAllViews();
         int numRows = impostorModel.getTableButtonsSize()[0];
         int numColumns = impostorModel.getTableButtonsSize()[1];
@@ -107,7 +103,9 @@ public class ImpostorActivity extends AppCompatActivity {
     }
 
     private void onSelectedAllCorrectImages(){
+        showKonfettiAnimation();
         indicationsTitle.setText("¡Bien hecho!\nEncontraste todas las imágenes");
+        indicationsTitle.setTypeface(null, Typeface.BOLD);
         Toast.makeText(this, "Excelente compañer@", Toast.LENGTH_SHORT).show();
         impostorModel.numOfGamesPlayed++;
         impostorModel.positionsIndividualImages = new HashMap<>(); // Restart the map
@@ -117,6 +115,19 @@ public class ImpostorActivity extends AppCompatActivity {
 
     private void endGame() { // Go to GameOptionsActivity
         (new Handler()).postDelayed(() -> startActivity(new Intent(this, GameOptionsActivity.class)), 3000);
+    }
+
+    private void showKonfettiAnimation(){
+        konfettiView.build()
+                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                .setDirection(0.0, 359.0)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(2000L)
+                .addShapes(Shape.Square.INSTANCE, Shape.Circle.INSTANCE)
+                .addSizes(new Size(12, 5f))
+                .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                .streamFor(300, 2000L);
     }
 
     @Override
