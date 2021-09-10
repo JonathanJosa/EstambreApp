@@ -29,13 +29,26 @@ public class MindfulnessActivity extends AppCompatActivity {
         songsApiManager.prepareMediaPlayer(mediaPlayer, context);
         mediaPlayer.start();
 
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                songsApiManager.nextSong(mediaPlayer, context, playPauseButton);
+            }
+        });
+
     }
+
+
+
 
     @Override
     public void onWindowFocusChanged(boolean focused){
         super.onWindowFocusChanged(focused);
         if(focused) new ScreenConfig(getWindow().getDecorView());
     }
+
+
 
     public void moveHome(View _v){  songsApiManager.killMediaPlayer(mediaPlayer, playPauseButton); startActivity(new Intent(this, HomeActivity.class)); }
     public void moveActivities(View _v){  songsApiManager.killMediaPlayer(mediaPlayer, playPauseButton); startActivity(new Intent(this, MindfulnessSessionActivity.class)); }

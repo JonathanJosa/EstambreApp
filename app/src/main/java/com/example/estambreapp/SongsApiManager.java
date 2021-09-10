@@ -102,6 +102,8 @@ public class SongsApiManager {
 
     }
 
+    
+
 
     public int calculateIndexNextSong( int index ) {
 
