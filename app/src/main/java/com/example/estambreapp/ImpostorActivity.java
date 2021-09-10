@@ -114,7 +114,7 @@ public class ImpostorActivity extends AppCompatActivity {
     }
 
     private void endGame() { // Go to GameOptionsActivity
-        (new Handler()).postDelayed(() -> startActivity(new Intent(this, GameOptionsActivity.class)), 3000);
+        (new Handler()).postDelayed(() -> startActivity(new Intent(this, GameOptionsActivity.class).putExtra("game","Impostor")), 3000);
     }
 
     private void showKonfettiAnimation(){
