@@ -44,8 +44,10 @@ public class ImpostorActivity extends AppCompatActivity {
         indicationsTitle.setText("Encuentra las imágenes que NO se repiten");
         indicationsTitle.setTypeface(null, Typeface.NORMAL);
         tableButtons.removeAllViews();
-        int numRows = impostorModel.getTableButtonsSize()[0];
-        int numColumns = impostorModel.getTableButtonsSize()[1];
+
+        int[] sizeTable = impostorModel.getTableButtonsSize();
+        int numRows = sizeTable[0];
+        int numColumns = sizeTable[1];
         int[][] matrixImages = impostorModel.getImagesMatrix();
 
         for(int row = 0; row < numRows; row++){

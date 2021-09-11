@@ -38,8 +38,9 @@ public class ImpostorModel {
     }
 
     public int[][] getImagesMatrix(){
-        int rows = getTableButtonsSize()[0];
-        int columns = getTableButtonsSize()[1];
+        int[] sizeTable = getTableButtonsSize();
+        int rows = sizeTable[0];
+        int columns = sizeTable[1];
         int[] images = getImagesSet();
         int numOfImagesNeeded = rows * columns;
         System.out.println("Number of images needed: " + numOfImagesNeeded);
