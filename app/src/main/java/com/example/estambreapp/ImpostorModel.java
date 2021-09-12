@@ -20,7 +20,14 @@ public class ImpostorModel {
     public int numOfGamesPlayed = 0;
 
     public int[] getTableButtonsSize(){
-        return new int[]{ 5, 4 }; // Hardcoded for experimentation purposes
+        // En vista de que no es posible asignarle un padding a los lados de los botones,
+        // hay que tener unos tamaños de la tabla definidos aquí los cuales hagan que las imágenes
+        // no se vean distorcionadas y que dependan de la dificultad, parámetro que estaría bien que
+        // recibiera esta función
+        // Por ejemplo: si la dificultad es media, la función regresará siempre un [5, 4],
+        // tamaño que debió ser probado y comprobado que se ve bien en cada imagen
+
+        return new int[]{ 4, 3 }; // Hardcoded for experimentation purposes
     }
 
     private int[] getImagesSet() { // Hardcoded images for experimentation purposes

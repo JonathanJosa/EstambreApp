@@ -42,7 +42,6 @@ public class ImpostorActivity extends AppCompatActivity {
 
     private void createTableButtons() {
         indicationsTitle.setText("Encuentra las imágenes que NO se repiten");
-        indicationsTitle.setTypeface(null, Typeface.NORMAL);
         tableButtons.removeAllViews();
 
         int[] sizeTable = impostorModel.getTableButtonsSize();
@@ -107,7 +106,6 @@ public class ImpostorActivity extends AppCompatActivity {
     private void onSelectedAllCorrectImages(){
         showKonfettiAnimation();
         indicationsTitle.setText("¡Bien hecho!\nEncontraste todas las imágenes");
-        indicationsTitle.setTypeface(null, Typeface.BOLD);
         Toast.makeText(this, "Excelente compañer@", Toast.LENGTH_SHORT).show();
         impostorModel.numOfGamesPlayed++;
         impostorModel.positionsIndividualImages = new HashMap<>(); // Restart the map
