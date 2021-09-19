@@ -1,54 +1,48 @@
-package com.example.estambreapp;
+package com.example.estambreapp                                                                                                                         ;
 
-public class GamesModel {
+import android.content.Context                                                                                                                          ;
+import android.content.SharedPreferences                                                                                                                ;
 
-    String gameName;
-    Double time = (double) 0.0;
-    Double finalTime = (double) 0.0;
-    Double difficulty = (double) 50.0;
+public class GamesModel                                                                                                                                 {
 
-    public GamesModel(String game){
-        gameName = game;
+    SharedPreferences preferencesUser                                                                                                                   ;
+    String gameName                                                                                                                                     ;
+    Double time                                                                                                                                         ;
+    Double difficulty                                                                                                                                   ; //Promedio 100.0
 
-        //Create if not declared
+    public GamesModel(Context context, String game)                                                                                                     {
+        gameName = game                                                                                                                                 ;
+        preferencesUser = context.getSharedPreferences(gameName, Context.MODE_PRIVATE)                                                                  ;
+        difficulty = Double.parseDouble(preferencesUser.getString("Difficulty", "50.0"))                                                          ;
+                                                                                                                                                        }
 
+    private void saveLastGame(double df)                                                                                                                {
+        preferencesUser.edit().putString("Difficulty", String.valueOf(df)).commit()                                                                  ;
+                                                                                                                                                        }
 
-        //if declared
-        //difficulty = promedio(getAllAdjustDifficulty());
-    }
+    private double calculateAdjustDifficulty(double totalTime)                                                                                          {
+        return (((totalTime / (new GamesControllerModel()).getSituableTime(gameName)) * (difficulty * 1.1)) + (difficulty * 4)) / 5                     ;
+                                                                                                                                                        }
 
-    private void ifNotDeclared(){
-        //Create String gameName on Preferences
-        //Default 50.0
-    }
+    public double getDifficulty                                                                                                                         (){
+        return difficulty * 1.1                                                                                                                         ;
+                                                                                                                                                        }
 
-    private double[] getAllAdjustDifficulties(){
-        return new double[]{1.0};
-    }
+    public void startTimeCount                                                                                                                          (){
+        time = ((Long) (System.currentTimeMillis() / 1000)).doubleValue() * -1                                                                          ;
+                                                                                                                                                        }
 
-    private void saveLastGame(){
-        //finalTime
-        Double situableTime = (new GamesControllerModel()).getSituableTime(gameName);
-        //difficulty * 1.2
-        //calculateAdjustDifficulty()
+    public void penalty(double penaltyTime)                                                                                                             {
+        time += penaltyTime                                                                                                                             ;
+                                                                                                                                                        }
 
-        //Delete last item
-        //Save on preferences
-    }
+    public void endGame                                                                                                                                 (){
+        saveLastGame                                                                                                                                    (
+                calculateAdjustDifficulty                                                                                                               (
+                        time + ((Long) (System.currentTimeMillis() / 1000)).doubleValue()
+                                                                                                                                                        )
+                                                                                                                                                        );
+        time = 0.0                                                                                                                                      ;
+                                                                                                                                                        }
 
-    public double getDifficulty(){ return difficulty; }
-
-    public void startTimeCount(){
-        //time = actualTime();
-    }
-
-    public void endGame(){
-        //finalTime += actualTime() - time;
-        saveLastGame();
-    }
-
-    public void penalty(double penaltyTime){
-        // finalTime += penaltyTime;
-    }
-
-}
+                                                                                                                                                        }
