@@ -10,6 +10,16 @@ import java.util.TreeSet;
 
 public class ImpostorModel {
 
+    GamesModel gameProperties = new GamesModel("BlackSheep");
+    //gameProperties.getDifficulty(); obtener dificultad
+    //gameProperties.startTimeCount(); Iniciar conteo de tiempo de reaccion
+    //gameProperties.endGame(); Terminar conteo de tiempo/Juego terminado o ganado
+    //gameProperties.penalty(1.0); Penalty de puntaje
+
+    // Difficulty = 50.0 <- is the difficulty in which every game starts
+    // 100.0 is the average medium difficulty for the game
+    // Penalty(penaltyTime) <- when player makes a mistake,
+
     // Map that saves the position of the images that appear only once
     // The position is saved as an string with syntax: "'row'-'column'"
     // Example: The key "2-3", indicates that the position on row 2 and column 3 has an individual image
