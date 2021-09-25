@@ -1,5 +1,6 @@
 package com.example.estambreapp;
 
+import android.content.Context;
 import android.util.Pair;
 
 import java.util.ArrayList;
@@ -10,15 +11,7 @@ import java.util.TreeSet;
 
 public class ImpostorModel {
 
-    GamesModel gameProperties = new GamesModel("BlackSheep");
-    //gameProperties.getDifficulty(); obtener dificultad
-    //gameProperties.startTimeCount(); Iniciar conteo de tiempo de reaccion
-    //gameProperties.endGame(); Terminar conteo de tiempo/Juego terminado o ganado
-    //gameProperties.penalty(1.0); Penalty de puntaje
-
-    // Difficulty = 50.0 <- is the difficulty in which every game starts
-    // 100.0 is the average medium difficulty for the game
-    // Penalty(penaltyTime) <- when player makes a mistake,
+    GamesModel gameProperties;
 
     // Map that saves the position of the images that appear only once
     // The position is saved as an string with syntax: "'row'-'column'"
@@ -29,6 +22,19 @@ public class ImpostorModel {
 
     public int numOfGamesPlayed = 0;
 
+    public ImpostorModel(Context context){
+        gameProperties = new GamesModel(context, "Impostor");
+    }
+
+    //gameProperties.getDifficulty(); // obtener dificultad
+    //gameProperties.startTimeCount(); // Iniciar conteo de tiempo de reaccion
+    //gameProperties.endGame(); // Terminar conteo de tiempo/Juego terminado o ganado
+    //gameProperties.penalty(1.0); // Penalty de puntaje
+
+    // Difficulty = 50.0 <- is the difficulty in which every game starts
+    // 100.0 is the average medium difficulty for the game
+    // Penalty(penaltyTime) <- when player makes a mistake,
+
     public int[] getTableButtonsSize(){
         // En vista de que no es posible asignarle un padding a los lados de los botones,
         // hay que tener unos tamaños de la tabla definidos aquí los cuales hagan que las imágenes
@@ -37,7 +43,7 @@ public class ImpostorModel {
         // Por ejemplo: si la dificultad es media, la función regresará siempre un [5, 4],
         // tamaño que debió ser probado y comprobado que se ve bien en cada imagen
 
-        return new int[]{ 4, 3 }; // Hardcoded for experimentation purposes
+        return new int[]{ 3, 2 }; // Hardcoded for experimentation purposes
     }
 
     private int[] getImagesSet() { // Hardcoded images for experimentation purposes
@@ -64,13 +70,13 @@ public class ImpostorModel {
 
         // First, determine the number of images that will appear individually (only once)
         numOfIndividualImages = (int) (Math.random()*(int)(images.length * 0.50)+1); // 50% of images
-        System.out.println("Number of individual images: " + numOfIndividualImages);
 
         // Then, select randomly the images that will appear only once
         SortedSet<Integer> posOfIndividualImages = new TreeSet<>(); // Doesn't allow repetitions
         for(int i = 0; i < numOfIndividualImages; i++)
             posOfIndividualImages.add((int) (Math.random()*images.length));
         numOfIndividualImages = posOfIndividualImages.size(); // Reassign this variable to avoid errors
+        System.out.println("Number of individual images: " + numOfIndividualImages);
 
         // Then, assign to each image how many times it will appear in the matrix
         ArrayList<Pair<Integer, Integer>> timesImagesAppear = new ArrayList<>(); // First: image, Second: NumOfTimes
