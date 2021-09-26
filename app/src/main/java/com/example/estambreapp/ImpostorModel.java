@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedSet;
@@ -42,8 +43,8 @@ public class ImpostorModel {
         // recibiera esta función
         // Por ejemplo: si la dificultad es media, la función regresará siempre un [5, 4],
         // tamaño que debió ser probado y comprobado que se ve bien en cada imagen
-
-        return new int[]{ 3, 2 }; // Hardcoded for experimentation purposes
+        // Tamaños adecuados a usar: 3-2, 4-3, 5-4, 6-4, 6-5, 7-5
+        return new int[]{ 5, 4 }; // Hardcoded for experimentation purposes
     }
 
     private int[] getImagesSet() { // Hardcoded images for experimentation purposes
@@ -64,8 +65,14 @@ public class ImpostorModel {
         int[] sizeTable = getTableButtonsSize();
         int rows = sizeTable[0];
         int columns = sizeTable[1];
-        int[] images = getImagesSet();
         int numOfImagesNeeded = rows * columns;
+        int[] images = getImagesSet();
+        // If the set of images is greater than the numOfImagesNeeded, delete the unnecessary elements
+        if(images.length > numOfImagesNeeded){
+            int[] copyImages = new int[numOfImagesNeeded];
+            System.arraycopy(images,0, copyImages,0,numOfImagesNeeded);
+            images = copyImages;
+        }
         System.out.println("Number of images needed: " + numOfImagesNeeded);
 
         // First, determine the number of images that will appear individually (only once)
@@ -77,25 +84,53 @@ public class ImpostorModel {
             posOfIndividualImages.add((int) (Math.random()*images.length));
         numOfIndividualImages = posOfIndividualImages.size(); // Reassign this variable to avoid errors
         System.out.println("Number of individual images: " + numOfIndividualImages);
+        System.out.println("Positions of individual images: " + posOfIndividualImages);
 
         // Then, assign to each image how many times it will appear in the matrix
         ArrayList<Pair<Integer, Integer>> timesImagesAppear = new ArrayList<>(); // First: image, Second: NumOfTimes
         int numOfAppearancesImage = (numOfImagesNeeded-numOfIndividualImages) / (images.length-numOfIndividualImages);
+        if(numOfAppearancesImage == 1) numOfAppearancesImage = 0; // Images cannot appear once cause they are not the individual ones
         System.out.println("Number of appearances of each image: " + numOfAppearancesImage);
         int leftOver = numOfImagesNeeded-numOfIndividualImages - (numOfAppearancesImage * (images.length-numOfIndividualImages));
         System.out.println("Left over: " + leftOver);
-        boolean assignedLeftOver = false;
-        for(int i = 0; i < images.length; i++){
+
+        // This for cycle is complex because if has to verify that the correct number of images are used
+        int subtractLeftOver = leftOver/2;
+        boolean isLeftOver = leftOver%2 != 0; // true
+        for(int i = 0; i < images.length && numOfImagesNeeded > 0; i++){
             if(!posOfIndividualImages.isEmpty() && posOfIndividualImages.first() == i){
                 timesImagesAppear.add(new Pair<>(images[i], 1)); // Images that appear only once
                 posOfIndividualImages.remove(posOfIndividualImages.first());
+                numOfImagesNeeded--;
             }
-            else if (!assignedLeftOver) {
-                timesImagesAppear.add(new Pair<>(images[i], numOfAppearancesImage+leftOver));
-                assignedLeftOver = true;
+            else if (leftOver > 0){
+                if(leftOver == 3) { // Hardcoded because it breaks my code
+                    timesImagesAppear.add(new Pair<>(images[i], 3));
+                    numOfImagesNeeded -= 3;
+                    leftOver -= 3;
+                } else {
+                    if(isLeftOver){
+                        timesImagesAppear.add(new Pair<>(images[i], numOfAppearancesImage+subtractLeftOver+1));
+                        leftOver -= subtractLeftOver+1; // 1
+                        numOfImagesNeeded -= subtractLeftOver+1;
+                    }else{
+                        timesImagesAppear.add(new Pair<>(images[i], numOfAppearancesImage+subtractLeftOver));
+                        leftOver -= subtractLeftOver; // 1
+                        numOfImagesNeeded -= subtractLeftOver;
+                    }
+                    isLeftOver = false;
+                }
             }
-            else timesImagesAppear.add(new Pair<>(images[i], numOfAppearancesImage));
+            else if(numOfAppearancesImage > 0){
+                timesImagesAppear.add(new Pair<>(images[i], numOfAppearancesImage));
+                numOfImagesNeeded -= numOfAppearancesImage;
+            }
         }
+        if(numOfImagesNeeded > 0)
+            for(int i = timesImagesAppear.size()-1; i >= 0; i--)
+                if(timesImagesAppear.get(i).second != 1)
+                    timesImagesAppear.set(i, new Pair<>(timesImagesAppear.get(i).first,
+                            timesImagesAppear.get(i).second + numOfImagesNeeded));
         System.out.println("Final array: " + timesImagesAppear);
 
         // Finally, generate the images matrix in which every position indicates de image that should go inside
@@ -103,11 +138,15 @@ public class ImpostorModel {
         ArrayList<Integer> positionIsIndividual = getIndividualPositionInFinalArray(timesImagesAppear);
         System.out.println("Individual images array: " + positionIsIndividual);
         int randomImagePos;
+
+        // Una manera de hacer que las imágenes individuales se coloquen aleatoriamente es primero asignándoles
+        // posiciones a ellas, es decir, random de su row y column, y que mientras recorre la matriz, las
+        // ponga cuando sea necesario. Las demás igual las pone en un random fijándose que no haya patrones
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < columns; j++){
-                randomImagePos = (int) (Math.random()*timesImagesAppear.size());
-                if(positionIsIndividual.get(randomImagePos) == 1){ // Verify if the the image is individual
-                    positionsIndividualImages.put(i + "-" + j, 1);
+                randomImagePos = (int) (Math.random()*timesImagesAppear.size()); // Random position in array of pairs
+                if(positionIsIndividual.get(randomImagePos) == 1){ // Verify if the image is individual
+                    positionsIndividualImages.put(i + "-" + j, 1); // Insert individual image in map
                     positionIsIndividual.set(randomImagePos, 0);
                 }
                 matrixImages[i][j] = timesImagesAppear.get(randomImagePos).first; // Set value to image
@@ -120,7 +159,7 @@ public class ImpostorModel {
             }
         }
 
-        System.out.println(positionsIndividualImages);
+        System.out.println("Positions of individual images: " + positionsIndividualImages);
         return matrixImages;
     }
 
