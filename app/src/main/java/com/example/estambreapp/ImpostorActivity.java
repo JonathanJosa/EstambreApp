@@ -113,12 +113,12 @@ public class ImpostorActivity extends AppCompatActivity {
         return (new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(impostorModel.positionsIndividualImages.get(row+"-"+column) != null) {
+                if(impostorModel.positionsIndividualImages.containsKey(row+"-"+column)) {
                     messageButtonClicked(true);
                     button.setBackgroundResource(R.drawable.impostor_check);
-                    if(impostorModel.positionsIndividualImages.get(row+"-"+column) == 1) {
+                    if(impostorModel.positionsIndividualImages.get(row+"-"+column) != 1) { // != 1
                         impostorModel.numOfIndividualImages--; // Decrease number of individual images to find
-                        impostorModel.positionsIndividualImages.put(row + "-" + column, 2);
+                        impostorModel.positionsIndividualImages.put(row + "-" + column, 1); // insert 1
                         if (impostorModel.numOfIndividualImages == 0)// If player selected all individual images
                             onSelectedAllCorrectImages();
                     }
@@ -147,7 +147,8 @@ public class ImpostorActivity extends AppCompatActivity {
     }
 
     private void endGame() { // Go to GameOptionsActivity
-        (new Handler()).postDelayed(() -> startActivity(new Intent(this, GameOptionsActivity.class).putExtra("game","Impostor")), 3000);
+        (new Handler()).postDelayed(() -> startActivity(new Intent(this,
+                GameOptionsActivity.class).putExtra("game","Impostor")), 3000);
     }
 
     private void showKonfettiAnimation(){
