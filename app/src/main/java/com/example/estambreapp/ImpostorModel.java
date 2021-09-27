@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Pair;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedSet;
@@ -37,8 +36,12 @@ public class ImpostorModel {
     // Penalty(penaltyTime) <- when player makes a mistake,
 
     public int[] getTableButtonsSize(){
-        // Tamaños adecuados a usar: 3-2, 4-3, 5-4, 6-4, 6-5, 7-5
-        return new int[]{ 6, 4 }; // Hardcoded for experimentation purposes
+        int numDifficultyOfGame = (int) gameProperties.getDifficulty();
+        return (numDifficultyOfGame < 50) ? new int[]{ 3, 2 } :
+                (numDifficultyOfGame < 75) ? new int[]{ 4, 3 } :
+                (numDifficultyOfGame < 110) ? new int[]{ 5, 4 } :
+                (numDifficultyOfGame < 130) ? new int[]{ 6, 4 } :
+                (numDifficultyOfGame < 160) ? new int[]{ 6, 5 } : new int[]{ 7, 5 };
     }
 
     private int[] getImagesSet() { // Hardcoded images for experimentation purposes
