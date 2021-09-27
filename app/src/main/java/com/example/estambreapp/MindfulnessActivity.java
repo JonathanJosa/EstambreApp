@@ -23,13 +23,15 @@ public class MindfulnessActivity extends AppCompatActivity {
 
         playPauseButton = findViewById(R.id.imageButton16);
         mediaPlayer = new MediaPlayer();
-        songsApiManager = new SongsApiManager();
-        Context context = getApplicationContext();
+        songsApiManager = new SongsApiManager(); // instance to SongsApiManager
+        Context context = getApplicationContext(); // we create a context send as a parameter in our model
 
-        songsApiManager.prepareMediaPlayer(mediaPlayer, context);
-        mediaPlayer.start();
+        songsApiManager.prepareMediaPlayer(mediaPlayer, context); // we prepare our media player
+        mediaPlayer.start(); // we start mediaplayer sound.
 
 
+
+        // we use a listener with our MediaPlayer object, to change next song when last one finishes.
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
@@ -39,25 +41,20 @@ public class MindfulnessActivity extends AppCompatActivity {
 
     }
 
-
-
-
     @Override
     public void onWindowFocusChanged(boolean focused){
         super.onWindowFocusChanged(focused);
         if(focused) new ScreenConfig(getWindow().getDecorView());
     }
 
+    public void moveHome(View _v){  songsApiManager.killMediaPlayer(mediaPlayer, playPauseButton); startActivity(new Intent(this, HomeActivity.class)); } // we kill the mediaPlayer and adjust the play/pause btn
+    public void moveActivities(View _v){  songsApiManager.killMediaPlayer(mediaPlayer, playPauseButton); startActivity(new Intent(this, MindfulnessSessionActivity.class)); } // we kill the mediaPlayer and adjust the play/pause btn
 
-
-    public void moveHome(View _v){  songsApiManager.killMediaPlayer(mediaPlayer, playPauseButton); startActivity(new Intent(this, HomeActivity.class)); }
-    public void moveActivities(View _v){  songsApiManager.killMediaPlayer(mediaPlayer, playPauseButton); startActivity(new Intent(this, MindfulnessSessionActivity.class)); }
-
-    public void pressPlayBack(View v){ songsApiManager.prevSong(mediaPlayer, getApplicationContext(), playPauseButton); }
-    public void pressPlayNext(View v){  songsApiManager.nextSong(mediaPlayer, getApplicationContext(), playPauseButton); }
+    public void pressPlayBack(View v){ songsApiManager.prevSong(mediaPlayer, getApplicationContext(), playPauseButton); } // we call prevSong function
+    public void pressPlayNext(View v){  songsApiManager.nextSong(mediaPlayer, getApplicationContext(), playPauseButton); } // we call nextSong function
     public void pressPausePlay(View v) {
-        songsApiManager.pausePlay(mediaPlayer, getApplicationContext(), playPauseButton);
-        v.setContentDescription("play".equals(v.getContentDescription().toString()) ? "pause" : "play");
+        songsApiManager.pausePlay(mediaPlayer, getApplicationContext(), playPauseButton); // we handle the play/pause button
+        v.setContentDescription("play".equals(v.getContentDescription().toString()) ? "pause" : "play"); // change the button play/pause icon.
     }
 
 }

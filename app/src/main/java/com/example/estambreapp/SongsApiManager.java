@@ -8,7 +8,9 @@ import android.widget.Toast;
 
 public class SongsApiManager {
 
-    int musicIndex = 0;
+    int musicIndex = 0; // index of our sequence of music
+
+    // create a String array, witch contains our song links
     String[] musicUrl = new String[]{
 
             "https://firebasestorage.googleapis.com/v0/b/estambreapp.appspot.com/o/1.mp3?alt=media&token=a0dfb33a-6add-4fae-8ed9-a203e3644b66",
@@ -17,22 +19,22 @@ public class SongsApiManager {
     };
 
 
-
+    // function to prepare our media player
     public void prepareMediaPlayer(MediaPlayer mediaPlayer, Context context) {
         try {
-
             mediaPlayer.setDataSource(musicUrl[ musicIndex ]); // URL of music file
             mediaPlayer.prepare();
         } catch (Exception exception) {
-            Toast.makeText(context,exception.getMessage(), Toast.LENGTH_SHORT).show(); // mostramos mensaje pequeño de lo que salio mal
+            Toast.makeText(context,exception.getMessage(), Toast.LENGTH_SHORT).show(); // Show a message to know what went wrong
 
         }
     }
 
+    // function to next song
+    // we receive MediaPlayer from the view, the app context, and the Play/Pause btn
     public void nextSong( MediaPlayer mediaPlayer, Context context, ImageButton button) {
 
-        musicIndex = calculateIndexNextSong( musicIndex++ );
-
+        musicIndex = calculateIndexNextSong( musicIndex++ ); // calculate the current index of the song
 
         if(mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
@@ -48,23 +50,26 @@ public class SongsApiManager {
 
     }
 
+    //function to previous song
+    // we receive MediaPlayer from the view, the app context, and the Play/Pause btn
     public void prevSong(MediaPlayer mediaPlayer, Context context, ImageButton button){
 
+        // if our mediaplayer is playing and the current time of the song is less or equal than 5 ms.
         if(mediaPlayer.isPlaying() && mediaPlayer.getCurrentPosition() <= 5000 ){
 
-            musicIndex = calculateIndexPrevSong( musicIndex-- );
+            musicIndex = calculateIndexPrevSong( musicIndex-- ); // we calculate and refresh the current index song.
             mediaPlayer.stop();
             mediaPlayer.reset();
             prepareMediaPlayer( mediaPlayer, context );
             mediaPlayer.start();
 
         }
-        else if (mediaPlayer.isPlaying()){
+        else if (mediaPlayer.isPlaying()){ // if media player is only playing a tack.
             mediaPlayer.pause();
             mediaPlayer.seekTo(0);
             mediaPlayer.start();
         }
-        else {
+        else { // otherwise, when mediaPlayer is paused
             musicIndex = calculateIndexPrevSong( musicIndex-- );
             mediaPlayer.reset();
             prepareMediaPlayer( mediaPlayer, context );
@@ -73,7 +78,7 @@ public class SongsApiManager {
         }
     }
 
-
+    // function to handle play/pause button
     public void pausePlay(MediaPlayer mediaPlayer, Context context, ImageButton button){
 
         if(mediaPlayer.isPlaying()){
@@ -89,6 +94,8 @@ public class SongsApiManager {
         }
     }
 
+
+    // function to kill MediaPlayer
     public void killMediaPlayer( MediaPlayer mediaPlayer, ImageButton button ){
 
         mediaPlayer.pause();
@@ -97,12 +104,15 @@ public class SongsApiManager {
         mediaPlayer.release();
         mediaPlayer = null;
 
+
+        // we change the pause/play btn icon
         if(mediaPlayer.isPlaying())
             button.setImageResource(R.drawable.pause);
 
     }
 
 
+    // function that handles index songs when require next song
     public int calculateIndexNextSong( int index ) {
 
         if( index >= musicUrl.length -1 ){
@@ -113,6 +123,7 @@ public class SongsApiManager {
 
     }
 
+    // function that handles index songs when require prev song
     public int calculateIndexPrevSong( int index ){
         if( index <= 0){
             return musicUrl.length - 1;
