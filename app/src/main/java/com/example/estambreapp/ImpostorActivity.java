@@ -37,6 +37,7 @@ public class ImpostorActivity extends AppCompatActivity {
         indicationsTitle = findViewById(R.id.indicationsTxt);
         tableButtons = findViewById(R.id.impostorTableButtons);
         createTableButtons(); // Calling the function for the creation of the Button Matrix
+        impostorModel.startOrEndGame(true);
     }
 
     private void createTableButtons() {
@@ -121,7 +122,11 @@ public class ImpostorActivity extends AppCompatActivity {
                             onSelectedAllCorrectImages();
                     }
                 }
-                else messageButtonClicked(false);
+                else {
+                    messageButtonClicked(false);
+                    impostorModel.setPenalty(0.5); // Setting a penalty of 0.5 seconds
+                }
+
                 System.out.println("Images left: " + impostorModel.numOfIndividualImages);
 
             }
@@ -135,6 +140,7 @@ public class ImpostorActivity extends AppCompatActivity {
     }
 
     private void onSelectedAllCorrectImages(){
+        impostorModel.startOrEndGame(false); // Stopping timer count
         showKonfettiAnimation();
         indicationsTitle.setText("¡Bien hecho!\nEncontraste todas las imágenes");
         Toast.makeText(this, "Excelente compañer@", Toast.LENGTH_SHORT).show();

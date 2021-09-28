@@ -26,17 +26,21 @@ public class ImpostorModel {
         gameProperties = new GamesModel(context, "Impostor");
     }
 
-    //gameProperties.getDifficulty(); // obtener dificultad
-    //gameProperties.startTimeCount(); // Iniciar conteo de tiempo de reaccion
-    //gameProperties.endGame(); // Terminar conteo de tiempo/Juego terminado o ganado
-    //gameProperties.penalty(1.0); // Penalty de puntaje
+    public void startOrEndGame(boolean option){ // If true, start time count; otherwise, end time count
+        if (option) gameProperties.startTimeCount();
+        else gameProperties.endGame();
+    }
 
-    // Difficulty = 50.0 <- is the difficulty in which every game starts
-    // 100.0 is the average medium difficulty for the game
-    // Penalty(penaltyTime) <- when player makes a mistake,
+    public void setPenalty(double penaltyTime){
+        gameProperties.penalty(penaltyTime); // Sending penalty in seconds
+    }
 
     public int[] getTableButtonsSize(){
+        // Difficulty = 50.0 <- is the difficulty in which every game starts
+        // 100.0 is the average medium difficulty for the game
+        // Penalty(penaltyTime) <- when player makes a mistake, give it a penalty. If you send 1, it equals to 1 second
         int numDifficultyOfGame = (int) gameProperties.getDifficulty();
+        System.out.println("The difficulty for this game is: " + numDifficultyOfGame);
         return (numDifficultyOfGame < 50) ? new int[]{ 3, 2 } :
                 (numDifficultyOfGame < 75) ? new int[]{ 4, 3 } :
                 (numDifficultyOfGame < 110) ? new int[]{ 5, 4 } :
