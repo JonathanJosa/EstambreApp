@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class MapNumbersModel {
 
-    private int[] numberList = {1,2,3,4,5,6,7,8,9,10};
+    private int[] numberList = {1,2,3,4,5,6,7,8,9,10}; // numbers to be selected by algorithm to be found
 
 
     // we generate our matrix of buttons, it will depend on the level data, to set up it.
@@ -19,10 +19,8 @@ public class MapNumbersModel {
         return new int[]{ 5, 4 }; // Hardcoded for experimentation purposes
     }
 
-
     // Implementing Fisher–Yates shuffle
-    static void shuffleArray(int[] ar)
-    {
+    static void shuffleArray(int[] ar) {
         // If running on Java 6 or older, use `new Random()` on RHS here
         Random rnd = ThreadLocalRandom.current();
         for (int i = ar.length - 1; i > 0; i--)
@@ -35,8 +33,8 @@ public class MapNumbersModel {
         }
     }
 
-    // we generate our numbers that our user going to look for.
-    // receives as a parameter the quantity of numbers.
+    // we generate our numbers which the user is going to search.
+    // receives as a parameter the quantity of numbers to generate.
     public int[] generateNumbersToSearch( int numbersToPick ) {
 
         //we shuffle the original numberList

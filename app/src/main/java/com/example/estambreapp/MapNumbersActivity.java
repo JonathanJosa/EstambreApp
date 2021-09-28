@@ -29,12 +29,14 @@ public class MapNumbersActivity extends AppCompatActivity {
 
         createTableButtonsNumbers();
 
-        mapNumbersModel.getRandomNumbersMatrix();
+
 
     }
 
     private void createTableButtonsNumbers() {
-        int[] sizeTable = mapNumbersModel.getTableButtonsSize();
+
+        int[] sizeTable = mapNumbersModel.getTableButtonsSize(); // we get the size of our numbers table
+        int[][] numMatrix = mapNumbersModel.getRandomNumbersMatrix(); // generates random matrix for our table
 
         int numRows = sizeTable[0];
         int numColumns = sizeTable[1];
@@ -57,6 +59,7 @@ public class MapNumbersActivity extends AppCompatActivity {
                 )); // Making the column expand and use the complete size of the vertical space
 
                 button.setBackgroundResource(R.drawable.mapnumbers_normalbtn); // Assign image to button
+                button.setText("1");
 
                 //button.setOnClickListener(clickButton(row, column, button)); // Activates when button clicked
 
