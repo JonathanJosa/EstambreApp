@@ -54,7 +54,23 @@ public class MapNumbersModel {
 
     }
 
+    // function that shuffles a 2D matrix
+    void shuffleMatrix(int[][] a) {
+        Random random = new Random();
 
+        for (int i = a.length - 1; i > 0; i--) {
+            for (int j = a[i].length - 1; j > 0; j--) {
+                int m = random.nextInt(i + 1);
+                int n = random.nextInt(j + 1);
+
+                int temp = a[i][j];
+                a[i][j] = a[m][n];
+                a[m][n] = temp;
+            }
+        }
+    }
+
+    // function that returns a 2D matrix of integers that includes the number selected by the algorithm, and which will be searched by user.
     public int[][] getRandomNumbersMatrix() {
 
         int[] size = getTableButtonsSize(); // we get our table size
@@ -63,22 +79,29 @@ public class MapNumbersModel {
         int numbersSize = numbers.length;
         int count = 0;
 
-        System.out.println(Arrays.toString(numbers));
+        //System.out.println(Arrays.toString(numbers));
 
         for( int i = 0; i < size[0] ; i++) {
             for(int j = 0; j < size[1] ; j++) {
 
+                // we assure that the numbers which will be searched, push into the matrix firstly.
                 if( count < numbersSize ){
                     matrix[i][j] = numbers[count];
                     count++;
                 } else {
+                    // and then, we fill it out with random numbers between 0 and 9
                     matrix[i][j] = (int) (Math.random() * 10); //generates between 0 - 9
                 }
 
             }
         }
 
-        System.out.println(Arrays.deepToString(matrix));
+
+        //System.out.println(Arrays.deepToString(matrix));
+
+        shuffleMatrix(matrix); // finally, we shuffle the matrix
+
+        //System.out.println(Arrays.deepToString(matrix));
 
         return matrix;
     }
