@@ -26,14 +26,14 @@ public class ImpostorModel {
     private int[] getImagesSet() { // Hardcoded images for experimentation purposes
         // The idea here is to return a random set of images depending on the difficulty
         return (new int[]{
-            R.drawable.impostor_plant1,
-            R.drawable.impostor_plant2,
-            R.drawable.impostor_plant3,
-            R.drawable.impostor_plant4,
-            R.drawable.impostor_plant5,
-            R.drawable.impostor_plant6,
-            R.drawable.impostor_plant7,
-            R.drawable.impostor_plant8,
+                R.drawable.impostor_plant1,
+                R.drawable.impostor_plant2,
+                R.drawable.impostor_plant3,
+                R.drawable.impostor_plant4,
+                R.drawable.impostor_plant5,
+                R.drawable.impostor_plant6,
+                R.drawable.impostor_plant7,
+                R.drawable.impostor_plant8,
         });
     }
 
@@ -45,19 +45,20 @@ public class ImpostorModel {
         System.out.println("Number of images needed: " + numOfImagesNeeded);
 
         // First, determine the number of images that will appear individually (only once)
-        numOfIndividualImages = (int) (Math.random()*(int)(images.length * 0.45)+1); // 45% of images
+        numOfIndividualImages = (int) (Math.random()*(int)(images.length * 0.50)+1); // 50% of images
         System.out.println("Number of individual images: " + numOfIndividualImages);
 
         // Then, select randomly the images that will appear only once
         SortedSet<Integer> posOfIndividualImages = new TreeSet<>(); // Doesn't allow repetitions
         for(int i = 0; i < numOfIndividualImages; i++)
             posOfIndividualImages.add((int) (Math.random()*images.length));
+        numOfIndividualImages = posOfIndividualImages.size(); // Reassign this variable to avoid errors
 
         // Then, assign to each image how many times it will appear in the matrix
         ArrayList<Pair<Integer, Integer>> timesImagesAppear = new ArrayList<>(); // First: image, Second: NumOfTimes
-        int numOfAppearancesImage = (numOfImagesNeeded-posOfIndividualImages.size()) / (images.length-posOfIndividualImages.size());
+        int numOfAppearancesImage = (numOfImagesNeeded-numOfIndividualImages) / (images.length-numOfIndividualImages);
         System.out.println("Number of appearances of each image: " + numOfAppearancesImage);
-        int leftOver = numOfImagesNeeded-posOfIndividualImages.size() - (numOfAppearancesImage * (images.length-posOfIndividualImages.size()));
+        int leftOver = numOfImagesNeeded-numOfIndividualImages - (numOfAppearancesImage * (images.length-numOfIndividualImages));
         System.out.println("Left over: " + leftOver);
         boolean assignedLeftOver = false;
         for(int i = 0; i < images.length; i++){
@@ -101,7 +102,7 @@ public class ImpostorModel {
 
     // Method for knowing the positions in which the timesImagesAppear[i].second == 1
     // Returns an array with 0's and 1's:
-    //      1 indicates that in that position the is an image that appears only once
+    //      1 indicates that in that position is an image that appears only once
     //      0 indicates that the image has more than 1 repetition
     private ArrayList<Integer> getIndividualPositionInFinalArray(ArrayList<Pair<Integer, Integer>> array){
         ArrayList<Integer> positions = new ArrayList<>();

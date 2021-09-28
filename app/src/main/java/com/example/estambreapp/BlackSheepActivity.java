@@ -7,18 +7,19 @@ import android.os.Bundle;
 
 public class BlackSheepActivity extends AppCompatActivity {
 
-    GamesModel gameProperties = new GamesModel("BlackSheep");
-    //Declarar metodo
+    GamesModel gameProperties; //Global declare, required for timeCount
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_black_sheep);
-        //gameProperties.getDifficulty(); obtener dificultad
-        //gameProperties.startTimeCount(); Iniciar conteo de tiempo de reaccion
-        //gameProperties.endGame(); Terminar conteo de tiempo/Juego terminado o ganado
-        //gameProperties.penalty(1.0); Penalty de puntaje
-        endGame();
+        gameProperties = new GamesModel(this, "BlackSheep"); //Required, constructor of model
+        //gameProperties.getDifficulty(); //Return double
+        //gameProperties.startTimeCount();
+        //gameProperties.endGame();
+        //gameProperties.penalty(double);
+
+        moveEndGame();
     }
 
     @Override
@@ -27,9 +28,6 @@ public class BlackSheepActivity extends AppCompatActivity {
         if(focused) new ScreenConfig(getWindow().getDecorView());
     }
 
-    private void endGame(){
-        //moreContent
-        startActivity(new Intent(this, GameOptionsActivity.class).putExtra("game","BlackSheep"));
-    }
+    private void moveEndGame(){ startActivity(new Intent(this, GameOptionsActivity.class).putExtra("game","BlackSheep")); }
 
 }
