@@ -39,7 +39,7 @@ public class ImpostorModel {
         // Difficulty = 50.0 <- is the difficulty in which every game starts
         // 100.0 is the average medium difficulty for the game
         // Penalty(penaltyTime) <- when player makes a mistake, give it a penalty. If you send 1, it equals to 1 second
-        int numDifficultyOfGame = (int) gameProperties.getDifficulty();
+        double numDifficultyOfGame = gameProperties.getDifficulty();
         System.out.println("The difficulty for this game is: " + numDifficultyOfGame);
         return (numDifficultyOfGame < 50) ? new int[]{ 3, 2 } :
                 (numDifficultyOfGame < 75) ? new int[]{ 4, 3 } :
