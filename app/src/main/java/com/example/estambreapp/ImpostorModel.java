@@ -39,6 +39,7 @@ public class ImpostorModel {
         // Difficulty = 50.0 <- is the difficulty in which every game starts
         // 100.0 is the average medium difficulty for the game
         // Penalty(penaltyTime) <- when player makes a mistake, give it a penalty. If you send 1, it equals to 1 second
+
         double numDifficultyOfGame = gameProperties.getDifficulty();
         System.out.println("The difficulty for this game is: " + numDifficultyOfGame);
         return (numDifficultyOfGame < 50) ? new int[]{ 3, 2 } :
@@ -47,6 +48,7 @@ public class ImpostorModel {
                 (numDifficultyOfGame < 130) ? new int[]{ 6, 4 } :
                 (numDifficultyOfGame < 160) ? new int[]{ 6, 5 } : new int[]{ 7, 5 };
     }
+
 
     private int[] getImagesSet() { // Hardcoded images for experimentation purposes
         // The idea here is to return a random set of images depending on the difficulty
@@ -71,7 +73,7 @@ public class ImpostorModel {
         // If the set of images is greater than the numOfImagesNeeded, delete the unnecessary elements
         if(images.length > numOfImagesNeeded){
             int[] copyImages = new int[numOfImagesNeeded];
-            System.arraycopy(images,0, copyImages,0,numOfImagesNeeded);
+            System.arraycopy(images,0, copyImages,0,numOfImagesNeeded); // Copying only the images needed
             images = copyImages;
         }
         System.out.println("Number of images needed: " + numOfImagesNeeded);
@@ -85,7 +87,6 @@ public class ImpostorModel {
             posOfIndividualImages.add((int) (Math.random()*images.length));
         numOfIndividualImages = posOfIndividualImages.size(); // Reassign this variable to avoid errors
         System.out.println("Number of individual images: " + numOfIndividualImages);
-        System.out.println("Positions of individual images: " + posOfIndividualImages);
 
         // Then, assign to each image how many times it will appear in the matrix
         ArrayList<Pair<Integer, Integer>> timesImagesAppear = new ArrayList<>(); // First: image, Second: NumOfTimes
@@ -96,8 +97,8 @@ public class ImpostorModel {
         System.out.println("Left over: " + leftOver);
 
         // Did this just to divide the left over into two images (if possible)
-        int subtractLeftOver = leftOver/2;
-        boolean isLeftOver = leftOver%2 != 0;
+        int subtractLeftOver = leftOver/2; // 2
+        boolean isLeftOver = leftOver%2 != 0; // true
 
         // Then, this for cycle has to verify that the correct number of images are used
         for(int i = 0; i < images.length && numOfImagesNeeded > 0; i++){
@@ -114,12 +115,12 @@ public class ImpostorModel {
                 } else {
                     if(isLeftOver){
                         timesImagesAppear.add(new Pair<>(images[i], numOfAppearancesImage+subtractLeftOver+1));
-                        leftOver -= subtractLeftOver+1;
-                        numOfImagesNeeded -= subtractLeftOver+1;
+                        leftOver -= (numOfAppearancesImage+subtractLeftOver+1);
+                        numOfImagesNeeded -= (numOfAppearancesImage+subtractLeftOver+1);
                     }else{
                         timesImagesAppear.add(new Pair<>(images[i], numOfAppearancesImage+subtractLeftOver));
-                        leftOver -= subtractLeftOver;
-                        numOfImagesNeeded -= subtractLeftOver;
+                        leftOver -= (numOfAppearancesImage+subtractLeftOver);
+                        numOfImagesNeeded -= (numOfAppearancesImage+subtractLeftOver);
                     }
                     isLeftOver = false;
                 }
