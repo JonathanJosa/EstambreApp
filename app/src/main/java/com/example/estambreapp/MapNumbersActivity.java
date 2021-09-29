@@ -59,7 +59,8 @@ public class MapNumbersActivity extends AppCompatActivity {
                 )); // Making the column expand and use the complete size of the vertical space
 
                 button.setBackgroundResource(R.drawable.mapnumbers_normalbtn); // Assign image to button
-                button.setText("1");
+                button.setText("Some text");
+                button.setTextColor(0xFFFFFF);
 
                 //button.setOnClickListener(clickButton(row, column, button)); // Activates when button clicked
 
