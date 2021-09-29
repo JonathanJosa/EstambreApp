@@ -37,10 +37,11 @@ public class ImpostorActivity extends AppCompatActivity {
         indicationsTitle = findViewById(R.id.indicationsTxt);
         tableButtons = findViewById(R.id.impostorTableButtons);
         createTableButtons(); // Calling the function for the creation of the Button Matrix
-        impostorModel.startOrEndGame(true);
+
     }
 
     private void createTableButtons() {
+        impostorModel.startOrEndGame(true);
         indicationsTitle.setText("Encuentra las imágenes que NO se repiten");
         tableButtons.removeAllViews();
 
