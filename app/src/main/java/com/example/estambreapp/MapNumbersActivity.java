@@ -2,11 +2,14 @@ package com.example.estambreapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MapNumbersActivity extends AppCompatActivity {
 
@@ -41,6 +44,8 @@ public class MapNumbersActivity extends AppCompatActivity {
         int numRows = sizeTable[0];
         int numColumns = sizeTable[1];
 
+        int idCounter = 0;
+
         for(int row = 0; row < numRows; row++){
             TableRow tableRow = new TableRow(this);
             tableRow.setLayoutParams(new TableLayout.LayoutParams(
@@ -59,16 +64,31 @@ public class MapNumbersActivity extends AppCompatActivity {
                 )); // Making the column expand and use the complete size of the vertical space
 
                 button.setBackgroundResource(R.drawable.mapnumbers_normalbtn); // Assign image to button
-                button.setText("Some text");
-                button.setTextColor(0xFFFFFF);
+                button.setId(idCounter);
+
+                button.setText(String.valueOf(numMatrix[row][column]));
+                button.setTextColor(Color.parseColor("#FFFFFF"));
+                button.setOnClickListener(getOnClick(idCounter, button));
+                button.setTextSize(25);
 
                 //button.setOnClickListener(clickButton(row, column, button)); // Activates when button clicked
 
                 tableRow.addView(button);
+                idCounter++;
             }
         }
 
 
+    }
+
+
+    private View.OnClickListener getOnClick(final int i, Button selectedButton){
+        return new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Clicked" + i+", selected no. "+ selectedButton.getText(), Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 
     @Override
