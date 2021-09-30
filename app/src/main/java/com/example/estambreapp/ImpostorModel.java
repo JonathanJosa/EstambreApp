@@ -42,25 +42,30 @@ public class ImpostorModel {
 
         double numDifficultyOfGame = gameProperties.getDifficulty();
         System.out.println("The difficulty for this game is: " + numDifficultyOfGame);
+        /*
         return (numDifficultyOfGame < 50) ? new int[]{ 3, 2 } :
                 (numDifficultyOfGame < 75) ? new int[]{ 4, 3 } :
                 (numDifficultyOfGame < 110) ? new int[]{ 5, 4 } :
                 (numDifficultyOfGame < 130) ? new int[]{ 6, 4 } :
                 (numDifficultyOfGame < 160) ? new int[]{ 6, 5 } : new int[]{ 7, 5 };
+
+         */
+        return new int[]{4,3};
     }
 
 
     private int[] getImagesSet() { // Hardcoded images for experimentation purposes
         // The idea here is to return a random set of images depending on the difficulty
+
         return (new int[]{
-                R.drawable.impostor_plant1,
-                R.drawable.impostor_plant2,
-                R.drawable.impostor_plant3,
-                R.drawable.impostor_plant4,
-                R.drawable.impostor_plant5,
-                R.drawable.impostor_plant6,
-                R.drawable.impostor_plant7,
-                R.drawable.impostor_plant8,
+                R.drawable.impostor_s1_plant1,
+                R.drawable.impostor_s1_plant2,
+                R.drawable.impostor_s1_plant3,
+                R.drawable.impostor_s1_plant4,
+                R.drawable.impostor_s1_plant5,
+                R.drawable.impostor_s1_plant6,
+                R.drawable.impostor_s1_plant7,
+                R.drawable.impostor_s1_plant8,
         });
     }
 

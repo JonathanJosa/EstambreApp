@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -56,8 +57,8 @@ public class ImpostorActivity extends AppCompatActivity {
         int sizeSideOfButton = Math.min(lenSidesTable[0]/numRows, lenSidesTable[1]/numColumns);
         // Then, we calculate the margin that each row and column should have according to the size of the side of the images
         // I used 20% of the size of the table if the margin left is too small
-        int marginBetweenRows = (int) Math.max(lenSidesTable[0] - sizeSideOfButton*numRows, 0.2*lenSidesTable[0]);
-        int marginBetweenColumns = (int) Math.max(lenSidesTable[1] - sizeSideOfButton*numColumns , 0.2*lenSidesTable[1]);
+        int marginBetweenRows = (int) Math.max(lenSidesTable[0] - sizeSideOfButton*numRows, 0.15*lenSidesTable[0]);
+        int marginBetweenColumns = (int) Math.max(lenSidesTable[1] - sizeSideOfButton*numColumns , 0.15*lenSidesTable[1]);
         // Then, we calculate the REAL length that each side of the images should have (including the margin)
         sizeSideOfButton = Math.min((lenSidesTable[0]-marginBetweenRows)/numRows, (lenSidesTable[1]-marginBetweenColumns)/numColumns);
         // Finally, we re-calculate the margin that each row and column should have according to the size of the side of the images
@@ -114,7 +115,6 @@ public class ImpostorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(impostorModel.positionsIndividualImages.containsKey(row+"-"+column)) {
-                    messageButtonClicked(true);
                     button.setBackgroundResource(R.drawable.impostor_check);
                     if(impostorModel.positionsIndividualImages.get(row+"-"+column) != 1) { // != 1
                         impostorModel.numOfIndividualImages--; // Decrease number of individual images to find
@@ -124,7 +124,9 @@ public class ImpostorActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    messageButtonClicked(false);
+                    Drawable buttonBackground = button.getBackground();
+                    button.setBackgroundResource(R.drawable.impostor_wrong);
+                    (new Handler()).postDelayed(() -> button.setBackground(buttonBackground), 1500);
                     impostorModel.setPenalty(0.5); // Setting a penalty of 0.5 seconds
                 }
 
@@ -134,17 +136,10 @@ public class ImpostorActivity extends AppCompatActivity {
         });
     }
 
-    private void messageButtonClicked(boolean correctButton) {
-        // Function that shows the pop-up message (Java obligated me to create a separate function)
-        Toast.makeText(this, (correctButton ? "Bien hecho :)" : "Esa está repetida :("),
-                Toast.LENGTH_SHORT).show();
-    }
-
     private void onSelectedAllCorrectImages(){
         impostorModel.startOrEndGame(false); // Stopping timer count
         showKonfettiAnimation();
         indicationsTitle.setText("¡Bien hecho!\nEncontraste todas las imágenes");
-        Toast.makeText(this, "Excelente compañer@", Toast.LENGTH_SHORT).show();
         impostorModel.numOfGamesPlayed++;
         impostorModel.positionsIndividualImages = new HashMap<>(); // Restart the map
         if(impostorModel.numOfGamesPlayed == 3) endGame();
