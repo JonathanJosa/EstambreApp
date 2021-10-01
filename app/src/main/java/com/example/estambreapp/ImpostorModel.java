@@ -42,22 +42,18 @@ public class ImpostorModel {
 
         double numDifficultyOfGame = gameProperties.getDifficulty();
         System.out.println("The difficulty for this game is: " + numDifficultyOfGame);
-        /*
+
         return (numDifficultyOfGame < 50) ? new int[]{ 3, 2 } :
                 (numDifficultyOfGame < 75) ? new int[]{ 4, 3 } :
                 (numDifficultyOfGame < 110) ? new int[]{ 5, 4 } :
                 (numDifficultyOfGame < 130) ? new int[]{ 6, 4 } :
                 (numDifficultyOfGame < 160) ? new int[]{ 6, 5 } : new int[]{ 7, 5 };
-
-         */
-        return new int[]{4,3};
     }
 
 
-    private int[] getImagesSet() { // Hardcoded images for experimentation purposes
-        // The idea here is to return a random set of images depending on the difficulty
-
-        return (new int[]{
+    private int[] getImagesSet() {
+        // Returns a random set of images that look similar
+        int[][] images = {{
                 R.drawable.impostor_s1_plant1,
                 R.drawable.impostor_s1_plant2,
                 R.drawable.impostor_s1_plant3,
@@ -66,7 +62,35 @@ public class ImpostorModel {
                 R.drawable.impostor_s1_plant6,
                 R.drawable.impostor_s1_plant7,
                 R.drawable.impostor_s1_plant8,
-        });
+        }, {
+                R.drawable.impostor_s2_fruit1,
+                R.drawable.impostor_s2_fruit2,
+                R.drawable.impostor_s2_fruit3,
+                R.drawable.impostor_s2_fruit4,
+                R.drawable.impostor_s2_fruit5,
+                R.drawable.impostor_s2_fruit6,
+                R.drawable.impostor_s2_fruit7,
+                R.drawable.impostor_s2_fruit8,
+        }, {
+                R.drawable.impostor_s3_emoji1,
+                R.drawable.impostor_s3_emoji2,
+                R.drawable.impostor_s3_emoji3,
+                R.drawable.impostor_s3_emoji4,
+                R.drawable.impostor_s3_emoji5,
+                R.drawable.impostor_s3_emoji6,
+                R.drawable.impostor_s3_emoji7,
+                R.drawable.impostor_s3_emoji8,
+        }, {
+                R.drawable.impostor_s4_animal1,
+                R.drawable.impostor_s4_animal2,
+                R.drawable.impostor_s4_animal3,
+                R.drawable.impostor_s4_animal4,
+                R.drawable.impostor_s4_animal5,
+                R.drawable.impostor_s4_animal6,
+                R.drawable.impostor_s4_animal7,
+                R.drawable.impostor_s4_animal8,
+        }};
+        return images[(int) (Math.random()*4)];
     }
 
     public int[][] getImagesMatrix(){
