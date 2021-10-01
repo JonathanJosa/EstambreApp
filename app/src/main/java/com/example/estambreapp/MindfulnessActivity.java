@@ -7,7 +7,12 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class MindfulnessActivity extends AppCompatActivity {
 
@@ -26,8 +31,10 @@ public class MindfulnessActivity extends AppCompatActivity {
         songsApiManager = new SongsApiManager(); // instance to SongsApiManager
         Context context = getApplicationContext(); // we create a context send as a parameter in our model
 
+
+        songsApiManager.shuffleMusicArray();
         songsApiManager.prepareMediaPlayer(mediaPlayer, context); // we prepare our media player
-        mediaPlayer.start(); // we start mediaplayer sound.
+        mediaPlayer.start(); // we start MediaPlayer sound.
 
 
 
