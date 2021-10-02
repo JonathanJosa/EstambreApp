@@ -24,6 +24,10 @@ public class SongsApiManager {
 
     int musicIndex = 0; // index of our sequence of music
 
+    //declare initial volume values for our fade in/out functions.
+    float volume = 0; // fade in
+    float volume2 = 1f; // fade out
+
     // create a int array, witch contains our songs' id
     Integer[] musicUri = { R.raw.bilateralharp, R.raw.bilateralstillness, R.raw.blessing, R.raw.movement, R.raw.springsunrise, R.raw.thedeep, R.raw.transie };
 
@@ -49,6 +53,16 @@ public class SongsApiManager {
         }
     }
 
+    // we handle the music controller next song, when the current track whether is paused or is playing
+    public void handleNextSong(MediaPlayer mediaPlayer, Context context, ImageButton button){
+        if(button.getContentDescription() == "play"){
+            nextSong(mediaPlayer, context, button);
+        } else {
+            startFadeOut(mediaPlayer, context, button);
+        }
+    }
+
+
 
     // function to next song
     // we receive MediaPlayer from the view, the app context, and the Play/Pause btn
@@ -57,7 +71,7 @@ public class SongsApiManager {
         musicIndex = calculateIndexNextSong( musicIndex++ ); // calculate the current index of the song
 
         if(mediaPlayer.isPlaying()) {
-            startFadeOut(mediaPlayer);
+
             mediaPlayer.stop();
             mediaPlayer.reset();
             prepareMediaPlayer(mediaPlayer, context);
@@ -65,6 +79,7 @@ public class SongsApiManager {
             startFadeIn(mediaPlayer);
         } else {
 
+            mediaPlayer.stop();
             mediaPlayer.reset();
             prepareMediaPlayer(mediaPlayer, context);
             mediaPlayer.start();
@@ -155,13 +170,9 @@ public class SongsApiManager {
         }
     }
 
-
-    float volume = 0;
-    float volume2 = 1f;
-
-    private void startFadeIn(MediaPlayer mediaPlayer){
+    public void startFadeIn(MediaPlayer mediaPlayer){
         volume = 0;
-        final int FADE_DURATION = 3000; //The duration of the fade
+        final int FADE_DURATION = 2000; //The duration of the fade
         //The amount of time between volume changes. The smaller this is, the smoother the fade
         final int FADE_INTERVAL = 50;
         final int MAX_VOLUME = 1; //The volume will increase from 0 to 1
@@ -187,16 +198,15 @@ public class SongsApiManager {
     }
 
     private void fadeInStep(float deltaVolume, MediaPlayer mediaPlayer){
-        System.out.println("entre al final!!");
         mediaPlayer.setVolume(volume, volume);
         volume += deltaVolume;
 
     }
 
 
-    private void startFadeOut(MediaPlayer mediaPlayer){
+    public void startFadeOut(MediaPlayer mediaPlayer, Context context, ImageButton btn){
         volume2 = 1f;
-        final int FADE_DURATION = 3000; //The duration of the fade
+        final int FADE_DURATION = 2000; //The duration of the fade
         //The amount of time between volume changes. The smaller this is, the smoother the fade
         final int FADE_INTERVAL = 50;
         final int MAX_VOLUME = 1; //The volume will increase from 0 to 1
@@ -214,6 +224,8 @@ public class SongsApiManager {
                 if(volume2<=0f){
                     timer.cancel();
                     timer.purge();
+                    // after killing timertask, we call the nextSong function to change the current song.
+                    nextSong(mediaPlayer, context, btn);
                 }
             }
         };
@@ -222,7 +234,6 @@ public class SongsApiManager {
     }
 
     private void fadeOutStep(float deltaVolume, MediaPlayer mediaPlayer){
-        System.out.println("entre al final22!!");
         mediaPlayer.setVolume(volume2, volume2);
         volume2 -= deltaVolume;
 
