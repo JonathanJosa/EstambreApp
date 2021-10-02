@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class BlackSheepActivity extends AppCompatActivity {
+public class BlackSheepActivity extends AppCompatActivity{
 
     BlackSheepModel sheepModel;
     LinearLayout board;
@@ -42,15 +42,12 @@ public class BlackSheepActivity extends AppCompatActivity {
     }
 
     private void createBoard(){
-
         for(int i=0; i<sheepModel.sheeps.first; i++){
             board.addView(setButtonsSettings(new ImageButton(this), "sheepw"));
         }
-
         for(int i=0; i<sheepModel.sheeps.second; i++){
             board.addView(setButtonsSettings(new ImageButton(this), "sheepb"));
         }
-
     }
 
     private void endGame(){
