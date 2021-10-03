@@ -3,9 +3,14 @@ package com.example.estambreapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.Toast;
 
 public class InfinityMazeActivity extends AppCompatActivity {
@@ -25,7 +30,30 @@ public class InfinityMazeActivity extends AppCompatActivity {
     }
 
     private void createMazeTable(){
+        int[] mazeSizes = infinityMazeModel.getMazeTableSize();
+        int numRows = mazeSizes[0];
+        int numColumns = mazeSizes[1];
         boolean[][] mazeMatrix = infinityMazeModel.getMazeMatrix();
+
+        for (int i = 0; i < numRows; i++) {
+            TableRow tableRow = new TableRow(this);
+            tableRow.setLayoutParams(new TableLayout.LayoutParams(
+                    TableLayout.LayoutParams.MATCH_PARENT,
+                    TableLayout.LayoutParams.MATCH_PARENT,
+                    1.0f
+            ));
+            mazeTable.addView(tableRow);
+            for (int j = 0; j < numColumns; j++) {
+                Button square = new Button(this);
+                square.setLayoutParams(new TableRow.LayoutParams(
+                        TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.MATCH_PARENT,
+                        1.0f
+                ));
+                square.setBackgroundColor(Color.parseColor(mazeMatrix[i][j] ? "#2F3136" : "#FFFFFF"));
+                tableRow.addView(square);
+            }
+        }
 
     }
 
