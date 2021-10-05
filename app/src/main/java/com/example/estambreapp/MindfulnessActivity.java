@@ -38,11 +38,12 @@ public class MindfulnessActivity extends AppCompatActivity {
 
 
 
-        // we use a listener with our MediaPlayer object, to change next song when last one finishes.
+        // we use a listener with our MediaPlayer object, in order to switch the next song when last one finishes and I start fade in effect.
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                songsApiManager.nextSong(mediaPlayer, context, playPauseButton);
+                songsApiManager.nextSong(mediaPlayer, getApplicationContext(), playPauseButton);
+                songsApiManager.startFadeIn(mediaPlayer);
             }
         });
 
@@ -57,8 +58,8 @@ public class MindfulnessActivity extends AppCompatActivity {
     public void moveHome(View _v){  songsApiManager.killMediaPlayer(mediaPlayer, playPauseButton); startActivity(new Intent(this, HomeActivity.class)); } // we kill the mediaPlayer and adjust the play/pause btn
     public void moveActivities(View _v){  songsApiManager.killMediaPlayer(mediaPlayer, playPauseButton); startActivity(new Intent(this, MindfulnessSessionActivity.class)); } // we kill the mediaPlayer and adjust the play/pause btn
 
-    public void pressPlayBack(View v){ songsApiManager.prevSong(mediaPlayer, getApplicationContext(), playPauseButton); } // we call prevSong function
-    public void pressPlayNext(View v){  songsApiManager.nextSong(mediaPlayer, getApplicationContext(), playPauseButton); } // we call nextSong function
+    public void pressPlayBack(View v){ songsApiManager.prevSong(mediaPlayer, getApplicationContext(), playPauseButton); songsApiManager.startFadeIn(mediaPlayer);} // we call prevSong function and we initialize the fadein effect
+    public void pressPlayNext(View v){ songsApiManager.handleNextSong(mediaPlayer, getApplicationContext(), playPauseButton);  } // we call fadeout to start effect into the mediaplayer
     public void pressPausePlay(View v) {
         songsApiManager.pausePlay(mediaPlayer, getApplicationContext(), playPauseButton); // we handle the play/pause button
         v.setContentDescription("play".equals(v.getContentDescription().toString()) ? "pause" : "play"); // change the button play/pause icon.
