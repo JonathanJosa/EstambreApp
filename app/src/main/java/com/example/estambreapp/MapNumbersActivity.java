@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -15,7 +16,7 @@ public class MapNumbersActivity extends AppCompatActivity {
 
     MapNumbersModel mapNumbersModel;
     TextView instructions;
-    Button buttonInstructions;
+    LinearLayout instructionsLayout;
     TableLayout tableNumbers;
 
     @Override
@@ -27,10 +28,12 @@ public class MapNumbersActivity extends AppCompatActivity {
         mapNumbersModel = new MapNumbersModel();
 
         instructions = findViewById(R.id.mapNumbersInstructions);
-        buttonInstructions = findViewById(R.id.mapNumbersButton);
+        instructionsLayout = findViewById(R.id.numbersToBefound);
         tableNumbers = findViewById(R.id.mapNumbersButtons);
 
+
         createTableButtonsNumbers();
+        createInstructions();
 
 
 
@@ -78,6 +81,38 @@ public class MapNumbersActivity extends AppCompatActivity {
             }
         }
 
+
+    }
+
+
+
+    private void createInstructions(){
+
+        int[] numbersToBeFound = mapNumbersModel.getNumbersToBeFound();
+
+        TableRow tr = new TableRow(this);
+        tr.setLayoutParams(new TableLayout.LayoutParams(
+                TableLayout.LayoutParams.MATCH_PARENT,
+                TableLayout.LayoutParams.MATCH_PARENT,
+                1.0f
+        ));// Making the row expand and use the complete size of the horizontal space
+        tr.setPadding(3,5,3,5);
+        instructionsLayout.addView(tr);
+
+        for (int i = 0;i<numbersToBeFound.length;i++) {
+            Button btn = new Button(this);
+            btn.setLayoutParams( new TableRow.LayoutParams(
+                    TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.MATCH_PARENT,
+                    1.0f
+            )); // Making the column expand and use the complete size of the vertical space
+            btn.setBackgroundResource(R.drawable.mapnumbers_normalbtn);
+            btn.setText(String.valueOf(numbersToBeFound[i]));
+            btn.setTextColor(Color.parseColor("#FFFFFF"));
+            btn.setTextSize(25);
+
+            tr.addView(btn);
+        }
 
     }
 

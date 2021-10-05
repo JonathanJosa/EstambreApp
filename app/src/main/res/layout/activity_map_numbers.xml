@@ -21,25 +21,16 @@
         app:layout_constraintVertical_bias="0.029"
         app:srcCompat="@drawable/mapnumbers_pandadialogo" />
 
-    <Button
-        android:id="@+id/mapNumbersButton"
-        android:layout_width="303dp"
-        android:layout_height="106dp"
-        android:backgroundTint="#FFEDDA"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.27" />
-
     <TableLayout
         android:id="@+id/mapNumbersButtons"
         android:layout_width="362dp"
         android:layout_height="375dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mapNumbersButton">
+        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        app:layout_constraintVertical_bias="0.901">
 
         <TableRow
             android:layout_width="match_parent"
@@ -56,6 +47,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </TableLayout>
 
     <TextView
@@ -73,6 +65,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.039" />
+
+    <LinearLayout
+        android:id="@+id/numbersToBefound"
+        android:layout_width="320dp"
+        android:layout_height="123dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/mapNumbersButtons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.31"></LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
