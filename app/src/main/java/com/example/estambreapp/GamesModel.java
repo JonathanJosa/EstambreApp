@@ -1,54 +1,47 @@
 package com.example.estambreapp;
 
-public class GamesModel {
+import android.content.Context;
+import android.content.SharedPreferences;
+import java.lang.Long;
 
-    String gameName;
-    Double time = (double) 0.0;
-    Double finalTime = (double) 0.0;
-    Double difficulty = (double) 50.0;
+public class GamesModel{
 
-    public GamesModel(String game){
+    private SharedPreferences preferencesUser;
+    private String gameName;
+    private Long time;
+    private Double difficulty; //Promedio 100.0
+
+    public GamesModel(Context context, String game){
         gameName = game;
-
-        //Create if not declared
-
-
-        //if declared
-        //difficulty = promedio(getAllAdjustDifficulty());
+        preferencesUser = context.getSharedPreferences(gameName, Context.MODE_PRIVATE);
+        difficulty = Double.parseDouble(preferencesUser.getString("Difficulty", "50.0"));
     }
 
-    private void ifNotDeclared(){
-        //Create String gameName on Preferences
-        //Default 50.0
+    private void saveLastGame(double df){
+        preferencesUser.edit().putString("Difficulty", String.valueOf(df)).commit();
+        difficulty = Double.parseDouble(preferencesUser.getString("Difficulty", "50.0"));
     }
 
-    private double[] getAllAdjustDifficulties(){
-        return new double[]{1.0};
+    private double calculateAdjustDifficulty(double totalTime){
+        return  ((((new GamesControllerModel()).getSituableTime(gameName) / totalTime) * (difficulty * 1.1)) + (difficulty * 9)) / 10;
     }
 
-    private void saveLastGame(){
-        //finalTime
-        Double situableTime = (new GamesControllerModel()).getSituableTime(gameName);
-        //difficulty * 1.2
-        //calculateAdjustDifficulty()
-
-        //Delete last item
-        //Save on preferences
+    public double getDifficulty(){
+        return difficulty * 1.1;
     }
-
-    public double getDifficulty(){ return difficulty; }
 
     public void startTimeCount(){
-        //time = actualTime();
-    }
-
-    public void endGame(){
-        //finalTime += actualTime() - time;
-        saveLastGame();
+        time = (System.currentTimeMillis()) * -1;
     }
 
     public void penalty(double penaltyTime){
-        // finalTime += penaltyTime;
+        time  += ((Double.valueOf(penaltyTime * 1000)).longValue());
+    }
+
+    public void endGame(){
+        saveLastGame(
+                calculateAdjustDifficulty(
+                        (Long.valueOf(time + (System.currentTimeMillis()))).doubleValue() / 1000));
     }
 
 }
