@@ -17,10 +17,16 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SongsApiManager {
 
     int musicIndex = 0; // index of our sequence of music
+
+    //declare initial volume values for our fade in/out functions.
+    float volume = 0; // fade in
+    float volume2 = 1f; // fade out
 
     // create a int array, witch contains our songs' id
     Integer[] musicUri = { R.raw.bilateralharp, R.raw.bilateralstillness, R.raw.blessing, R.raw.movement, R.raw.springsunrise, R.raw.thedeep, R.raw.transie };
@@ -47,6 +53,16 @@ public class SongsApiManager {
         }
     }
 
+    // we handle the music controller next song, when the current track whether is paused or is playing
+    public void handleNextSong(MediaPlayer mediaPlayer, Context context, ImageButton button){
+        if(button.getContentDescription() == "play"){
+            nextSong(mediaPlayer, context, button);
+        } else {
+            startFadeOut(mediaPlayer, context, button);
+        }
+    }
+
+
 
     // function to next song
     // we receive MediaPlayer from the view, the app context, and the Play/Pause btn
@@ -55,14 +71,19 @@ public class SongsApiManager {
         musicIndex = calculateIndexNextSong( musicIndex++ ); // calculate the current index of the song
 
         if(mediaPlayer.isPlaying()) {
+
             mediaPlayer.stop();
             mediaPlayer.reset();
             prepareMediaPlayer(mediaPlayer, context);
             mediaPlayer.start();
+            startFadeIn(mediaPlayer);
         } else {
+
+            mediaPlayer.stop();
             mediaPlayer.reset();
             prepareMediaPlayer(mediaPlayer, context);
             mediaPlayer.start();
+            startFadeIn(mediaPlayer);
             button.setImageResource(R.drawable.pause);
         }
 
@@ -149,5 +170,75 @@ public class SongsApiManager {
         }
     }
 
+    public void startFadeIn(MediaPlayer mediaPlayer){
+        volume = 0;
+        final int FADE_DURATION = 2000; //The duration of the fade
+        //The amount of time between volume changes. The smaller this is, the smoother the fade
+        final int FADE_INTERVAL = 50;
+        final int MAX_VOLUME = 1; //The volume will increase from 0 to 1
+        int numberOfSteps = FADE_DURATION/FADE_INTERVAL; //Calculate the number of fade steps
+        //Calculate by how much the volume changes each step
+        final float deltaVolume = MAX_VOLUME / (float)numberOfSteps;
 
-}
+        //Create a new Timer and Timer task to run the fading outside the main UI thread
+        final Timer timer = new Timer(true);
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                fadeInStep(deltaVolume, mediaPlayer); //Do a fade step
+                //Cancel and Purge the Timer if the desired volume has been reached
+                if(volume>=1f){
+                    timer.cancel();
+                    timer.purge();
+                }
+            }
+        };
+
+        timer.schedule(timerTask,FADE_INTERVAL,FADE_INTERVAL);
+    }
+
+    private void fadeInStep(float deltaVolume, MediaPlayer mediaPlayer){
+        mediaPlayer.setVolume(volume, volume);
+        volume += deltaVolume;
+
+    }
+
+
+    public void startFadeOut(MediaPlayer mediaPlayer, Context context, ImageButton btn){
+        volume2 = 1f;
+        final int FADE_DURATION = 2000; //The duration of the fade
+        //The amount of time between volume changes. The smaller this is, the smoother the fade
+        final int FADE_INTERVAL = 50;
+        final int MAX_VOLUME = 1; //The volume will increase from 0 to 1
+        int numberOfSteps = FADE_DURATION/FADE_INTERVAL; //Calculate the number of fade steps
+        //Calculate by how much the volume changes each step
+        final float deltaVolume = MAX_VOLUME / (float)numberOfSteps;
+
+        //Create a new Timer and Timer task to run the fading outside the main UI thread
+        final Timer timer = new Timer(true);
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                fadeOutStep(deltaVolume, mediaPlayer); //Do a fade step
+                //Cancel and Purge the Timer if the desired volume has been reached
+                if(volume2<=0f){
+                    timer.cancel();
+                    timer.purge();
+                    // after killing timertask, we call the nextSong function to change the current song.
+                    nextSong(mediaPlayer, context, btn);
+                }
+            }
+        };
+
+        timer.schedule(timerTask,FADE_INTERVAL,FADE_INTERVAL);
+    }
+
+    private void fadeOutStep(float deltaVolume, MediaPlayer mediaPlayer){
+        mediaPlayer.setVolume(volume2, volume2);
+        volume2 -= deltaVolume;
+
+    }
+
+
+
+    }
