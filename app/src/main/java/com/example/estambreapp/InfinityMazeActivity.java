@@ -31,46 +31,47 @@ public class InfinityMazeActivity extends AppCompatActivity {
 
     private void createMazeTable(){
         int[] mazeSizes = infinityMazeModel.getMazeTableSize();
-        int numRows = mazeSizes[0];
-        int numColumns = mazeSizes[1];
+        int numRows = mazeSizes[0], numColumns = mazeSizes[1];
         int[][] mazeMatrix = infinityMazeModel.getMazeMatrix();
 
         int[] lenSidesTable = {mazeTable.getLayoutParams().height, mazeTable.getLayoutParams().width};
-        int heightBtn = lenSidesTable[0]/numRows;
-        int widthBtn = lenSidesTable[1]/numColumns;
+        int heightBtn = lenSidesTable[0]/numRows, widthBtn = lenSidesTable[1]/numColumns, lenSideBtn;
+        boolean greaterHeight;
+        if(heightBtn > widthBtn){
+            greaterHeight = true;
+            lenSideBtn = widthBtn;
+        } else {
+            greaterHeight = false;
+            lenSideBtn = heightBtn;
+        }
 
         for (int i = 0; i < numRows; i++) {
             TableRow tableRow = new TableRow(this);
-            tableRow.setLayoutParams(new TableLayout.LayoutParams(
-                    widthBtn, heightBtn, 1.0f
-            ));
+            TableLayout.LayoutParams mazeTableLayoutParams = new TableLayout.LayoutParams(
+                    lenSideBtn, lenSideBtn, 1.0f
+            );
 
-            /*
-            tableRow.setLayoutParams(new TableLayout.LayoutParams(
-                    TableLayout.LayoutParams.MATCH_PARENT,
-                    TableLayout.LayoutParams.MATCH_PARENT,
-                    1.0f
-            ));
+            if(i+1 == numRows && greaterHeight)
+                mazeTableLayoutParams.setMargins(0,0,0,lenSidesTable[0] - lenSideBtn*numRows);
 
-             */
+            tableRow.setLayoutParams(mazeTableLayoutParams);
             mazeTable.addView(tableRow);
             for (int j = 0; j < numColumns; j++) {
                 Button square = new Button(this);
 
-                square.setLayoutParams(new TableRow.LayoutParams(
-                        widthBtn, heightBtn,
-                        /*
-                        TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.MATCH_PARENT,
-                         */
-                        1.0f
-                ));
+                TableRow.LayoutParams mazeRowLayoutParams = new TableRow.LayoutParams(
+                        lenSideBtn, lenSideBtn, 1.0f
+                );
+
+                if((j == 0 || j+1 == numColumns) && !greaterHeight)
+                    mazeRowLayoutParams.setMargins(j == 0 ? (lenSidesTable[1] - lenSideBtn*numColumns)/2 : 0,
+                            0,0, j != 0 ? (lenSidesTable[1] - lenSideBtn*numColumns)/2 : 0);
+
+                square.setLayoutParams(mazeRowLayoutParams);
 
                 if(mazeMatrix[i][j] == 0 || mazeMatrix[i][j] == 1)
-                    //square.setBackgroundResource(mazeMatrix[i][j] == 0 ? R.drawable.impostor_check : R.drawable.impostor_wrong);
                     square.setBackgroundColor(Color.parseColor(mazeMatrix[i][j] == 0 ? "#2F3136" : "#FFFFFF"));
                 else
-                    //square.setBackgroundColor(Color.parseColor("#555555"));
                     square.setBackgroundResource(mazeMatrix[i][j] == 3 ? R.drawable.maze_key :
                             mazeMatrix[i][j] == 2 ? R.drawable.maze_runner : R.drawable.maze_door);
 
