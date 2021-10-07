@@ -33,24 +33,47 @@ public class InfinityMazeActivity extends AppCompatActivity {
         int[] mazeSizes = infinityMazeModel.getMazeTableSize();
         int numRows = mazeSizes[0];
         int numColumns = mazeSizes[1];
-        boolean[][] mazeMatrix = infinityMazeModel.getMazeMatrix();
+        int[][] mazeMatrix = infinityMazeModel.getMazeMatrix();
+
+        int[] lenSidesTable = {mazeTable.getLayoutParams().height, mazeTable.getLayoutParams().width};
+        int heightBtn = lenSidesTable[0]/numRows;
+        int widthBtn = lenSidesTable[1]/numColumns;
 
         for (int i = 0; i < numRows; i++) {
             TableRow tableRow = new TableRow(this);
+            tableRow.setLayoutParams(new TableLayout.LayoutParams(
+                    widthBtn, heightBtn, 1.0f
+            ));
+
+            /*
             tableRow.setLayoutParams(new TableLayout.LayoutParams(
                     TableLayout.LayoutParams.MATCH_PARENT,
                     TableLayout.LayoutParams.MATCH_PARENT,
                     1.0f
             ));
+
+             */
             mazeTable.addView(tableRow);
             for (int j = 0; j < numColumns; j++) {
                 Button square = new Button(this);
+
                 square.setLayoutParams(new TableRow.LayoutParams(
+                        widthBtn, heightBtn,
+                        /*
                         TableRow.LayoutParams.MATCH_PARENT,
                         TableRow.LayoutParams.MATCH_PARENT,
+                         */
                         1.0f
                 ));
-                square.setBackgroundColor(Color.parseColor(mazeMatrix[i][j] ? "#2F3136" : "#FFFFFF"));
+
+                if(mazeMatrix[i][j] == 0 || mazeMatrix[i][j] == 1)
+                    //square.setBackgroundResource(mazeMatrix[i][j] == 0 ? R.drawable.impostor_check : R.drawable.impostor_wrong);
+                    square.setBackgroundColor(Color.parseColor(mazeMatrix[i][j] == 0 ? "#2F3136" : "#FFFFFF"));
+                else
+                    //square.setBackgroundColor(Color.parseColor("#555555"));
+                    square.setBackgroundResource(mazeMatrix[i][j] == 3 ? R.drawable.maze_key :
+                            mazeMatrix[i][j] == 2 ? R.drawable.maze_runner : R.drawable.maze_door);
+
                 tableRow.addView(square);
             }
         }
