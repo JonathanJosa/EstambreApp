@@ -30,13 +30,16 @@ public class InfinityMazeActivity extends AppCompatActivity {
     }
 
     private void createMazeTable(){
-        int[] mazeSizes = infinityMazeModel.getMazeTableSize();
+        int[] mazeSizes = infinityMazeModel.getMazeTableSize(); // Obtaining the size of the maze
         int numRows = mazeSizes[0], numColumns = mazeSizes[1];
-        int[][] mazeMatrix = infinityMazeModel.getMazeMatrix();
+        int[][] mazeMatrix = infinityMazeModel.getMazeMatrix(); // Obtaining the matrix / maze
 
+        // Obtaining the lengths of the sides of the table
         int[] lenSidesTable = {mazeTable.getLayoutParams().height, mazeTable.getLayoutParams().width};
+        // Calculating the lengths that the buttons should have according to the amount of buttons needed
         int heightBtn = lenSidesTable[0]/numRows, widthBtn = lenSidesTable[1]/numColumns, lenSideBtn;
-        boolean greaterHeight;
+        boolean greaterHeight; // Boolean that indicates if the height is greater than the width
+        // If the height is greater than the width, assign the len of the btn to be the width, and vice versa
         if(heightBtn > widthBtn){
             greaterHeight = true;
             lenSideBtn = widthBtn;
@@ -47,15 +50,17 @@ public class InfinityMazeActivity extends AppCompatActivity {
 
         for (int i = 0; i < numRows; i++) {
             TableRow tableRow = new TableRow(this);
+            // Setting the height of each row to be equal to the len of the buttons
             TableLayout.LayoutParams mazeTableLayoutParams = new TableLayout.LayoutParams(
                     lenSideBtn, lenSideBtn, 1.0f
             );
 
-            if(i+1 == numRows && greaterHeight)
+            if(i+1 == numRows && greaterHeight) // Inserting the margin in bottom if needed
                 mazeTableLayoutParams.setMargins(0,0,0,lenSidesTable[0] - lenSideBtn*numRows);
 
             tableRow.setLayoutParams(mazeTableLayoutParams);
             mazeTable.addView(tableRow);
+
             for (int j = 0; j < numColumns; j++) {
                 Button square = new Button(this);
 
@@ -69,9 +74,9 @@ public class InfinityMazeActivity extends AppCompatActivity {
 
                 square.setLayoutParams(mazeRowLayoutParams);
 
-                if(mazeMatrix[i][j] == 0 || mazeMatrix[i][j] == 1)
+                if(mazeMatrix[i][j] == 0 || mazeMatrix[i][j] == 1) // If is a wall or an open path
                     square.setBackgroundColor(Color.parseColor(mazeMatrix[i][j] == 0 ? "#2F3136" : "#FFFFFF"));
-                else
+                else // if is the runner, exit door or a key
                     square.setBackgroundResource(mazeMatrix[i][j] == 3 ? R.drawable.maze_key :
                             mazeMatrix[i][j] == 2 ? R.drawable.maze_runner : R.drawable.maze_door);
 
