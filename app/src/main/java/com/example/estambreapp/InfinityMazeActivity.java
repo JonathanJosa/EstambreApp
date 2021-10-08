@@ -91,20 +91,15 @@ public class InfinityMazeActivity extends AppCompatActivity {
         int[] mazeTableSizes = infinityMazeModel.getMazeTableSize();
         if(viewID == R.id.arrowUpBtn) { // Trying to move up
             if(actualPos[0] != 0 && mazeMatrix[actualPos[0]-1][actualPos[1]] != 1){
-                // Setting the actual position to an empty path
-                TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
-                actualBtn.getChildAt(actualPos[1]).setBackgroundColor(Color.parseColor("#2F3136"));
-                // Setting the position above to the runner
-                actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]-1);
-                if(mazeMatrix[actualPos[0]-1][actualPos[1]] == 4 && infinityMazeModel.getNumKeysRemaining() == 0) { // Checking if the next position is the exit
-                    /*
-                    Estaría cool que solo se mostrara la puerta de salida cuando se hayan seleccionado
-                    todas las llaves, para que así siga buscando y no intente salir antes.
-                     */
-                    actualBtn.getChildAt(actualPos[1]).setBackgroundResource(R.drawable.maze_runner);
-                    infinityMazeModel.setPosRunner(new int[]{actualPos[0]-1, actualPos[1]});
-                    Toast.makeText(this, "Felicidades, encontraste la salida", Toast.LENGTH_SHORT).show();
-                } else{
+                if(mazeMatrix[actualPos[0]-1][actualPos[1]] == 4) { // Checking if the next position is the exit
+                    if(infinityMazeModel.getNumKeysRemaining() == 0) completedMaze();
+                    else Toast.makeText(this, "No has encontrado todas las llaves", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Setting the actual position to an empty path
+                    TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
+                    actualBtn.getChildAt(actualPos[1]).setBackgroundColor(Color.parseColor("#2F3136"));
+                    // Setting the position above to the runner
+                    actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]-1);
                     if(mazeMatrix[actualPos[0]-1][actualPos[1]] == 3){ // Checking if the next position is a key
                         infinityMazeModel.setNumKeysRemaining(infinityMazeModel.getNumKeysRemaining()-1); // Decreasing the num of keys remaining
                         mazeMatrix[actualPos[0]-1][actualPos[1]] = 0; // Deleting the key in the matrix
@@ -113,25 +108,19 @@ public class InfinityMazeActivity extends AppCompatActivity {
                     infinityMazeModel.setPosRunner(new int[]{actualPos[0]-1, actualPos[1]});
                 }
             }
-            else
-                Toast.makeText(this, "No te puedes mover hacia arriba", Toast.LENGTH_SHORT).show();
+            else Toast.makeText(this, "No te puedes mover hacia arriba", Toast.LENGTH_SHORT).show();
         } else if(viewID == R.id.arrowDownBtn) {
             //move down
             if(actualPos[0]+1 != mazeTableSizes[0] && mazeMatrix[actualPos[0]+1][actualPos[1]] != 1){
-                // Setting the actual position to an empty path
-                TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
-                actualBtn.getChildAt(actualPos[1]).setBackgroundColor(Color.parseColor("#2F3136"));
-                // Setting the position above to the runner
-                actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]+1);
-                if(mazeMatrix[actualPos[0]+1][actualPos[1]] == 4 && infinityMazeModel.getNumKeysRemaining() == 0) { // Checking if the next position is the exit
-                    /*
-                    Estaría cool que solo se mostrara la puerta de salida cuando se hayan seleccionado
-                    todas las llaves, para que así siga buscando y no intente salir antes.
-                     */
-                    actualBtn.getChildAt(actualPos[1]).setBackgroundResource(R.drawable.maze_runner);
-                    infinityMazeModel.setPosRunner(new int[]{actualPos[0]+1, actualPos[1]});
-                    Toast.makeText(this, "Felicidades, encontraste la salida", Toast.LENGTH_SHORT).show();
-                } else{
+                if(mazeMatrix[actualPos[0]+1][actualPos[1]] == 4) { // Checking if the next position is the exit
+                    if(infinityMazeModel.getNumKeysRemaining() == 0) completedMaze(); // It's possible to get out of the maze
+                    else Toast.makeText(this, "No has encontrado todas las llaves", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Setting the actual position to an empty path
+                    TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
+                    actualBtn.getChildAt(actualPos[1]).setBackgroundColor(Color.parseColor("#2F3136"));
+                    // Setting the position above to the runner
+                    actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]+1);
                     if(mazeMatrix[actualPos[0]+1][actualPos[1]] == 3){ // Checking if the next position is a key
                         infinityMazeModel.setNumKeysRemaining(infinityMazeModel.getNumKeysRemaining()-1); // Decreasing the num of keys remaining
                         mazeMatrix[actualPos[0]+1][actualPos[1]] = 0; // Deleting the key in the matrix
@@ -140,25 +129,19 @@ public class InfinityMazeActivity extends AppCompatActivity {
                     infinityMazeModel.setPosRunner(new int[]{actualPos[0]+1, actualPos[1]});
                 }
             }
-            else
-                Toast.makeText(this, "No te puedes mover hacia abajo", Toast.LENGTH_SHORT).show();
+            else Toast.makeText(this, "No te puedes mover hacia abajo", Toast.LENGTH_SHORT).show();
         } else if(viewID == R.id.arrowRightBtn) {
             // move right
             if(actualPos[1]+1 != mazeTableSizes[1] && mazeMatrix[actualPos[0]][actualPos[1]+1] != 1){
-                // Setting the actual position to an empty path
-                TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
-                actualBtn.getChildAt(actualPos[1]).setBackgroundColor(Color.parseColor("#2F3136"));
-                // Setting the position above to the runner
-                actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
-                if(mazeMatrix[actualPos[0]][actualPos[1]+1] == 4 && infinityMazeModel.getNumKeysRemaining() == 0) { // Checking if the next position is the exit
-                    /*
-                    Estaría cool que solo se mostrara la puerta de salida cuando se hayan seleccionado
-                    todas las llaves, para que así siga buscando y no intente salir antes.
-                     */
-                    actualBtn.getChildAt(actualPos[1]+1).setBackgroundResource(R.drawable.maze_runner);
-                    infinityMazeModel.setPosRunner(new int[]{actualPos[0], actualPos[1]+1});
-                    Toast.makeText(this, "Felicidades, encontraste la salida", Toast.LENGTH_SHORT).show();
-                } else{
+                if(mazeMatrix[actualPos[0]][actualPos[1]+1] == 4) { // Checking if the next position is the exit
+                    if(infinityMazeModel.getNumKeysRemaining() == 0) completedMaze();
+                    else Toast.makeText(this, "No has encontrado todas las llaves", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Setting the actual position to an empty path
+                    TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
+                    actualBtn.getChildAt(actualPos[1]).setBackgroundColor(Color.parseColor("#2F3136"));
+                    // Setting the position above to the runner
+                    actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
                     if(mazeMatrix[actualPos[0]][actualPos[1]+1] == 3){ // Checking if the next position is a key
                         infinityMazeModel.setNumKeysRemaining(infinityMazeModel.getNumKeysRemaining()-1); // Decreasing the num of keys remaining
                         mazeMatrix[actualPos[0]][actualPos[1]+1] = 0; // Deleting the key in the matrix
@@ -167,25 +150,19 @@ public class InfinityMazeActivity extends AppCompatActivity {
                     infinityMazeModel.setPosRunner(new int[]{actualPos[0], actualPos[1]+1});
                 }
             }
-            else
-                Toast.makeText(this, "No te puedes mover hacia la derecha", Toast.LENGTH_SHORT).show();
+            else Toast.makeText(this, "No te puedes mover hacia la derecha", Toast.LENGTH_SHORT).show();
         } else if(viewID == R.id.arrowLeftBtn) {
             // move left
             if(actualPos[1] != 0 && mazeMatrix[actualPos[0]][actualPos[1]-1] != 1){
-                // Setting the actual position to an empty path
-                TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
-                actualBtn.getChildAt(actualPos[1]).setBackgroundColor(Color.parseColor("#2F3136"));
-                // Setting the position above to the runner
-                actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
-                if(mazeMatrix[actualPos[0]][actualPos[1]-1] == 4 && infinityMazeModel.getNumKeysRemaining() == 0) { // Checking if the next position is the exit
-                    /*
-                    Estaría cool que solo se mostrara la puerta de salida cuando se hayan seleccionado
-                    todas las llaves, para que así siga buscando y no intente salir antes.
-                     */
-                    actualBtn.getChildAt(actualPos[1]-1).setBackgroundResource(R.drawable.maze_runner);
-                    infinityMazeModel.setPosRunner(new int[]{actualPos[0], actualPos[1]-1});
-                    Toast.makeText(this, "Felicidades, encontraste la salida", Toast.LENGTH_SHORT).show();
-                } else{
+                if(mazeMatrix[actualPos[0]][actualPos[1]-1] == 4) { // Checking if the next position is the exit
+                    if(infinityMazeModel.getNumKeysRemaining() == 0) completedMaze();
+                    else Toast.makeText(this, "No has encontrado todas las llaves", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Setting the actual position to an empty path
+                    TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
+                    actualBtn.getChildAt(actualPos[1]).setBackgroundColor(Color.parseColor("#2F3136"));
+                    // Setting the position above to the runner
+                    actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
                     if(mazeMatrix[actualPos[0]][actualPos[1]-1] == 3){ // Checking if the next position is a key
                         infinityMazeModel.setNumKeysRemaining(infinityMazeModel.getNumKeysRemaining()-1); // Decreasing the num of keys remaining
                         mazeMatrix[actualPos[0]][actualPos[1]-1] = 0; // Deleting the key in the matrix
@@ -194,9 +171,19 @@ public class InfinityMazeActivity extends AppCompatActivity {
                     infinityMazeModel.setPosRunner(new int[]{actualPos[0], actualPos[1]-1});
                 }
             }
-            else
-                Toast.makeText(this, "No te puedes mover hacia la izquierda", Toast.LENGTH_SHORT).show();
+            else Toast.makeText(this, "No te puedes mover hacia la izquierda", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    // When the maze all the keys have been collected and the player found the exit door, this function is called
+    public void completedMaze(){
+        int[] posExitDoor = infinityMazeModel.getPosExitDoor(), posRunner = infinityMazeModel.getPosRunner();
+        // Setting the previous runner pos to an empty path
+        ((TableRow) mazeTable.getChildAt(posRunner[0])).getChildAt(posRunner[1]).setBackgroundColor(Color.parseColor("#2F3136"));
+        // Setting the new pos, which was a door, to the runner
+        ((TableRow) mazeTable.getChildAt(posExitDoor[0])).getChildAt(posExitDoor[1]).setBackgroundResource(R.drawable.maze_runner);
+        infinityMazeModel.setPosRunner(posExitDoor);
+        Toast.makeText(this, "Felicidades, encontraste la salida", Toast.LENGTH_SHORT).show();
     }
 
     // If I try to go back to the game instructions, the app crashes
