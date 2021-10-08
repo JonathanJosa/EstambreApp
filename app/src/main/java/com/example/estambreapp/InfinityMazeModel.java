@@ -2,6 +2,18 @@ package com.example.estambreapp;
 
 public class InfinityMazeModel {
 
+    private int[] posRunner;
+
+    // Setter for posRunner
+    public void setPosRunner(int[] newPos){
+        posRunner = newPos;
+    }
+
+    // Getter for posRunner
+    public int[] getPosRunner(){
+        return posRunner;
+    }
+
     public int[] getMazeTableSize(){
         return new int[]{7, 7};
     }
@@ -30,9 +42,10 @@ public class InfinityMazeModel {
      * @return matrix with values
      */
     public int[][] getMazeMatrix() {
+        posRunner = new int[]{1,1};
         return new int[][] {
-                {1, 2, 1, 1, 1, 1, 1},
-                {1, 0, 1, 0, 0, 0, 1},
+                {1, 0, 1, 1, 1, 1, 1},
+                {1, 2, 1, 0, 0, 0, 1},
                 {1, 0, 1, 3, 1, 0, 1},
                 {1, 0, 1, 0, 1, 0, 1},
                 {1, 3, 1, 0, 1, 3, 1},

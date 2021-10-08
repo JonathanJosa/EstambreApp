@@ -17,6 +17,7 @@ public class InfinityMazeActivity extends AppCompatActivity {
 
     TableLayout mazeTable;
     InfinityMazeModel infinityMazeModel;
+    int[][] mazeMatrix;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class InfinityMazeActivity extends AppCompatActivity {
     private void createMazeTable(){
         int[] mazeSizes = infinityMazeModel.getMazeTableSize(); // Obtaining the size of the maze
         int numRows = mazeSizes[0], numColumns = mazeSizes[1];
-        int[][] mazeMatrix = infinityMazeModel.getMazeMatrix(); // Obtaining the matrix / maze
+        mazeMatrix = infinityMazeModel.getMazeMatrix(); // Obtaining the matrix / maze
 
         // Obtaining the lengths of the sides of the table
         int[] lenSidesTable = {mazeTable.getLayoutParams().height, mazeTable.getLayoutParams().width};
@@ -88,18 +89,59 @@ public class InfinityMazeActivity extends AppCompatActivity {
 
     public void onArrowClicked(View v){ // Everytime an arrow is clicked, this function is called
         int viewID = v.getId();
-        if(viewID == R.id.arrowUpBtn){
-            // move up
-            Toast.makeText(this, "Moving up", Toast.LENGTH_SHORT).show();
+        int[] actualPos = infinityMazeModel.getPosRunner();
+        int[] mazeTableSizes = infinityMazeModel.getMazeTableSize();
+        if(viewID == R.id.arrowUpBtn) { // Trying to move up
+            if(actualPos[0] != 0 && mazeMatrix[actualPos[0]-1][actualPos[1]] != 1){
+                // Setting the actual position to an empty path
+                TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
+                actualBtn.getChildAt(actualPos[1]).setBackgroundColor(Color.parseColor("#2F3136"));
+                // Setting the position above to the runner
+                actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]-1);
+                actualBtn.getChildAt(actualPos[1]).setBackgroundResource(R.drawable.maze_runner);
+                infinityMazeModel.setPosRunner(new int[]{actualPos[0]-1, actualPos[1]});
+            }
+            else
+                Toast.makeText(this, "No te puedes mover hacia arriba", Toast.LENGTH_SHORT).show();
         } else if(viewID == R.id.arrowDownBtn) {
             //move down
-            Toast.makeText(this, "Moving down", Toast.LENGTH_SHORT).show();
+            if(actualPos[0]+1 != mazeTableSizes[0] && mazeMatrix[actualPos[0]+1][actualPos[1]] != 1){
+                // Setting the actual position to an empty path
+                TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
+                actualBtn.getChildAt(actualPos[1]).setBackgroundColor(Color.parseColor("#2F3136"));
+                // Setting the position above to the runner
+                actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]+1);
+                actualBtn.getChildAt(actualPos[1]).setBackgroundResource(R.drawable.maze_runner);
+                infinityMazeModel.setPosRunner(new int[]{actualPos[0]+1, actualPos[1]});
+            }
+            else
+                Toast.makeText(this, "No te puedes mover hacia abajo", Toast.LENGTH_SHORT).show();
         } else if(viewID == R.id.arrowRightBtn) {
             // move right
-            Toast.makeText(this, "Moving right", Toast.LENGTH_SHORT).show();
+            if(actualPos[1]+1 != mazeTableSizes[1] && mazeMatrix[actualPos[0]][actualPos[1]+1] != 1){
+                // Setting the actual position to an empty path
+                TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
+                actualBtn.getChildAt(actualPos[1]).setBackgroundColor(Color.parseColor("#2F3136"));
+                // Setting the position above to the runner
+                actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
+                actualBtn.getChildAt(actualPos[1]+1).setBackgroundResource(R.drawable.maze_runner);
+                infinityMazeModel.setPosRunner(new int[]{actualPos[0], actualPos[1]+1});
+            }
+            else
+                Toast.makeText(this, "No te puedes mover hacia la derecha", Toast.LENGTH_SHORT).show();
         } else if(viewID == R.id.arrowLeftBtn) {
             // move left
-            Toast.makeText(this, "Moving left", Toast.LENGTH_SHORT).show();
+            if(actualPos[1] != 0 && mazeMatrix[actualPos[0]][actualPos[1]-1] != 1){
+                // Setting the actual position to an empty path
+                TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
+                actualBtn.getChildAt(actualPos[1]).setBackgroundColor(Color.parseColor("#2F3136"));
+                // Setting the position above to the runner
+                actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
+                actualBtn.getChildAt(actualPos[1]-1).setBackgroundResource(R.drawable.maze_runner);
+                infinityMazeModel.setPosRunner(new int[]{actualPos[0], actualPos[1]-1});
+            }
+            else
+                Toast.makeText(this, "No te puedes mover hacia la izquierda", Toast.LENGTH_SHORT).show();
         }
     }
 
