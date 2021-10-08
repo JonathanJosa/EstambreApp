@@ -1,8 +1,13 @@
 package com.example.estambreapp;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class InfinityMazeModel {
 
     private int[] posRunner;
+    private int[] posExitDoor;
+    private int numKeysRemaining;
 
     // Setter for posRunner
     public void setPosRunner(int[] newPos){
@@ -14,23 +19,24 @@ public class InfinityMazeModel {
         return posRunner;
     }
 
+    // Getter for posExitDoor
+    public int[] getPosExitDoor(){
+        return posExitDoor;
+    }
+
+    // Setter for numKeysRemaining
+    public void setNumKeysRemaining(int newNumKeys){
+        numKeysRemaining = newNumKeys;
+    }
+
+    // Getter for numKeysRemaining
+    public int getNumKeysRemaining(){
+        return numKeysRemaining;
+    }
+
     public int[] getMazeTableSize(){
         return new int[]{7, 7};
     }
-
-    /*
-    public boolean[][] getMazeMatrix() {
-        return new boolean[][] {
-                {false, true, false, false, false, false, false},
-                {false, true, false, true, true, true, false},
-                {false, true, false, true, false, true, false},
-                {false, true, false, true, false, true, false},
-                {false, true, false, true, false, true, false},
-                {false, true, true, true, false, true, false},
-                {false, false, false, false, false, true, false}
-        };
-    }
-     */
 
     /** - getMazeMatrix explanation -
      * Matrix values meaning:
@@ -42,10 +48,12 @@ public class InfinityMazeModel {
      * @return matrix with values
      */
     public int[][] getMazeMatrix() {
-        posRunner = new int[]{1,1};
+        posRunner = new int[]{0,1};
+        posExitDoor = new int[]{6,5};
+        numKeysRemaining = 3;
         return new int[][] {
-                {1, 0, 1, 1, 1, 1, 1},
-                {1, 2, 1, 0, 0, 0, 1},
+                {1, 2, 1, 1, 1, 1, 1},
+                {1, 0, 1, 0, 0, 0, 1},
                 {1, 0, 1, 3, 1, 0, 1},
                 {1, 0, 1, 0, 1, 0, 1},
                 {1, 3, 1, 0, 1, 3, 1},
