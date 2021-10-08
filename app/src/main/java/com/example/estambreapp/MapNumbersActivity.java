@@ -157,11 +157,16 @@ public class MapNumbersActivity extends AppCompatActivity {
     }
 
 
-    private View.OnClickListener getOnClick(final int i, Button selectedButton){
+    private View.OnClickListener getOnClick(final int idButton, Button selectedButton){
         return new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Clicked" + i+", selected no. "+ selectedButton.getText(), Toast.LENGTH_SHORT).show();
+
+
+                mapNumbersModel.checkButtonValue(idButton, selectedButton);
+
+
+                Toast.makeText(getApplicationContext(), "Clicked" + idButton +", selected no. "+ selectedButton.getText(), Toast.LENGTH_SHORT).show();
             }
         };
     }

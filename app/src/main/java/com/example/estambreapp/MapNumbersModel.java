@@ -2,6 +2,7 @@ package com.example.estambreapp;
 
 import android.app.appsearch.ReportSystemUsageRequest;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -130,7 +131,11 @@ public class MapNumbersModel {
 
 
 
-    public void checkButtonValue(  ){
+    public void checkButtonValue( int idBtn, Button sendValue ){
+
+        
+
+
 
     }
 
