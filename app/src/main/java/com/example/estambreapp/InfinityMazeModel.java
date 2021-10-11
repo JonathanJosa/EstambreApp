@@ -79,13 +79,13 @@ public class InfinityMazeModel {
         Collections.shuffle(movementPossibilities);
 
         while(movementPossibilities.size() > 0){
-            Integer[] tryingNewPosibility = movementPossibilities.remove(movementPossibilities.size()-1);
+            Integer[] tryingNewPossibility = movementPossibilities.remove(movementPossibilities.size()-1);
             Integer[] newPosition = new Integer[]{
-                    pos[0] + (tryingNewPosibility[0] * 2),
-                    pos[1] + (tryingNewPosibility[1] * 2)
+                    pos[0] + (tryingNewPossibility[0] * 2),
+                    pos[1] + (tryingNewPossibility[1] * 2)
             };
             if(validNewPos(newPosition)){
-                mazeMatrix[pos[0] + tryingNewPosibility[0]][pos[1] + tryingNewPosibility[1]] = 1;
+                mazeMatrix[pos[0] + tryingNewPossibility[0]][pos[1] + tryingNewPossibility[1]] = 1;
                 recursiveMazeGenerator(new int[]{newPosition[0], newPosition[1]});
             }
         }
@@ -116,7 +116,7 @@ public class InfinityMazeModel {
         setMazeTableSize(); // Setting the Size of the maze
         mazeMatrix = new int[mazeSizes[0]][mazeSizes[1]]; // Initializing the matrix with 0
 
-        // The maze generator only works if the position of the runner are odd coordenates
+        // The maze generator only works if the position of the runner are odd coordinates
         int row = (int) (Math.random()*mazeSizes[0]);
         row = (row % 2 == 0 && row != 0) ? row-1 : row % 2 == 0 ? row+1 : row; // Making sure that is odd
         int column = (int) (Math.random()*mazeSizes[1]);
