@@ -40,10 +40,12 @@ public class InfinityMazeActivity extends AppCompatActivity {
 
         // Obtaining the lengths of the sides of the table
         int[] lenSidesTable = {mazeTable.getLayoutParams().height, mazeTable.getLayoutParams().width};
+        System.out.println("Length table: " + lenSidesTable[0] + ", " + lenSidesTable[1]);
         // Calculating the lengths that the buttons should have according to the amount of buttons needed
         int heightBtn = lenSidesTable[0]/numRows, widthBtn = lenSidesTable[1]/numColumns, lenSideBtn;
         boolean greaterHeight; // Boolean that indicates if the height is greater than the width
         // If the height is greater than the width, assign the len of the btn to be the width, and vice versa
+        System.out.println("Height btn: " + heightBtn + ", Width btn: " + widthBtn);
         if(heightBtn > widthBtn){
             greaterHeight = true;
             lenSideBtn = widthBtn;
@@ -51,7 +53,7 @@ public class InfinityMazeActivity extends AppCompatActivity {
             greaterHeight = false;
             lenSideBtn = heightBtn;
         }
-
+        System.out.println("Final len side of btn: " + lenSideBtn + ", Is height greater? " + greaterHeight);
         for (int i = 0; i < numRows; i++) {
             TableRow tableRow = new TableRow(this);
             // Setting the height of each row to be equal to the len of the buttons
@@ -59,8 +61,9 @@ public class InfinityMazeActivity extends AppCompatActivity {
                     lenSideBtn, lenSideBtn, 1.0f
             );
 
-            if(i+1 == numRows && greaterHeight) // Inserting the margin in bottom if needed
-                mazeTableLayoutParams.setMargins(0,0,0,lenSidesTable[0] - lenSideBtn*numRows);
+            if((i+1 == numRows || i == 0) && greaterHeight) // Inserting the margin in top and bottom if needed
+                mazeTableLayoutParams.setMargins(0, i == 0 ? (lenSidesTable[0] - lenSideBtn*numRows)/2 : 0,
+                        0, i != 0 ? (lenSidesTable[0] - lenSideBtn*numRows)/2 : 0);
 
             tableRow.setLayoutParams(mazeTableLayoutParams);
             mazeTable.addView(tableRow);
@@ -72,9 +75,11 @@ public class InfinityMazeActivity extends AppCompatActivity {
                         lenSideBtn, lenSideBtn, 1.0f
                 );
 
-                if((j == 0 || j+1 == numColumns) && !greaterHeight)
+                if((j == 0 || j+1 == numColumns) && !greaterHeight){
+                    System.out.println("Margin to insert: " + ((lenSidesTable[1] - lenSideBtn*numColumns)/2));
                     mazeRowLayoutParams.setMargins(j == 0 ? (lenSidesTable[1] - lenSideBtn*numColumns)/2 : 0,
-                            0,0, j != 0 ? (lenSidesTable[1] - lenSideBtn*numColumns)/2 : 0);
+                            0, j != 0 ? (lenSidesTable[1] - lenSideBtn*numColumns)/2 : 0, 0);
+                }
 
                 square.setLayoutParams(mazeRowLayoutParams);
 

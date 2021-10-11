@@ -39,17 +39,23 @@ public class InfinityMazeModel {
         return numKeysRemaining;
     }
 
+    // Getter for mazeSizes
     public int[] getMazeTableSize(){
         return mazeSizes;
     }
 
+    // Setting the size of the mazeMatrix
     public void setMazeTableSize(){
-        int numRows = (int) (Math.random()*12+5);
-        if (numRows % 2 == 0) numRows = numRows-1;
-        int numColumns = (int) (Math.random()*12+5);
-        if(numColumns % 2 == 0) numColumns = numColumns-1;
+        // The recursiveMazeGenerator only works correctly if
+        // the num of rows and columns are odd numbers
 
-        mazeSizes = new int[]{numRows, numColumns};
+        int[][] sizes = new int[][]{
+                {7,5}, {7, 7}, {9, 7}, // Easy
+                {9, 9}, {11, 9}, {11,11}, {13,11}, // Medium
+                {15, 13}, {17, 13}, {17, 15}, {19, 15} // Difficult
+        };
+
+        mazeSizes = sizes[(int) (Math.random()*sizes.length)];
     }
 
     public boolean validNewPos(Integer[] pos){
@@ -127,6 +133,7 @@ public class InfinityMazeModel {
         numKeysRemaining = 4; // This is going to be determined by the difficulty
 
         // Determining the amount of iterations that have to happen in mazeGenerator in order to insert a key
+        // (mazeSizes[0]*mazeSizes[1] / 4) <- this is the amount of recursive calls to the maze generator
         insertKeyIteration = (mazeSizes[0]*mazeSizes[1] / 4) / numKeysRemaining;
 
         // Initialization of attributes
