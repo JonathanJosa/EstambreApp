@@ -16,4 +16,10 @@
     <string name="nextsong">nextSong</string>
     <string name="presong">preSong</string>
     <string name="pause">pause</string>
+    <string name="encuentra_la_salida">Encuentra la salida</string>
+    <string name="button_to_go_down_on_maze">Button to go down on maze</string>
+    <string name="button_to_go_right_on_maze">Button to go right on maze</string>
+    <string name="button_to_go_left_on_maze">Button to go left on maze</string>
+    <string name="button_to_go_up_on_maze">Button to go up on maze</string>
+    <string name="exitgame">ExitGame</string>
 </resources>
