@@ -2,6 +2,7 @@ package com.example.estambreapp;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 
 public class InfinityMazeModel {
 
@@ -13,6 +14,7 @@ public class InfinityMazeModel {
     private int actualIteration;
     private int numKeysRemaining;
     private int numKeysInserted;
+    private HashSet<String> posKeys = new HashSet<>();
 
     // Setter for posRunner
     public void setPosRunner(int[] newPos){
@@ -44,6 +46,16 @@ public class InfinityMazeModel {
         return mazeSizes;
     }
 
+    // Getter for posKeys
+    public HashSet<String> getPosKeys() {
+        return posKeys;
+    }
+
+    // Delete given key
+    public void deletePosKey(String key) {
+        posKeys.remove(key);
+    }
+
     // Setting the size of the mazeMatrix
     public void setMazeTableSize(){
         // The recursiveMazeGenerator only works correctly if
@@ -71,6 +83,7 @@ public class InfinityMazeModel {
                 mazeMatrix[pos[0]][pos[1]] != 3)
         {
             mazeMatrix[pos[0]][pos[1]] = 3;
+            posKeys.add(pos[0] + "-" + pos[1]);
             actualIteration = 1;
             numKeysInserted++;
         }
