@@ -4,6 +4,7 @@ import android.app.appsearch.ReportSystemUsageRequest;
 import android.os.Looper;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,12 +24,17 @@ public class MapNumbersModel {
 
     public HashMap <String, Integer> toBeFound = new HashMap<String, Integer>(); // {5=2, 6=1, 9=3, 10=1}
 
-    public boolean nextRound = false;
+    public boolean nextRound = false; // variable para controlar el el cambio de ronda
 
-    public int numbersCompleted = 1;
+    public int numbersCompleted = 1; // contador que usamos para ver cuantos elementos del mapa hemos descubierto.
 
 
-
+    public int[] getNumbersToBeFound(){
+        return numbers;
+    }
+    public boolean getNextRound(){
+        return nextRound;
+    }
 
     // we generate our matrix of buttons, it will depend on the level data, to set up it.
     public int[] getTableButtonsSize(){
@@ -46,6 +52,22 @@ public class MapNumbersModel {
             int a = ar[index];
             ar[index] = ar[i];
             ar[i] = a;
+        }
+    }
+
+    // function that shuffles a 2D matrix
+    private void shuffleMatrix(int[][] a) {
+        Random random = new Random();
+
+        for (int i = a.length - 1; i > 0; i--) {
+            for (int j = a[i].length - 1; j > 0; j--) {
+                int m = random.nextInt(i + 1);
+                int n = random.nextInt(j + 1);
+
+                int temp = a[i][j];
+                a[i][j] = a[m][n];
+                a[m][n] = temp;
+            }
         }
     }
 
@@ -68,40 +90,12 @@ public class MapNumbersModel {
 
     }
 
-    // function that shuffles a 2D matrix
-    void shuffleMatrix(int[][] a) {
-        Random random = new Random();
-
-        for (int i = a.length - 1; i > 0; i--) {
-            for (int j = a[i].length - 1; j > 0; j--) {
-                int m = random.nextInt(i + 1);
-                int n = random.nextInt(j + 1);
-
-                int temp = a[i][j];
-                a[i][j] = a[m][n];
-                a[m][n] = temp;
-            }
-        }
-    }
-
-
-    public void fillHashMap(int[] arrayNumbersToSearch){
-        for (int i = 0;i<arrayNumbersToSearch.length;i++){
-            toBeFound.put(String.valueOf(arrayNumbersToSearch[i]), 1);
-        }
-        //System.out.println(Arrays.toString(arrayNumbersToSearch));
-    }
-
-    public int[] getNumbersToBeFound(){
-        return numbers;
-    }
-
     // function that returns a 2D matrix of integers that includes the number selected by the algorithm, and which will be searched by user.
     public int[][] getRandomNumbersMatrix() {
 
         int[] size = getTableButtonsSize(); // we get our table size
         int[][] matrix = new int[size[0]][size[1]]; // declare a matrix with size[1] and size[0] length.
-        numbers =  generateNumbersToSearch(3); // we generate our random numbers to find.
+        numbers =  generateNumbersToSearch(4); // we generate our random numbers to find.
 
         fillHashMap(numbers); // we fill our hashmap
 
@@ -139,42 +133,54 @@ public class MapNumbersModel {
         return matrix;
     }
 
-
-    public boolean getNextRound(){
-        return nextRound;
+    public void fillHashMap(int[] arrayNumbersToSearch){
+        for (int i = 0;i<arrayNumbersToSearch.length;i++){
+            toBeFound.put(String.valueOf(arrayNumbersToSearch[i]), 1);
+        }
+        //System.out.println(Arrays.toString(arrayNumbersToSearch));
     }
 
-    public void checkNumbersToBeFound(){
+
+    public void checkNumbersToBeFound( TextView instructionsText ){
         numbersCompleted++;
         if(numbersCompleted > numbers.length){
+
             System.out.println("La ronda temina, pq encontraste todos los numeros :D");
 
             nextRound = true;
-            numbersCompleted = 1; // inicializamos a 1 otra vez.
+            numbersCompleted = 1; // inicializamos a 1 otra vez la cantidad de numeros encontrados.
 
         }
     }
 
-    public void checkButtonValue( int idBtn, Button selectedValueButton ){
+    public void checkButtonValue(Button selectedValueButton, TextView instructionsText){
 
-        String value = (String) selectedValueButton.getText();
+        String value = (String) selectedValueButton.getText(); // obtenemos el valor del botón
+
 
         if(toBeFound.containsKey(value) && toBeFound.get(value) > 0){
+
             toBeFound.put( value, (toBeFound.get(value) - 1) );
             selectedValueButton.setBackgroundResource(R.drawable.mapnumbers_correctbtn);
             selectedValueButton.setEnabled(false);
 
+            // si el valor de la llave del hashmap es cero, significa que ya no hay mas numeros a buscar
+
             if( toBeFound.get(value) == 0 ){
                 System.out.println("no hay mas numeros de algo");
-                checkNumbersToBeFound();
+                instructionsText.setText(" ¡ Excelente buscador! , sigue buscando a los otros numeros \\ (•◡•) / ");
 
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        instructionsText.setText(" Encuentra estos numeros en la tabla de abajo");
+                    }
+                }, 3000);
+
+                checkNumbersToBeFound( instructionsText ); // verificamos si aun hay mas numeros que buscar
             }
 
-
-
-        } else if( toBeFound.containsKey(value) && toBeFound.get(value) == 0 ){
-            System.out.println("Ya no puedes seleccionar este numero");
-        } else {
+        } else if( !toBeFound.containsKey(value) ){
 
             selectedValueButton.setBackgroundResource(R.drawable.mapnumbers_incorrectbtn);
 
@@ -183,18 +189,20 @@ public class MapNumbersModel {
                 public void run() {
                     selectedValueButton.setBackgroundResource(R.drawable.mapnumbers_normalbtn);
                 }
-            }, 1300);
+            }, 1500);
 
             System.out.println("El numero que elejiste no esta en la lista a encontrar");
+
         }
-
-
-
 
     }
 
 
 
+
+    public  void generateOperationAndNumberToBeFound(  ){
+        
+    }
 
 
 }

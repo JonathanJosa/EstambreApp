@@ -2,8 +2,11 @@ package com.example.estambreapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MapNumbersActivity extends AppCompatActivity {
 
@@ -36,13 +41,14 @@ public class MapNumbersActivity extends AppCompatActivity {
 
 
         createTableButtonsNumbers();
-        createInstructions();
+
 
 
 
     }
 
     private void createTableButtonsNumbers() {
+
 
         tableNumbers.removeAllViews();
 
@@ -55,6 +61,8 @@ public class MapNumbersActivity extends AppCompatActivity {
 
         int numRows = sizeTable[0];
         int numColumns = sizeTable[1];
+
+        createInstructions();
 
         for (int n = 0 ; n < numMatrix.length ; n++)
         {
@@ -123,16 +131,20 @@ public class MapNumbersActivity extends AppCompatActivity {
 
     private void createInstructions(){
 
-        instructionsLayout.removeAllViews();
+        instructionsLayout.removeAllViews(); // removemos vistas anteriores, para refrescar la view.
 
 
         TableRow tr = new TableRow(this);
         int[] numbersToBeFound = mapNumbersModel.getNumbersToBeFound();
 
-        System.out.println(Arrays.toString(numbersToBeFound));
-
         int[] lenSizeInstructions = { instructionsLayout.getLayoutParams().height, instructionsLayout.getLayoutParams().width };
-        int sizeButtons =lenSizeInstructions[1]/numbersToBeFound.length;
+
+        // variable que vamos a usar para clacular el 20% del valor del ancho del contenedor
+        int sizeButtonWhenLessThanFour = (int) (lenSizeInstructions[1] * .20);
+
+
+        int sizeButtons = (numbersToBeFound.length < 4 ? sizeButtonWhenLessThanFour : (lenSizeInstructions[1]/numbersToBeFound.length) );
+
 
         //int marginBetweenRows = (int) Math.max(lenSizeInstructions[0] - sizeButtons*1, 0.12*lenSizeInstructions[0]);
         int marginBetweenColumns = (int) Math.max(lenSizeInstructions[1] - sizeButtons*numbersToBeFound.length, 0.12*lenSizeInstructions[1]);
@@ -153,6 +165,8 @@ public class MapNumbersActivity extends AppCompatActivity {
 
         tr.setLayoutParams(tableAllRowsLayoutParams);
 
+        tr.setGravity(Gravity.CENTER_HORIZONTAL);
+
         instructionsLayout.addView(tr);
 
         for (int i = 0;i<numbersToBeFound.length;i++) {
@@ -163,7 +177,12 @@ public class MapNumbersActivity extends AppCompatActivity {
                     sizeButtons
             );
 
-            tableRowLayoutParams.setMargins((i == 0) ? 0: marginBetweenColumns/(numbersToBeFound.length),0, (i+1 != numbersToBeFound.length)? 0 : marginBetweenColumns/(numbersToBeFound.length),0);
+            if( numbersToBeFound.length <4 ){
+                tableRowLayoutParams.setMargins(0,0, 0,0);
+            } else {
+                tableRowLayoutParams.setMargins((i+1 == 1) ? 0: marginBetweenColumns/(numbersToBeFound.length),0, (i+1 != numbersToBeFound.length)? 0 : marginBetweenColumns/(numbersToBeFound.length),0);
+            }
+
 
             btn.setLayoutParams(tableRowLayoutParams);
 
@@ -183,25 +202,25 @@ public class MapNumbersActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                // aqui iniciamos el proceso de chequeo al momento de presionar un botón.
+                mapNumbersModel.checkButtonValue( selectedButton, instructions );
 
-                mapNumbersModel.checkButtonValue(idButton, selectedButton);
 
+                // comprobamos que hayamos completado los numeros a encontrar de la ronda.
                 if(mapNumbersModel.getNextRound()){
 
-                    System.out.println("deberia de reiniciarme :v");
-
+                    //seteamos las variables importantes al estado original
                     mapNumbersModel.nextRound = false;
                     mapNumbersModel.toBeFound.clear(); // we clear the hashmap
 
+                    // volvemos a generar otra matriz y otros numeros a buscar
 
-                    createTableButtonsNumbers();
-                    createInstructions();
-
-                    System.out.println("hash map: "+mapNumbersModel.toBeFound);
+                    instructions.setText("¡ Excelente !, encontraste todos los números  ");
+                    (new Handler()).postDelayed( () -> createTableButtonsNumbers(), 3000 );
 
                 }
 
-                Toast.makeText(getApplicationContext(), "Clicked" + idButton +", selected no. "+ selectedButton.getText(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Clicked" + idButton +", selected no. "+ selectedButton.getText(), Toast.LENGTH_SHORT).show();
             }
         };
     }
