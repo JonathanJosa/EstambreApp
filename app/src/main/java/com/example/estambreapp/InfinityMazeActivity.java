@@ -32,7 +32,7 @@ public class InfinityMazeActivity extends AppCompatActivity {
         mazeTable = findViewById(R.id.mazeTable);
         titleGame = findViewById(R.id.titleTxt);
 
-        createMazeTable();
+        createMazeTable(); // Automatically create and show the maze
     }
 
     private void createMazeTable(){
@@ -117,9 +117,9 @@ public class InfinityMazeActivity extends AppCompatActivity {
                         infinityMazeModel.deletePosKey((actualPos[0]-1) + "-" + actualPos[1]); // Removing key from set
                         mazeMatrix[actualPos[0]-1][actualPos[1]] = 1; // Deleting the key in the matrix
                     }
+                    // Updating the runner position
                     actualBtn.getChildAt(actualPos[1]).setBackgroundResource(R.drawable.maze_runner);
                     infinityMazeModel.setPosRunner(new int[]{actualPos[0]-1, actualPos[1]});
-
                 }
             }
             else Toast.makeText(this, "No te puedes mover hacia arriba", Toast.LENGTH_SHORT).show();
@@ -140,6 +140,7 @@ public class InfinityMazeActivity extends AppCompatActivity {
                         infinityMazeModel.deletePosKey((actualPos[0]+1) + "-" + actualPos[1]); // Removing key from set
                         mazeMatrix[actualPos[0]+1][actualPos[1]] = 1; // Deleting the key in the matrix
                     }
+                    // Updating the runner position
                     actualBtn.getChildAt(actualPos[1]).setBackgroundResource(R.drawable.maze_runner);
                     infinityMazeModel.setPosRunner(new int[]{actualPos[0]+1, actualPos[1]});
                 }
@@ -162,6 +163,7 @@ public class InfinityMazeActivity extends AppCompatActivity {
                         infinityMazeModel.deletePosKey(actualPos[0] + "-" + (actualPos[1]+1)); // Removing key from set
                         mazeMatrix[actualPos[0]][actualPos[1]+1] = 1; // Deleting the key in the matrix
                     }
+                    // Updating the runner position
                     actualBtn.getChildAt(actualPos[1]+1).setBackgroundResource(R.drawable.maze_runner);
                     infinityMazeModel.setPosRunner(new int[]{actualPos[0], actualPos[1]+1});
                 }
@@ -184,6 +186,7 @@ public class InfinityMazeActivity extends AppCompatActivity {
                         infinityMazeModel.deletePosKey(actualPos[0] + "-" + (actualPos[1]-1)); // Removing key from set
                         mazeMatrix[actualPos[0]][actualPos[1]-1] = 1; // Deleting the key in the matrix
                     }
+                    // Updating the runner position
                     actualBtn.getChildAt(actualPos[1]-1).setBackgroundResource(R.drawable.maze_runner);
                     infinityMazeModel.setPosRunner(new int[]{actualPos[0], actualPos[1]-1});
                 }
@@ -196,6 +199,7 @@ public class InfinityMazeActivity extends AppCompatActivity {
 
     }
 
+    // Function that receives a position, and shows the keys that are close to that position
     private void searchCloseKeys(int[] actualPos){
         HashSet<String> posKeys = infinityMazeModel.getPosKeys(); // Get the keys positions set
         for(String key: posKeys){
