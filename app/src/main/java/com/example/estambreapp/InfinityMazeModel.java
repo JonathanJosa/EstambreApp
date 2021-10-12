@@ -1,10 +1,15 @@
 package com.example.estambreapp;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
 public class InfinityMazeModel {
+
+    GamesModel gameProperties;
+    private double gameDifficulty;
 
     private int[] posRunner;
     private int[] posExitDoor;
@@ -15,6 +20,31 @@ public class InfinityMazeModel {
     private int numKeysRemaining;
     private int numKeysInserted;
     private HashSet<String> posKeys = new HashSet<>();
+
+    // Constructor for this class
+    public InfinityMazeModel(Context context) {
+        gameProperties = new GamesModel(context, "InfinityMaze");
+    }
+
+    // Starting the game and time counter
+    public void startGame(){
+        gameProperties.startTimeCount();
+    }
+
+    // End game and stop time counter
+    public void endGame(){
+        gameProperties.endGame();
+    }
+
+    // Setter for gameDifficulty
+    public void setGameDifficulty(){
+        gameDifficulty = gameProperties.getDifficulty();
+    }
+
+    // Setter for penalty
+    public void setPenalty(double penaltyTime) {
+        gameProperties.penalty(penaltyTime); // Sending penalty in seconds
+    }
 
     // Setter for posRunner
     public void setPosRunner(int[] newPos){
@@ -67,7 +97,10 @@ public class InfinityMazeModel {
                 {15, 13}, {17, 13}, {17, 15}, {19, 15} // Difficult
         };
 
-        mazeSizes = sizes[(int) (Math.random()*sizes.length)];
+        // Most of the time, game difficulty will be in a range of 30 to 180
+        // So I set the max difficulty to be 160
+        double percentDifficulty = Math.min (gameDifficulty/160, 1);
+        mazeSizes = sizes[(int) (percentDifficulty * (sizes.length-1))];
     }
 
     // Function that validates if the position received is valid
@@ -158,7 +191,9 @@ public class InfinityMazeModel {
 
         posRunner = new int[]{row, column}; // Assigning the position of the runner
 
-        numKeysRemaining = 4; // This is going to be determined by the difficulty
+        // Determining the percentage of difficulty choosing 160 as highest difficulty
+        double percentDifficulty = Math.min (gameDifficulty/160, 1);
+        numKeysRemaining = (int) (1 + percentDifficulty*5); // Setting 5 as the max amount of keys that can appear
 
         // Determining the amount of iterations that have to happen in mazeGenerator in order to insert a key
         // (mazeSizes[0]*mazeSizes[1] / 4) <- this is the amount of recursive calls made to the maze generator
