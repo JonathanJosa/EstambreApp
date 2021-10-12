@@ -215,14 +215,29 @@ public class MapNumbersActivity extends AppCompatActivity {
 
                     // volvemos a generar otra matriz y otros numeros a buscar
 
+
+                    mapNumbersModel.LevelNumber++;
+                    mapNumbersModel.calculateLevelParams(mapNumbersModel.LevelNumber);
+
+
                     instructions.setText("¡ Excelente !, encontraste todos los números  ");
-                    (new Handler()).postDelayed( () -> createTableButtonsNumbers(), 3000 );
+                    if( mapNumbersModel.LevelNumber > 4 ){
+                        endGame();
+                    }else {
+                        (new Handler()).postDelayed( () -> createTableButtonsNumbers(), 3000 );
+                    }
+
 
                 }
 
                 //Toast.makeText(getApplicationContext(), "Clicked" + idButton +", selected no. "+ selectedButton.getText(), Toast.LENGTH_SHORT).show();
             }
         };
+    }
+
+    private void endGame() { // Go to GameOptionsActivity
+        (new Handler()).postDelayed(() -> startActivity(new Intent(this,
+                GameOptionsActivity.class).putExtra("game","MapNumbers")), 3000);
     }
 
     @Override

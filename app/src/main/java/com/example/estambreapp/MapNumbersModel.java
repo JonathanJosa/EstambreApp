@@ -20,7 +20,17 @@ public class MapNumbersModel {
 
     private int[] numberList = {1,2,3,4,5,6,7,8,9,10}; // numbers to be selected by algorithm to be found
 
-    public int[] numbers;
+    public int[] numbers; // array where we store our numbers to found
+
+    //----------------------------------------------------------------------------------------------
+    // TEMPORAL
+    public int LevelNumber = 1;
+
+    private int rows = 3;
+    private int cols = 2;
+    private int lotNumbersToFound = 1;
+
+    //----------------------------------------------------------------------------------------------
 
     public HashMap <String, Integer> toBeFound = new HashMap<String, Integer>(); // {5=2, 6=1, 9=3, 10=1}
 
@@ -36,9 +46,39 @@ public class MapNumbersModel {
         return nextRound;
     }
 
+    //----------------------------------------------------------------------------------------------
+    // TEMPORAL
+    public void calculateLevelParams( int lvlNum ){
+        switch (lvlNum){
+            case 1:
+                rows = 3; cols = 2;
+                lotNumbersToFound = 1;
+                break;
+            case 2:
+                rows = 4; cols = 3;
+                lotNumbersToFound = 2;
+                break;
+            case 3:
+                rows = 5; cols = 4;
+                lotNumbersToFound = 3;
+                break;
+            case 4:
+                rows = 5; cols = 4;
+                lotNumbersToFound = 4;
+            default:
+                break;
+
+        }
+
+
+    }
+    //----------------------------------------------------------------------------------------------
+
+
+
     // we generate our matrix of buttons, it will depend on the level data, to set up it.
     public int[] getTableButtonsSize(){
-        return new int[]{ 5, 4 }; // Hardcoded for experimentation purposes
+        return new int[]{ rows, cols }; // Hardcoded for experimentation purposes
     }
 
     // Implementing Fisher–Yates shuffle
@@ -95,7 +135,7 @@ public class MapNumbersModel {
 
         int[] size = getTableButtonsSize(); // we get our table size
         int[][] matrix = new int[size[0]][size[1]]; // declare a matrix with size[1] and size[0] length.
-        numbers =  generateNumbersToSearch(4); // we generate our random numbers to find.
+        numbers =  generateNumbersToSearch(lotNumbersToFound); // we generate our random numbers to find.
 
         fillHashMap(numbers); // we fill our hashmap
 
@@ -122,13 +162,7 @@ public class MapNumbersModel {
             }
         }
 
-
-        //System.out.println(Arrays.deepToString(matrix));
-
         shuffleMatrix(matrix); // finally, we shuffle the matrix
-
-        //System.out.println(Arrays.deepToString(matrix));
-        //System.out.println(toBeFound);
 
         return matrix;
     }
@@ -201,7 +235,7 @@ public class MapNumbersModel {
 
 
     public  void generateOperationAndNumberToBeFound(  ){
-        
+
     }
 
 
