@@ -1,34 +1,68 @@
 package com.example.estambreapp;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
+import android.provider.MediaStore;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SongsApiManager {
 
     int musicIndex = 0; // index of our sequence of music
 
-    // create a String array, witch contains our song links
-    String[] musicUrl = new String[]{
+    //declare initial volume values for our fade in/out functions.
+    float volume = 0; // fade in
+    float volume2 = 1f; // fade out
 
-            "https://firebasestorage.googleapis.com/v0/b/estambreapp.appspot.com/o/1.mp3?alt=media&token=a0dfb33a-6add-4fae-8ed9-a203e3644b66",
-            "https://firebasestorage.googleapis.com/v0/b/estambreapp.appspot.com/o/2.mp3?alt=media&token=ea3dc64f-ddeb-4606-8461-e9dc2312634f",
-            "https://firebasestorage.googleapis.com/v0/b/estambreapp.appspot.com/o/3.mp3?alt=media&token=201d5b36-e1d9-4e20-8a1a-ea6c6da18275"
-    };
+    // create a int array, witch contains our songs' id
+    Integer[] musicUri = { R.raw.bilateralharp, R.raw.bilateralstillness, R.raw.blessing, R.raw.movement, R.raw.springsunrise, R.raw.thedeep, R.raw.transie };
+
+
+    // function that shuffles my music ids array, every time the mindfulness section is opened.
+    public void shuffleMusicArray(){
+        List<Integer> inList = Arrays.asList(musicUri);
+        Collections.shuffle(inList);
+        inList.toArray(musicUri);
+    }
 
 
     // function to prepare our media player
     public void prepareMediaPlayer(MediaPlayer mediaPlayer, Context context) {
+
+        AssetFileDescriptor afd = context.getResources().openRawResourceFd(musicUri[musicIndex]);// using a afd, we get the raw music file.
         try {
-            mediaPlayer.setDataSource(musicUrl[ musicIndex ]); // URL of music file
+            mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength()); // URL of music file
             mediaPlayer.prepare();
         } catch (Exception exception) {
             Toast.makeText(context,exception.getMessage(), Toast.LENGTH_SHORT).show(); // Show a message to know what went wrong
 
         }
     }
+
+    // we handle the music controller next song, when the current track whether is paused or is playing
+    public void handleNextSong(MediaPlayer mediaPlayer, Context context, ImageButton button){
+        if(button.getContentDescription() == "play"){
+            nextSong(mediaPlayer, context, button);
+        } else {
+            startFadeOut(mediaPlayer, context, button);
+        }
+    }
+
+
 
     // function to next song
     // we receive MediaPlayer from the view, the app context, and the Play/Pause btn
@@ -37,14 +71,19 @@ public class SongsApiManager {
         musicIndex = calculateIndexNextSong( musicIndex++ ); // calculate the current index of the song
 
         if(mediaPlayer.isPlaying()) {
+
             mediaPlayer.stop();
             mediaPlayer.reset();
             prepareMediaPlayer(mediaPlayer, context);
             mediaPlayer.start();
+            startFadeIn(mediaPlayer);
         } else {
+
+            mediaPlayer.stop();
             mediaPlayer.reset();
             prepareMediaPlayer(mediaPlayer, context);
             mediaPlayer.start();
+            startFadeIn(mediaPlayer);
             button.setImageResource(R.drawable.pause);
         }
 
@@ -98,24 +137,23 @@ public class SongsApiManager {
     // function to kill MediaPlayer
     public void killMediaPlayer( MediaPlayer mediaPlayer, ImageButton button ){
 
+        // we change the pause/play btn icon
+        if(mediaPlayer.isPlaying()) {
+            button.setImageResource(R.drawable.pause);
+        }
+
         mediaPlayer.pause();
         mediaPlayer.stop();
         mediaPlayer.reset();
         mediaPlayer.release();
         mediaPlayer = null;
-
-
-        // we change the pause/play btn icon
-        if(mediaPlayer.isPlaying())
-            button.setImageResource(R.drawable.pause);
-
     }
 
 
     // function that handles index songs when require next song
     public int calculateIndexNextSong( int index ) {
 
-        if( index >= musicUrl.length -1 ){
+        if( index >= musicUri.length -1 ){
             return 0;
         }else {
             return  index + 1;
@@ -126,11 +164,81 @@ public class SongsApiManager {
     // function that handles index songs when require prev song
     public int calculateIndexPrevSong( int index ){
         if( index <= 0){
-            return musicUrl.length - 1;
+            return musicUri.length - 1;
         } else {
             return index - 1;
         }
     }
 
+    public void startFadeIn(MediaPlayer mediaPlayer){
+        volume = 0;
+        final int FADE_DURATION = 2000; //The duration of the fade
+        //The amount of time between volume changes. The smaller this is, the smoother the fade
+        final int FADE_INTERVAL = 50;
+        final int MAX_VOLUME = 1; //The volume will increase from 0 to 1
+        int numberOfSteps = FADE_DURATION/FADE_INTERVAL; //Calculate the number of fade steps
+        //Calculate by how much the volume changes each step
+        final float deltaVolume = MAX_VOLUME / (float)numberOfSteps;
 
-}
+        //Create a new Timer and Timer task to run the fading outside the main UI thread
+        final Timer timer = new Timer(true);
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                fadeInStep(deltaVolume, mediaPlayer); //Do a fade step
+                //Cancel and Purge the Timer if the desired volume has been reached
+                if(volume>=1f){
+                    timer.cancel();
+                    timer.purge();
+                }
+            }
+        };
+
+        timer.schedule(timerTask,FADE_INTERVAL,FADE_INTERVAL);
+    }
+
+    private void fadeInStep(float deltaVolume, MediaPlayer mediaPlayer){
+        mediaPlayer.setVolume(volume, volume);
+        volume += deltaVolume;
+
+    }
+
+
+    public void startFadeOut(MediaPlayer mediaPlayer, Context context, ImageButton btn){
+        volume2 = 1f;
+        final int FADE_DURATION = 2000; //The duration of the fade
+        //The amount of time between volume changes. The smaller this is, the smoother the fade
+        final int FADE_INTERVAL = 50;
+        final int MAX_VOLUME = 1; //The volume will increase from 0 to 1
+        int numberOfSteps = FADE_DURATION/FADE_INTERVAL; //Calculate the number of fade steps
+        //Calculate by how much the volume changes each step
+        final float deltaVolume = MAX_VOLUME / (float)numberOfSteps;
+
+        //Create a new Timer and Timer task to run the fading outside the main UI thread
+        final Timer timer = new Timer(true);
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                fadeOutStep(deltaVolume, mediaPlayer); //Do a fade step
+                //Cancel and Purge the Timer if the desired volume has been reached
+                if(volume2<=0f){
+                    timer.cancel();
+                    timer.purge();
+                    // after killing timertask, we call the nextSong function to change the current song.
+                    nextSong(mediaPlayer, context, btn);
+                }
+            }
+        };
+
+        timer.schedule(timerTask,FADE_INTERVAL,FADE_INTERVAL);
+    }
+
+    private void fadeOutStep(float deltaVolume, MediaPlayer mediaPlayer){
+        mediaPlayer.setVolume(volume2, volume2);
+        volume2 -= deltaVolume;
+
+    }
+
+
+
+    }

@@ -7,7 +7,12 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class MindfulnessActivity extends AppCompatActivity {
 
@@ -26,16 +31,19 @@ public class MindfulnessActivity extends AppCompatActivity {
         songsApiManager = new SongsApiManager(); // instance to SongsApiManager
         Context context = getApplicationContext(); // we create a context send as a parameter in our model
 
+
+        songsApiManager.shuffleMusicArray();
         songsApiManager.prepareMediaPlayer(mediaPlayer, context); // we prepare our media player
-        mediaPlayer.start(); // we start mediaplayer sound.
+        mediaPlayer.start(); // we start MediaPlayer sound.
 
 
 
-        // we use a listener with our MediaPlayer object, to change next song when last one finishes.
+        // we use a listener with our MediaPlayer object, in order to switch the next song when last one finishes and I start fade in effect.
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                songsApiManager.nextSong(mediaPlayer, context, playPauseButton);
+                songsApiManager.nextSong(mediaPlayer, getApplicationContext(), playPauseButton);
+                songsApiManager.startFadeIn(mediaPlayer);
             }
         });
 
@@ -50,8 +58,8 @@ public class MindfulnessActivity extends AppCompatActivity {
     public void moveHome(View _v){  songsApiManager.killMediaPlayer(mediaPlayer, playPauseButton); startActivity(new Intent(this, HomeActivity.class)); } // we kill the mediaPlayer and adjust the play/pause btn
     public void moveActivities(View _v){  songsApiManager.killMediaPlayer(mediaPlayer, playPauseButton); startActivity(new Intent(this, MindfulnessSessionActivity.class)); } // we kill the mediaPlayer and adjust the play/pause btn
 
-    public void pressPlayBack(View v){ songsApiManager.prevSong(mediaPlayer, getApplicationContext(), playPauseButton); } // we call prevSong function
-    public void pressPlayNext(View v){  songsApiManager.nextSong(mediaPlayer, getApplicationContext(), playPauseButton); } // we call nextSong function
+    public void pressPlayBack(View v){ songsApiManager.prevSong(mediaPlayer, getApplicationContext(), playPauseButton); songsApiManager.startFadeIn(mediaPlayer);} // we call prevSong function and we initialize the fadein effect
+    public void pressPlayNext(View v){ songsApiManager.handleNextSong(mediaPlayer, getApplicationContext(), playPauseButton);  } // we call fadeout to start effect into the mediaplayer
     public void pressPausePlay(View v) {
         songsApiManager.pausePlay(mediaPlayer, getApplicationContext(), playPauseButton); // we handle the play/pause button
         v.setContentDescription("play".equals(v.getContentDescription().toString()) ? "pause" : "play"); // change the button play/pause icon.
