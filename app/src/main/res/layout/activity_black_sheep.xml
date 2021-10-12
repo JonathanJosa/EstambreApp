@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
-        android:text="Sigue a la oveja Negra"
+        android:text="@string/sigue_a_la_oveja_negra"
         android:textColor="#050505"
         android:textSize="34sp"
         android:textStyle="bold"
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
-        android:text="mezclando...3"
+        android:text="@string/mezclando"
         android:textColor="#151515"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,8 +39,9 @@
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintVertical_bias="0.022" />
 
-    <ScrollView
-        android:id="@+id/viewScrollBoard"
+    <RelativeLayout
+        android:id="@+id/LinearLayoutBoard"
+        android:animateLayoutChanges="true"
         android:layout_width="336dp"
         android:layout_height="536dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -48,13 +49,5 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/restante"
-        app:layout_constraintVertical_bias="0.449"
-        tools:ignore="SpeakableTextPresentCheck">
-
-        <LinearLayout
-            android:id="@+id/LinearLayoutBoard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+        app:layout_constraintVertical_bias="0.449" />
 </androidx.constraintlayout.widget.ConstraintLayout>

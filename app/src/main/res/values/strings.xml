@@ -16,4 +16,6 @@
     <string name="nextsong">nextSong</string>
     <string name="presong">preSong</string>
     <string name="pause">pause</string>
+    <string name="sigue_a_la_oveja_negra">Sigue a la oveja Negra</string>
+    <string name="mezclando">mezclando...</string>
 </resources>
