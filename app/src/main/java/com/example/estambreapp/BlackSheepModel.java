@@ -1,33 +1,20 @@
 package com.example.estambreapp;
 
-
-import android.animation.LayoutTransition;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
-import android.util.LayoutDirection;
-import android.util.Pair;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.transition.AutoTransition;
-import androidx.transition.Transition;
-import androidx.transition.TransitionValues;
-import androidx.transition.Visibility;
+
 
 public class BlackSheepModel {
 
     GamesModel gameProperties;
-    Double difficulty = 50.0;
+    Double difficulty;
     Context context;
     Float dpi;
     Boolean counting = false;
@@ -43,7 +30,6 @@ public class BlackSheepModel {
         dpi = context.getResources().getDisplayMetrics().density;
         gameProperties = new GamesModel(ctx, "BlackSheep");
         difficulty = gameProperties.getDifficulty();
-        System.out.println(difficulty);
         whiteSheeps = getWhiteSheeps();
         blackSheeps = getBlackSheeps();
         totalTime = getTotalTime();
