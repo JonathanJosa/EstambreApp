@@ -1,6 +1,7 @@
 package com.example.estambreapp;
 
 import android.app.appsearch.ReportSystemUsageRequest;
+import android.os.Looper;
 import android.view.ViewGroup;
 import android.widget.Button;
 
@@ -9,7 +10,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Handler;
 
 public class MapNumbersModel {
 
@@ -17,7 +21,13 @@ public class MapNumbersModel {
 
     public int[] numbers;
 
-    private HashMap <String, Integer> toBeFound = new HashMap<String, Integer>();
+    public HashMap <String, Integer> toBeFound = new HashMap<String, Integer>(); // {5=2, 6=1, 9=3, 10=1}
+
+    public boolean nextRound = false;
+
+    public int numbersCompleted = 1;
+
+
 
 
     // we generate our matrix of buttons, it will depend on the level data, to set up it.
@@ -91,7 +101,7 @@ public class MapNumbersModel {
 
         int[] size = getTableButtonsSize(); // we get our table size
         int[][] matrix = new int[size[0]][size[1]]; // declare a matrix with size[1] and size[0] length.
-        numbers =  generateNumbersToSearch(4); // we generate our random numbers to find.
+        numbers =  generateNumbersToSearch(3); // we generate our random numbers to find.
 
         fillHashMap(numbers); // we fill our hashmap
 
@@ -130,14 +140,59 @@ public class MapNumbersModel {
     }
 
 
+    public boolean getNextRound(){
+        return nextRound;
+    }
 
-    public void checkButtonValue( int idBtn, Button sendValue ){
+    public void checkNumbersToBeFound(){
+        numbersCompleted++;
+        if(numbersCompleted > numbers.length){
+            System.out.println("La ronda temina, pq encontraste todos los numeros :D");
 
-        
+            nextRound = true;
+            numbersCompleted = 1; // inicializamos a 1 otra vez.
+
+        }
+    }
+
+    public void checkButtonValue( int idBtn, Button selectedValueButton ){
+
+        String value = (String) selectedValueButton.getText();
+
+        if(toBeFound.containsKey(value) && toBeFound.get(value) > 0){
+            toBeFound.put( value, (toBeFound.get(value) - 1) );
+            selectedValueButton.setBackgroundResource(R.drawable.mapnumbers_correctbtn);
+            selectedValueButton.setEnabled(false);
+
+            if( toBeFound.get(value) == 0 ){
+                System.out.println("no hay mas numeros de algo");
+                checkNumbersToBeFound();
+
+            }
+
+
+
+        } else if( toBeFound.containsKey(value) && toBeFound.get(value) == 0 ){
+            System.out.println("Ya no puedes seleccionar este numero");
+        } else {
+
+            selectedValueButton.setBackgroundResource(R.drawable.mapnumbers_incorrectbtn);
+
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    selectedValueButton.setBackgroundResource(R.drawable.mapnumbers_normalbtn);
+                }
+            }, 1300);
+
+            System.out.println("El numero que elejiste no esta en la lista a encontrar");
+        }
+
 
 
 
     }
+
 
 
 

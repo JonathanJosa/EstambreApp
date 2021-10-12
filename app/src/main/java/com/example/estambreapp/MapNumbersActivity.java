@@ -13,6 +13,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Arrays;
+
 public class MapNumbersActivity extends AppCompatActivity {
 
     MapNumbersModel mapNumbersModel;
@@ -41,10 +43,24 @@ public class MapNumbersActivity extends AppCompatActivity {
     }
 
     private void createTableButtonsNumbers() {
+
+        tableNumbers.removeAllViews();
+
+
         int[] sizeTable = mapNumbersModel.getTableButtonsSize(); // we get the size of our numbers table
         int[][] numMatrix = mapNumbersModel.getRandomNumbersMatrix(); // generates random matrix for our table
+
+
+
+
         int numRows = sizeTable[0];
         int numColumns = sizeTable[1];
+
+        for (int n = 0 ; n < numMatrix.length ; n++)
+        {
+            System.out.println(Arrays.toString(numMatrix[n]));
+        }
+
 
         int idCounter = 0;
 
@@ -63,7 +79,6 @@ public class MapNumbersActivity extends AppCompatActivity {
 
         for(int row = 0; row < numRows; row++){
             TableRow tableRow = new TableRow(this);
-
 
             TableLayout.LayoutParams tableAllRowsLayoutParams = new TableLayout.LayoutParams(
                     lenSideTableNumbers[1],
@@ -89,7 +104,7 @@ public class MapNumbersActivity extends AppCompatActivity {
                 button.setLayoutParams(tableRowLayoutParams);
 
                 button.setBackgroundResource(R.drawable.mapnumbers_normalbtn); // Assign image to button
-                button.setId(idCounter);
+                //button.setId(idCounter);
 
                 button.setText(String.valueOf(numMatrix[row][column]));
                 button.setTextColor(Color.parseColor("#FFFFFF"));
@@ -107,8 +122,14 @@ public class MapNumbersActivity extends AppCompatActivity {
 
 
     private void createInstructions(){
+
+        instructionsLayout.removeAllViews();
+
+
         TableRow tr = new TableRow(this);
         int[] numbersToBeFound = mapNumbersModel.getNumbersToBeFound();
+
+        System.out.println(Arrays.toString(numbersToBeFound));
 
         int[] lenSizeInstructions = { instructionsLayout.getLayoutParams().height, instructionsLayout.getLayoutParams().width };
         int sizeButtons =lenSizeInstructions[1]/numbersToBeFound.length;
@@ -165,6 +186,20 @@ public class MapNumbersActivity extends AppCompatActivity {
 
                 mapNumbersModel.checkButtonValue(idButton, selectedButton);
 
+                if(mapNumbersModel.getNextRound()){
+
+                    System.out.println("deberia de reiniciarme :v");
+
+                    mapNumbersModel.nextRound = false;
+                    mapNumbersModel.toBeFound.clear(); // we clear the hashmap
+
+
+                    createTableButtonsNumbers();
+                    createInstructions();
+
+                    System.out.println("hash map: "+mapNumbersModel.toBeFound);
+
+                }
 
                 Toast.makeText(getApplicationContext(), "Clicked" + idButton +", selected no. "+ selectedButton.getText(), Toast.LENGTH_SHORT).show();
             }
