@@ -26,6 +26,7 @@ public class MapNumbersActivity extends AppCompatActivity {
     TextView instructions;
     LinearLayout instructionsLayout;
     TableLayout tableNumbers;
+    TextView operation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +37,16 @@ public class MapNumbersActivity extends AppCompatActivity {
         mapNumbersModel = new MapNumbersModel();
 
         instructions = findViewById(R.id.mapNumbersInstructions);
+        operation = findViewById(R.id.textViewOperation);
         instructionsLayout = findViewById(R.id.numbersToBefound);
         tableNumbers = findViewById(R.id.mapNumbersButtons);
 
 
+        operation.setText("");
+
         createTableButtonsNumbers();
 
-        mapNumbersModel.generateOperationAndNumberToBeFound(5);
+        //mapNumbersModel.generateOperationAndNumberToBeFound(5);
 
 
 
@@ -55,8 +59,8 @@ public class MapNumbersActivity extends AppCompatActivity {
 
 
         int[] sizeTable = mapNumbersModel.getTableButtonsSize(); // we get the size of our numbers table
-        int[][] numMatrix = mapNumbersModel.getRandomNumbersMatrix(); // generates random matrix for our table
-
+        //int[][] numMatrix = mapNumbersModel.getRandomNumbersMatrix(); // generates random matrix for our table
+        int[][] numMatrix = mapNumbersModel.getRandomNumbersMatrixWithOperation();
 
 
 
@@ -134,9 +138,11 @@ public class MapNumbersActivity extends AppCompatActivity {
 
         instructionsLayout.removeAllViews(); // removemos vistas anteriores, para refrescar la view.
 
+        int[] arraySenuelo = {0};
 
         TableRow tr = new TableRow(this);
-        int[] numbersToBeFound = mapNumbersModel.getNumbersToBeFound();
+        //int[] numbersToBeFound = mapNumbersModel.getNumbersToBeFound();
+        int[] numbersToBeFound = arraySenuelo;
 
         int[] lenSizeInstructions = { instructionsLayout.getLayoutParams().height, instructionsLayout.getLayoutParams().width };
 
@@ -170,6 +176,11 @@ public class MapNumbersActivity extends AppCompatActivity {
 
         instructionsLayout.addView(tr);
 
+       operation.setText("2 + 5 + 3 =");
+       operation.setTextSize(30);
+       operation.setTextColor(Color.parseColor("#000000"));
+
+
         for (int i = 0;i<numbersToBeFound.length;i++) {
             Button btn = new Button(this);
 
@@ -188,7 +199,8 @@ public class MapNumbersActivity extends AppCompatActivity {
             btn.setLayoutParams(tableRowLayoutParams);
 
             btn.setBackgroundResource(R.drawable.mapnumbers_normalbtn);
-            btn.setText(String.valueOf(numbersToBeFound[i]));
+            //btn.setText(String.valueOf(numbersToBeFound[i]));
+            btn.setText("??");
             btn.setTextColor(Color.parseColor("#FFFFFF"));
             btn.setTextSize(25);
 

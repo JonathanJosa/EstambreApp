@@ -179,7 +179,7 @@ public class MapNumbersModel {
 
     public void checkNumbersToBeFound( TextView instructionsText ){
         numbersCompleted++;
-        if(numbersCompleted > numbers.length){
+        if(numbersCompleted > arrayNumberToFound.length){ // en caso de generar normales va el de numbers
 
             System.out.println("La ronda temina, pq encontraste todos los numeros :D");
 
@@ -299,7 +299,6 @@ public class MapNumbersModel {
 
 
     public String assembleOperation( List<Integer> listNumbers, List<String> listSigns, int indexNumbers, int indexSigns, String total ) {
-        System.out.println(total);
 
         if( indexNumbers  > listNumbers.size() - 1 ){
             return total;
@@ -312,7 +311,7 @@ public class MapNumbersModel {
         return total;
     }
 
-    public  void generateOperationAndNumberToBeFound( int level ){
+    public  int generateOperationAndNumberToBeFound( int level ){
 
         // recibimos los numeros que vamos a calcular (dependiendo en el nivel)
 
@@ -333,7 +332,7 @@ public class MapNumbersModel {
         String operationStringAssembled = assembleOperation(listOfNumbers, signsForOperations, 1, 0, String.valueOf(listOfNumbers.get(0)));
         System.out.println("String de resultado: " + operationStringAssembled);
 
-        
+
 
         // .... junto con el boton a crear
 
@@ -341,8 +340,60 @@ public class MapNumbersModel {
 
 
 
+
         // eviamos el resultado a traves de una matriz (otra funcion )
 
+        return result;
+
+    }
+
+
+    public int[] arrayNumberToFound = new int[1];
+
+
+    public int[][] getRandomNumbersMatrixWithOperation() {
+
+        int[] size = getTableButtonsSize(); // we get our table size
+        int[][] matrix = new int[size[0]][size[1]]; // declare a matrix with size[1] and size[0] length.
+        int numberToFound =  generateOperationAndNumberToBeFound(5); // we generate our random numbers to find.
+
+
+        arrayNumberToFound[0] = numberToFound; //creamos el array, para poder mandar como parametro a fillHashMap
+
+        fillHashMap(arrayNumberToFound); // we fill our hashmap
+
+        int count = 0; //variable to handle 'numbers' array numbers push into the matrix.
+
+        //calculamos el 20% por arriba y por abajo de nuestro nuemero a encontrar
+
+
+        int min = numberToFound - 15;
+        int max = numberToFound + 15;
+
+
+
+        for( int i = 0; i < size[0] ; i++) {
+            for(int j = 0; j < size[1] ; j++) {
+
+                // we assure that the numbers which will be searched get pushed into the matrix first.
+                if( count < arrayNumberToFound.length ){
+                    matrix[i][j] = arrayNumberToFound[count];
+                    count++;
+                } else {
+                    // and then, we fill it out with random numbers between 0 and 9
+                    matrix[i][j] = (int)(Math.random() * ((max - min) + 1)) + min; //generates between 0 - 9
+
+                    if(toBeFound.containsKey(String.valueOf(matrix[i][j]))){
+                        toBeFound.put( String.valueOf(matrix[i][j]), toBeFound.get(String.valueOf(matrix[i][j])) + 1 );
+                    }
+                }
+
+            }
+        }
+
+        shuffleMatrix(matrix); // finally, we shuffle the matrix
+
+        return matrix;
     }
 
 

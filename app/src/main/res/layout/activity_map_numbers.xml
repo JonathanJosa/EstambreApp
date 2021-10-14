@@ -79,5 +79,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.304"></LinearLayout>
 
+    <TextView
+        android:id="@+id/textViewOperation"
+        android:layout_width="196dp"
+        android:layout_height="46dp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/numbersToBefound"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.827"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapNumbersInstructions"
+        app:layout_constraintVertical_bias="0.59" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
