@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -234,7 +236,112 @@ public class MapNumbersModel {
 
 
 
-    public  void generateOperationAndNumberToBeFound(  ){
+
+
+
+    public List<Integer> getNumbersForOperations(int level ){
+
+        List<Integer> numbers = new ArrayList<Integer>();
+        int min = 1;
+        int max = 15;
+
+        if( level > 4  ){
+
+            for( int i = 0; i < 3 ;i++ ){
+                numbers.add((int) (Math.random()*(max-min+1)+min));
+            }
+
+        } else if( level <=4 ){
+
+            for( int i = 0; i < 2 ;i++ ){
+                numbers.add((int) (Math.random()*(max-min+1)+min));
+            }
+        }
+
+        return numbers;
+    }
+
+
+    public List<String> getOperationSigns(int numberOfNumbers){
+        List<String> signs = new ArrayList<String>();
+
+
+        if( numberOfNumbers == 2 ){
+
+            float signIndex = (float) Math.random();
+            signs.add( ( signIndex > 0.5) ? "+" : "-" );
+
+        }else if( numberOfNumbers > 2 ){
+            for( int i = 0; i<2 ;i++ ){
+                float signIndex = (float)Math.random();
+                signs.add( ( signIndex > 0.5) ? "+" : "-" );
+            }
+        }
+
+        return signs;
+    }
+
+
+    public int operationResult( List<Integer> listNumbers, List<String> listSigns, int indexNumbers, int indexSigns, int total ){
+
+        if( indexNumbers  > listNumbers.size() - 1 ){
+            return total;
+        }else {
+            if( listSigns.get(indexSigns) == "+" )
+                    return  operationResult(listNumbers, listSigns, indexNumbers + 1, indexSigns + 1, total + listNumbers.get(indexNumbers));
+            if( listSigns.get(indexSigns) == "-" )
+                return operationResult(listNumbers, listSigns, indexNumbers + 1, indexSigns + 1, total - listNumbers.get(indexNumbers));
+
+        }
+        return total;
+    }
+
+
+
+    public String assembleOperation( List<Integer> listNumbers, List<String> listSigns, int indexNumbers, int indexSigns, String total ) {
+        System.out.println(total);
+
+        if( indexNumbers  > listNumbers.size() - 1 ){
+            return total;
+        }else {
+            if( listSigns.get(indexSigns) == "+" )
+                return  assembleOperation(listNumbers, listSigns, indexNumbers + 1, indexSigns + 1, total +" " +"+"+" " + String.valueOf(listNumbers.get(indexNumbers)));
+            if( listSigns.get(indexSigns) == "-" )
+                return assembleOperation(listNumbers, listSigns, indexNumbers + 1, indexSigns + 1, total +" " +"-"+" " + String.valueOf(listNumbers.get(indexNumbers)));
+        }
+        return total;
+    }
+
+    public  void generateOperationAndNumberToBeFound( int level ){
+
+        // recibimos los numeros que vamos a calcular (dependiendo en el nivel)
+
+        List<Integer> listOfNumbers = getNumbersForOperations(level);
+
+        System.out.println( listOfNumbers );
+
+
+        // a travez de una función, decidimos que operacion se va a realizar con los numeros
+        List<String> signsForOperations =  getOperationSigns( listOfNumbers.size() );
+        System.out.println( signsForOperations );
+
+        // se realiza la operacion aquí, para concer el resultado
+        int result = operationResult(listOfNumbers, signsForOperations, 1, 0, listOfNumbers.get(0));
+        System.out.println("Resultado: " + result);
+
+        // se envian o se muestran el texto en string de la operacion a ser resuelta por el usuario
+        String operationStringAssembled = assembleOperation(listOfNumbers, signsForOperations, 1, 0, String.valueOf(listOfNumbers.get(0)));
+        System.out.println("String de resultado: " + operationStringAssembled);
+
+        
+
+        // .... junto con el boton a crear
+
+
+
+
+
+        // eviamos el resultado a traves de una matriz (otra funcion )
 
     }
 

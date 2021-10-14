@@ -42,6 +42,7 @@ public class MapNumbersActivity extends AppCompatActivity {
 
         createTableButtonsNumbers();
 
+        mapNumbersModel.generateOperationAndNumberToBeFound(5);
 
 
 
@@ -63,11 +64,11 @@ public class MapNumbersActivity extends AppCompatActivity {
         int numColumns = sizeTable[1];
 
         createInstructions();
-
+        /*
         for (int n = 0 ; n < numMatrix.length ; n++)
         {
             System.out.println(Arrays.toString(numMatrix[n]));
-        }
+        }*/
 
 
         int idCounter = 0;
