@@ -14,18 +14,19 @@
 
     <TextView
         android:id="@+id/indicationsTxt"
-        android:layout_width="365dp"
-        android:layout_height="60dp"
+        android:layout_width="317dp"
+        android:layout_height="54dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/encuentra_las_im_genes_que_no_se_repiten"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/impostorTableButtons"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.606"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.04" />
+        app:layout_constraintVertical_bias="0.484" />
 
     <TableLayout
         android:id="@+id/impostorTableButtons"
@@ -39,4 +40,21 @@
         app:layout_constraintVertical_bias="0.743">
 
     </TableLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton18"
+        android:layout_width="40dp"
+        android:layout_height="60dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:rotation="90"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/indicationsTxt"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/arrow"
+        tools:ignore="SpeakableTextPresentCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>
