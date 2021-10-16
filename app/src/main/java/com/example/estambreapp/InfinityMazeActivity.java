@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -27,6 +28,7 @@ public class InfinityMazeActivity extends AppCompatActivity {
     boolean doorIsVisible;
 
     KonfettiView konfettiView;
+    AlphaAnimation arrowClickAnim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class InfinityMazeActivity extends AppCompatActivity {
         doorIsVisible = false; // At the beginning, the door is not visible
 
         konfettiView = findViewById(R.id.konfettiAnimation);
+        arrowClickAnim = new AlphaAnimation(1F, 0.5F);
 
         infinityMazeModel.startGame(); // Starting time counter
         infinityMazeModel.setGameDifficulty(); // Setting the difficulty
@@ -114,6 +117,8 @@ public class InfinityMazeActivity extends AppCompatActivity {
         int viewID = v.getId();
         int[] actualPos = infinityMazeModel.getPosRunner();
         int[] mazeTableSizes = infinityMazeModel.getMazeTableSize();
+
+        v.startAnimation(arrowClickAnim);
 
         // Arrow to move up was pressed
         if(viewID == R.id.arrowUpBtn) {
