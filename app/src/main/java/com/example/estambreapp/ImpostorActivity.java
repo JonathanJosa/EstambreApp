@@ -151,6 +151,10 @@ public class ImpostorActivity extends AppCompatActivity {
                 GameOptionsActivity.class).putExtra("game","Impostor")), 3000);
     }
 
+    public void exitOnGameBtn(View _v){
+        startActivity(new Intent(this, GameInstructionsActivity.class).putExtra("game", "Impostor"));
+    }
+
     private void showKonfettiAnimation(){
         konfettiView.build()
                 .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)

@@ -47,6 +47,7 @@
         android:layout_height="60dp"
         android:adjustViewBounds="true"
         android:background="@null"
+        android:onClick="exitOnGameBtn"
         android:rotation="90"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
