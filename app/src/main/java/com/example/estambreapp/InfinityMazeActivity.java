@@ -21,6 +21,8 @@ public class InfinityMazeActivity extends AppCompatActivity {
     InfinityMazeModel infinityMazeModel;
     TextView titleGame;
     int[][] mazeMatrix;
+    boolean doorIsVisible;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,8 @@ public class InfinityMazeActivity extends AppCompatActivity {
 
         mazeTable = findViewById(R.id.mazeTable);
         titleGame = findViewById(R.id.titleTxt);
+
+        doorIsVisible = false;
 
         infinityMazeModel.startGame(); // Starting time counter
         infinityMazeModel.setGameDifficulty(); // Setting the difficulty
@@ -88,11 +92,11 @@ public class InfinityMazeActivity extends AppCompatActivity {
 
                 square.setLayoutParams(mazeRowLayoutParams);
 
-                if(mazeMatrix[i][j] == 0 || mazeMatrix[i][j] == 1) // If is a wall or an open path
+                // If is a wall, an open path or the exit door
+                if(mazeMatrix[i][j] == 0 || mazeMatrix[i][j] == 1 || mazeMatrix[i][j] == 4)
                     square.setBackgroundColor(Color.parseColor(mazeMatrix[i][j] == 1 ? "#2F3136" : "#FFFFFF"));
-                else // if is the runner, exit door or a key
-                    square.setBackgroundResource(mazeMatrix[i][j] == 3 ? R.drawable.maze_key :
-                            mazeMatrix[i][j] == 2 ? R.drawable.maze_runner : R.drawable.maze_door);
+                else // if is the runner or a key
+                    square.setBackgroundResource(mazeMatrix[i][j] == 3 ? R.drawable.maze_key : R.drawable.maze_runner);
 
                 tableRow.addView(square);
             }
@@ -108,10 +112,8 @@ public class InfinityMazeActivity extends AppCompatActivity {
             if(actualPos[0] != 0 && mazeMatrix[actualPos[0]-1][actualPos[1]] != 0){
                 if(mazeMatrix[actualPos[0]-1][actualPos[1]] == 4) { // Checking if the next position is the exit
                     if(infinityMazeModel.getNumKeysRemaining() == 0) completedMaze();
-                    else { // If the player has not found all the keys
-                        infinityMazeModel.setPenalty(1); // Add a penalty of 1 sec to the difficulty
-                        Toast.makeText(this, "No has encontrado todas las llaves", Toast.LENGTH_SHORT).show();
-                    }
+                    // If the player has not found all the keys
+                    else infinityMazeModel.setPenalty(1); // Add a penalty of 1 sec to the difficulty
                 } else {
                     // Setting the actual position to an empty path
                     TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
@@ -133,10 +135,8 @@ public class InfinityMazeActivity extends AppCompatActivity {
             if(actualPos[0]+1 != mazeTableSizes[0] && mazeMatrix[actualPos[0]+1][actualPos[1]] != 0){
                 if(mazeMatrix[actualPos[0]+1][actualPos[1]] == 4) { // Checking if the next position is the exit
                     if(infinityMazeModel.getNumKeysRemaining() == 0) completedMaze(); // It's possible to get out of the maze
-                    else { // If the player has not found all the keys
-                        infinityMazeModel.setPenalty(1); // Add a penalty of 1 sec to the difficulty
-                        Toast.makeText(this, "No has encontrado todas las llaves", Toast.LENGTH_SHORT).show();
-                    }
+                    // If the player has not found all the keys
+                    else infinityMazeModel.setPenalty(1); // Add a penalty of 1 sec to the difficulty
                 } else {
                     // Setting the actual position to an empty path
                     TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
@@ -158,10 +158,8 @@ public class InfinityMazeActivity extends AppCompatActivity {
             if(actualPos[1]+1 != mazeTableSizes[1] && mazeMatrix[actualPos[0]][actualPos[1]+1] != 0){
                 if(mazeMatrix[actualPos[0]][actualPos[1]+1] == 4) { // Checking if the next position is the exit
                     if(infinityMazeModel.getNumKeysRemaining() == 0) completedMaze();
-                    else { // If the player has not found all the keys
-                        infinityMazeModel.setPenalty(1); // Add a penalty of 1 sec to the difficulty
-                        Toast.makeText(this, "No has encontrado todas las llaves", Toast.LENGTH_SHORT).show();
-                    }
+                    // If the player has not found all the keys
+                    else infinityMazeModel.setPenalty(1); // Add a penalty of 1 sec to the difficulty
                 } else {
                     // Setting the actual position to an empty path
                     TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
@@ -183,10 +181,8 @@ public class InfinityMazeActivity extends AppCompatActivity {
             if(actualPos[1] != 0 && mazeMatrix[actualPos[0]][actualPos[1]-1] != 0){
                 if(mazeMatrix[actualPos[0]][actualPos[1]-1] == 4) { // Checking if the next position is the exit
                     if(infinityMazeModel.getNumKeysRemaining() == 0) completedMaze();
-                    else { // If the player has not found all the keys
-                        infinityMazeModel.setPenalty(1); // Add a penalty of 1 sec to the difficulty
-                        Toast.makeText(this, "No has encontrado todas las llaves", Toast.LENGTH_SHORT).show();
-                    }
+                    // If the player has not found all the keys
+                    else infinityMazeModel.setPenalty(1); // Add a penalty of 1 sec to the difficulty
                 } else {
                     // Setting the actual position to an empty path
                     TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
@@ -206,7 +202,10 @@ public class InfinityMazeActivity extends AppCompatActivity {
         }
 
         // Finally, check if the new position has close keys
-        searchCloseKeys(infinityMazeModel.getPosRunner());
+        if(infinityMazeModel.getNumKeysRemaining() > 0)
+            searchCloseKeys(infinityMazeModel.getPosRunner());
+        else if(!doorIsVisible) // Otherwise, show the exit door
+            showExitDoor();
 
     }
 
@@ -228,6 +227,15 @@ public class InfinityMazeActivity extends AppCompatActivity {
         }
     }
 
+    // Function that shows the exit door (should be used only if all the keys have been found)
+    private void showExitDoor() {
+        int[] posExitDoor = infinityMazeModel.getPosExitDoor();
+        // Changing the exit door btn view
+        TableRow actualBtn = (TableRow) mazeTable.getChildAt(posExitDoor[0]);
+        actualBtn.getChildAt(posExitDoor[1]).setBackgroundResource(R.drawable.maze_door);
+        doorIsVisible = true;
+    }
+
     // When the maze all the keys have been collected and the player found the exit door, this function is called
     public void completedMaze(){
         infinityMazeModel.endGame(); // Stopping time counter
@@ -247,8 +255,9 @@ public class InfinityMazeActivity extends AppCompatActivity {
                 GameOptionsActivity.class).putExtra("game","InfinityMaze")), 2000);
     }
 
-    // If I try to go back to the game instructions, the app crashes
-    public void exitGame(View _v){ startActivity(new Intent(this, GamesHomeActivity.class)); }
+    public void exitGameBtn(View _v){ // Go to instructions when exit arrow is clicked (while playing)
+        startActivity(new Intent(this, GameInstructionsActivity.class).putExtra("game", "InfinityMaze"));
+    }
 
     @Override
     public void onWindowFocusChanged(boolean focused){
