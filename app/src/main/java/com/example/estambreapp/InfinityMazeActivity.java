@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -105,7 +106,7 @@ public class InfinityMazeActivity extends AppCompatActivity {
                 if(mazeMatrix[i][j] == 0 || mazeMatrix[i][j] == 1 || mazeMatrix[i][j] == 4)
                     square.setBackgroundColor(Color.parseColor(mazeMatrix[i][j] == 1 ? "#2F3136" : "#FFFFFF"));
                 else // if is the runner or a key
-                    square.setBackgroundResource(mazeMatrix[i][j] == 3 ? R.drawable.maze_key : R.drawable.maze_runner);
+                    square.setBackgroundResource(mazeMatrix[i][j] == 3 ? R.drawable.maze_key : R.drawable.maze_runner_right);
 
                 tableRow.addView(square);
             }
@@ -130,6 +131,8 @@ public class InfinityMazeActivity extends AppCompatActivity {
                 } else {
                     // Setting the actual position to an empty path
                     TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
+                    // Saving the last background of the runner
+                    Drawable previousRunner = actualBtn.getChildAt(actualPos[1]).getBackground();
                     actualBtn.getChildAt(actualPos[1]).setBackgroundColor(Color.parseColor("#2F3136"));
                     // Setting the position above to the runner
                     actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]-1);
@@ -139,7 +142,7 @@ public class InfinityMazeActivity extends AppCompatActivity {
                         mazeMatrix[actualPos[0]-1][actualPos[1]] = 1; // Deleting the key in the matrix
                     }
                     // Updating the runner position
-                    actualBtn.getChildAt(actualPos[1]).setBackgroundResource(R.drawable.maze_runner);
+                    actualBtn.getChildAt(actualPos[1]).setBackground(previousRunner);
                     infinityMazeModel.setPosRunner(new int[]{actualPos[0]-1, actualPos[1]});
                 }
             }
@@ -155,6 +158,8 @@ public class InfinityMazeActivity extends AppCompatActivity {
                 } else {
                     // Setting the actual position to an empty path
                     TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
+                    // Saving the last background of the runner
+                    Drawable previousRunner = actualBtn.getChildAt(actualPos[1]).getBackground();
                     actualBtn.getChildAt(actualPos[1]).setBackgroundColor(Color.parseColor("#2F3136"));
                     // Setting the position above to the runner
                     actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]+1);
@@ -164,13 +169,13 @@ public class InfinityMazeActivity extends AppCompatActivity {
                         mazeMatrix[actualPos[0]+1][actualPos[1]] = 1; // Deleting the key in the matrix
                     }
                     // Updating the runner position
-                    actualBtn.getChildAt(actualPos[1]).setBackgroundResource(R.drawable.maze_runner);
+                    actualBtn.getChildAt(actualPos[1]).setBackground(previousRunner);
                     infinityMazeModel.setPosRunner(new int[]{actualPos[0]+1, actualPos[1]});
                 }
             }
         }
 
-        // Arrow to move down was pressed
+        // Arrow to move right was pressed
         else if(viewID == R.id.arrowRightBtn) {
             if(actualPos[1]+1 != mazeTableSizes[1] && mazeMatrix[actualPos[0]][actualPos[1]+1] != 0) {
                 if (mazeMatrix[actualPos[0]][actualPos[1] + 1] == 4) { // Checking if the next position is the exit
@@ -190,13 +195,13 @@ public class InfinityMazeActivity extends AppCompatActivity {
                         mazeMatrix[actualPos[0]][actualPos[1] + 1] = 1; // Deleting the key in the matrix
                     }
                     // Updating the runner position
-                    actualBtn.getChildAt(actualPos[1] + 1).setBackgroundResource(R.drawable.maze_runner);
+                    actualBtn.getChildAt(actualPos[1] + 1).setBackgroundResource(R.drawable.maze_runner_right);
                     infinityMazeModel.setPosRunner(new int[]{actualPos[0], actualPos[1] + 1});
                 }
             }
         }
 
-        // Arrow to move down was pressed
+        // Arrow to move left was pressed
         else if(viewID == R.id.arrowLeftBtn) {
             if(actualPos[1] != 0 && mazeMatrix[actualPos[0]][actualPos[1]-1] != 0){
                 if(mazeMatrix[actualPos[0]][actualPos[1]-1] == 4) { // Checking if the next position is the exit
@@ -215,7 +220,7 @@ public class InfinityMazeActivity extends AppCompatActivity {
                         mazeMatrix[actualPos[0]][actualPos[1]-1] = 1; // Deleting the key in the matrix
                     }
                     // Updating the runner position
-                    actualBtn.getChildAt(actualPos[1]-1).setBackgroundResource(R.drawable.maze_runner);
+                    actualBtn.getChildAt(actualPos[1]-1).setBackgroundResource(R.drawable.maze_runner_left);
                     infinityMazeModel.setPosRunner(new int[]{actualPos[0], actualPos[1]-1});
                 }
             }
@@ -264,10 +269,12 @@ public class InfinityMazeActivity extends AppCompatActivity {
 
         int[] posExitDoor = infinityMazeModel.getPosExitDoor(), posRunner = infinityMazeModel.getPosRunner();
 
+        // Saving the last background of the runner
+        Drawable previousRunner = ((TableRow) mazeTable.getChildAt(posRunner[0])).getChildAt(posRunner[1]).getBackground();
         // Setting the previous runner pos to an empty path
         ((TableRow) mazeTable.getChildAt(posRunner[0])).getChildAt(posRunner[1]).setBackgroundColor(Color.parseColor("#2F3136"));
         // Setting the new pos, which was a door, to the runner
-        ((TableRow) mazeTable.getChildAt(posExitDoor[0])).getChildAt(posExitDoor[1]).setBackgroundResource(R.drawable.maze_runner);
+        ((TableRow) mazeTable.getChildAt(posExitDoor[0])).getChildAt(posExitDoor[1]).setBackground(previousRunner);
         infinityMazeModel.setPosRunner(posExitDoor);
 
         titleGame.setText("¡Lograste salir del laberinto!");
