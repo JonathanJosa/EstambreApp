@@ -11,9 +11,12 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.HashSet;
+
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
 public class InfinityMazeActivity extends AppCompatActivity {
 
@@ -23,6 +26,7 @@ public class InfinityMazeActivity extends AppCompatActivity {
     int[][] mazeMatrix;
     boolean doorIsVisible;
 
+    KonfettiView konfettiView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +38,9 @@ public class InfinityMazeActivity extends AppCompatActivity {
         mazeTable = findViewById(R.id.mazeTable);
         titleGame = findViewById(R.id.titleTxt);
 
-        doorIsVisible = false;
+        doorIsVisible = false; // At the beginning, the door is not visible
+
+        konfettiView = findViewById(R.id.konfettiAnimation);
 
         infinityMazeModel.startGame(); // Starting time counter
         infinityMazeModel.setGameDifficulty(); // Setting the difficulty
@@ -108,7 +114,9 @@ public class InfinityMazeActivity extends AppCompatActivity {
         int viewID = v.getId();
         int[] actualPos = infinityMazeModel.getPosRunner();
         int[] mazeTableSizes = infinityMazeModel.getMazeTableSize();
-        if(viewID == R.id.arrowUpBtn) { // Trying to move up
+
+        // Arrow to move up was pressed
+        if(viewID == R.id.arrowUpBtn) {
             if(actualPos[0] != 0 && mazeMatrix[actualPos[0]-1][actualPos[1]] != 0){
                 if(mazeMatrix[actualPos[0]-1][actualPos[1]] == 4) { // Checking if the next position is the exit
                     if(infinityMazeModel.getNumKeysRemaining() == 0) completedMaze();
@@ -130,8 +138,10 @@ public class InfinityMazeActivity extends AppCompatActivity {
                     infinityMazeModel.setPosRunner(new int[]{actualPos[0]-1, actualPos[1]});
                 }
             }
-        } else if(viewID == R.id.arrowDownBtn) {
-            //move down
+        }
+
+        // Arrow to move down was pressed
+        else if(viewID == R.id.arrowDownBtn) {
             if(actualPos[0]+1 != mazeTableSizes[0] && mazeMatrix[actualPos[0]+1][actualPos[1]] != 0){
                 if(mazeMatrix[actualPos[0]+1][actualPos[1]] == 4) { // Checking if the next position is the exit
                     if(infinityMazeModel.getNumKeysRemaining() == 0) completedMaze(); // It's possible to get out of the maze
@@ -153,31 +163,36 @@ public class InfinityMazeActivity extends AppCompatActivity {
                     infinityMazeModel.setPosRunner(new int[]{actualPos[0]+1, actualPos[1]});
                 }
             }
-        } else if(viewID == R.id.arrowRightBtn) {
-            // move right
-            if(actualPos[1]+1 != mazeTableSizes[1] && mazeMatrix[actualPos[0]][actualPos[1]+1] != 0){
-                if(mazeMatrix[actualPos[0]][actualPos[1]+1] == 4) { // Checking if the next position is the exit
-                    if(infinityMazeModel.getNumKeysRemaining() == 0) completedMaze();
-                    // If the player has not found all the keys
-                    else infinityMazeModel.setPenalty(1); // Add a penalty of 1 sec to the difficulty
+        }
+
+        // Arrow to move down was pressed
+        else if(viewID == R.id.arrowRightBtn) {
+            if(actualPos[1]+1 != mazeTableSizes[1] && mazeMatrix[actualPos[0]][actualPos[1]+1] != 0) {
+                if (mazeMatrix[actualPos[0]][actualPos[1] + 1] == 4) { // Checking if the next position is the exit
+                    if (infinityMazeModel.getNumKeysRemaining() == 0) completedMaze();
+                        // If the player has not found all the keys
+                    else
+                        infinityMazeModel.setPenalty(1); // Add a penalty of 1 sec to the difficulty
                 } else {
                     // Setting the actual position to an empty path
                     TableRow actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
                     actualBtn.getChildAt(actualPos[1]).setBackgroundColor(Color.parseColor("#2F3136"));
                     // Setting the position above to the runner
                     actualBtn = (TableRow) mazeTable.getChildAt(actualPos[0]);
-                    if(mazeMatrix[actualPos[0]][actualPos[1]+1] == 3){ // Checking if the next position is a key
-                        infinityMazeModel.setNumKeysRemaining(infinityMazeModel.getNumKeysRemaining()-1); // Decreasing the num of keys remaining
-                        infinityMazeModel.deletePosKey(actualPos[0] + "-" + (actualPos[1]+1)); // Removing key from set
-                        mazeMatrix[actualPos[0]][actualPos[1]+1] = 1; // Deleting the key in the matrix
+                    if (mazeMatrix[actualPos[0]][actualPos[1] + 1] == 3) { // Checking if the next position is a key
+                        infinityMazeModel.setNumKeysRemaining(infinityMazeModel.getNumKeysRemaining() - 1); // Decreasing the num of keys remaining
+                        infinityMazeModel.deletePosKey(actualPos[0] + "-" + (actualPos[1] + 1)); // Removing key from set
+                        mazeMatrix[actualPos[0]][actualPos[1] + 1] = 1; // Deleting the key in the matrix
                     }
                     // Updating the runner position
-                    actualBtn.getChildAt(actualPos[1]+1).setBackgroundResource(R.drawable.maze_runner);
-                    infinityMazeModel.setPosRunner(new int[]{actualPos[0], actualPos[1]+1});
+                    actualBtn.getChildAt(actualPos[1] + 1).setBackgroundResource(R.drawable.maze_runner);
+                    infinityMazeModel.setPosRunner(new int[]{actualPos[0], actualPos[1] + 1});
                 }
             }
-        } else if(viewID == R.id.arrowLeftBtn) {
-            // move left
+        }
+
+        // Arrow to move down was pressed
+        else if(viewID == R.id.arrowLeftBtn) {
             if(actualPos[1] != 0 && mazeMatrix[actualPos[0]][actualPos[1]-1] != 0){
                 if(mazeMatrix[actualPos[0]][actualPos[1]-1] == 4) { // Checking if the next position is the exit
                     if(infinityMazeModel.getNumKeysRemaining() == 0) completedMaze();
@@ -238,6 +253,8 @@ public class InfinityMazeActivity extends AppCompatActivity {
 
     // When the maze all the keys have been collected and the player found the exit door, this function is called
     public void completedMaze(){
+        showKonfettiAnimation(); // Show the confetti
+
         infinityMazeModel.endGame(); // Stopping time counter
 
         int[] posExitDoor = infinityMazeModel.getPosExitDoor(), posRunner = infinityMazeModel.getPosRunner();
@@ -252,11 +269,30 @@ public class InfinityMazeActivity extends AppCompatActivity {
 
         // Exit game
         (new Handler()).postDelayed(() -> startActivity(new Intent(this,
-                GameOptionsActivity.class).putExtra("game","InfinityMaze")), 2000);
+                GameOptionsActivity.class).putExtra("game","InfinityMaze")), 3000);
     }
 
-    public void exitGameBtn(View _v){ // Go to instructions when exit arrow is clicked (while playing)
+    // Function that changes the Activity to instructions when exit arrow is clicked (while playing)
+    public void exitGameBtn(View _v){
         startActivity(new Intent(this, GameInstructionsActivity.class).putExtra("game", "InfinityMaze"));
+    }
+
+    // Confetti animation creator
+    private void showKonfettiAnimation(){
+        konfettiView.build()
+                .addColors(
+                        Color.rgb(64, 151, 170),
+                        Color.rgb(175, 99, 40),
+                        Color.rgb(255, 235, 161)
+                )
+                .setDirection(0.0, 359.0)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(2000L)
+                .addShapes(Shape.Square.INSTANCE, Shape.Circle.INSTANCE)
+                .addSizes(new Size(12, 5f))
+                .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                .streamFor(300, 2000L);
     }
 
     @Override

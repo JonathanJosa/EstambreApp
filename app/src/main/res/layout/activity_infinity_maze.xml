@@ -7,6 +7,11 @@
     android:background="#2F3136"
     tools:context=".InfinityMazeActivity">
 
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/konfettiAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <ImageButton
         android:id="@+id/goBackBtn"
         android:layout_width="29dp"
@@ -23,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.039"
         app:srcCompat="@drawable/white_arrow"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/titleTxt"
