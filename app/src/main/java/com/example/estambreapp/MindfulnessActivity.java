@@ -50,6 +50,7 @@ public class MindfulnessActivity extends AppCompatActivity {
     }
 
     @Override
+    //Configuracion de pantalla completa
     public void onWindowFocusChanged(boolean focused){
         super.onWindowFocusChanged(focused);
         if(focused) new ScreenConfig(getWindow().getDecorView());
