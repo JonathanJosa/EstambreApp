@@ -1,6 +1,7 @@
 package com.example.estambreapp;
 
 import android.app.appsearch.ReportSystemUsageRequest;
+import android.content.Context;
 import android.os.Looper;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -20,67 +22,60 @@ import java.util.logging.Handler;
 
 public class MapNumbersModel {
 
+    GamesModel gameProperties;
+
     private int[] numberList = {1,2,3,4,5,6,7,8,9,10}; // numbers to be selected by algorithm to be found
 
     public int[] numbers; // array where we store our numbers to found
 
-    //----------------------------------------------------------------------------------------------
-    // TEMPORAL
-    public int LevelNumber = 1;
+    public int LevelNumber = 1; // number of games played
 
-    private int rows = 3;
-    private int cols = 2;
-    private int lotNumbersToFound = 1;
-
-    //----------------------------------------------------------------------------------------------
-
-    public HashMap <String, Integer> toBeFound = new HashMap<String, Integer>(); // {5=2, 6=1, 9=3, 10=1}
+    public HashMap <String, Integer> toBeFoundMap = new HashMap<String, Integer>(); // {5=2, 6=1, 9=3, 10=1}
 
     public boolean nextRound = false; // variable para controlar el el cambio de ronda
 
     public int numbersCompleted = 1; // contador que usamos para ver cuantos elementos del mapa hemos descubierto.
 
+    int[] arrayNumberToFound = new int[1]; // array when we create number by mathematical operation result
+
+    public String operationString = ""; // string where we store our operation string to show in our view.
+
+    public MapNumbersModel(Context context) {
+        gameProperties = new GamesModel(context, "MapNumbers");
+    }
+
+    public void startOrEndGame(boolean option){ // If true, start time count; otherwise, end time count
+        if (option) gameProperties.startTimeCount();
+        else gameProperties.endGame();
+    }
+
+    public double getDifficulty(){
+        return gameProperties.getDifficulty();
+    }
+
 
     public int[] getNumbersToBeFound(){
         return numbers;
+
     }
     public boolean getNextRound(){
         return nextRound;
     }
 
-    //----------------------------------------------------------------------------------------------
-    // TEMPORAL
-    public void calculateLevelParams( int lvlNum ){
-        switch (lvlNum){
-            case 1:
-                rows = 3; cols = 2;
-                lotNumbersToFound = 1;
-                break;
-            case 2:
-                rows = 4; cols = 3;
-                lotNumbersToFound = 2;
-                break;
-            case 3:
-                rows = 5; cols = 4;
-                lotNumbersToFound = 3;
-                break;
-            case 4:
-                rows = 5; cols = 4;
-                lotNumbersToFound = 4;
-            default:
-                break;
-
-        }
-
-
-    }
-    //----------------------------------------------------------------------------------------------
-
-
 
     // we generate our matrix of buttons, it will depend on the level data, to set up it.
     public int[] getTableButtonsSize(){
-        return new int[]{ rows, cols }; // Hardcoded for experimentation purposes
+
+        double numDiffOfGame = gameProperties.getDifficulty();
+
+        System.out.println("Difficulty: " + numDiffOfGame);
+        // dependiendiendo de la dificultad ....
+        return ( numDiffOfGame < 50 ) ? new int[]{ 3, 2 }:
+                ( numDiffOfGame < 75 ) ? new int[]{ 4, 3 }:
+                ( numDiffOfGame < 100) ? new int[]{ 4, 3 }:
+                ( numDiffOfGame < 125) ? new int[]{6, 4}:
+                ( numDiffOfGame < 150) ? new int[] { 6, 5 } : new int[]{ 7, 5 };
+
     }
 
     // Implementing Fisher–Yates shuffle
@@ -137,13 +132,15 @@ public class MapNumbersModel {
 
         int[] size = getTableButtonsSize(); // we get our table size
         int[][] matrix = new int[size[0]][size[1]]; // declare a matrix with size[1] and size[0] length.
-        numbers =  generateNumbersToSearch(lotNumbersToFound); // we generate our random numbers to find.
+        double curentDifficulty = getDifficulty();
+
+        numbers = ( curentDifficulty < 50 ) ? generateNumbersToSearch(1):
+                  ( curentDifficulty < 75 ) ? generateNumbersToSearch(2):// we generate our random numbers to find.
+                  ( curentDifficulty < 100 ) ? generateNumbersToSearch(3): generateNumbersToSearch(4);
 
         fillHashMap(numbers); // we fill our hashmap
 
         int count = 0; //variable to handle 'numbers' array numbers push into the matrix.
-
-        //System.out.println(Arrays.toString(numbers));
 
         for( int i = 0; i < size[0] ; i++) {
             for(int j = 0; j < size[1] ; j++) {
@@ -156,8 +153,8 @@ public class MapNumbersModel {
                     // and then, we fill it out with random numbers between 0 and 9
                     matrix[i][j] = (int) (Math.random() * 10); //generates between 0 - 9
 
-                    if(toBeFound.containsKey(String.valueOf(matrix[i][j]))){
-                        toBeFound.put( String.valueOf(matrix[i][j]), toBeFound.get(String.valueOf(matrix[i][j])) + 1 );
+                    if(toBeFoundMap.containsKey(String.valueOf(matrix[i][j]))){
+                        toBeFoundMap.put( String.valueOf(matrix[i][j]), toBeFoundMap.get(String.valueOf(matrix[i][j])) + 1 );
                     }
                 }
 
@@ -171,15 +168,14 @@ public class MapNumbersModel {
 
     public void fillHashMap(int[] arrayNumbersToSearch){
         for (int i = 0;i<arrayNumbersToSearch.length;i++){
-            toBeFound.put(String.valueOf(arrayNumbersToSearch[i]), 1);
+            toBeFoundMap.put(String.valueOf(arrayNumbersToSearch[i]), 1);
         }
-        //System.out.println(Arrays.toString(arrayNumbersToSearch));
     }
 
 
     public void checkNumbersToBeFound( TextView instructionsText ){
         numbersCompleted++;
-        if(numbersCompleted > arrayNumberToFound.length){ // en caso de generar normales va el de numbers
+        if(numbersCompleted > numbers.length){ // en caso de generar normales va el de numbers
 
             System.out.println("La ronda temina, pq encontraste todos los numeros :D");
 
@@ -194,15 +190,15 @@ public class MapNumbersModel {
         String value = (String) selectedValueButton.getText(); // obtenemos el valor del botón
 
 
-        if(toBeFound.containsKey(value) && toBeFound.get(value) > 0){
+        if(toBeFoundMap.containsKey(value) && toBeFoundMap.get(value) > 0){
 
-            toBeFound.put( value, (toBeFound.get(value) - 1) );
+            toBeFoundMap.put( value, (toBeFoundMap.get(value) - 1) );
             selectedValueButton.setBackgroundResource(R.drawable.mapnumbers_correctbtn);
             selectedValueButton.setEnabled(false);
 
             // si el valor de la llave del hashmap es cero, significa que ya no hay mas numeros a buscar
 
-            if( toBeFound.get(value) == 0 ){
+            if( toBeFoundMap.get(value) == 0 ){
                 System.out.println("no hay mas numeros de algo");
                 instructionsText.setText(" ¡ Excelente buscador! , sigue buscando a los otros numeros \\ (•◡•) / ");
 
@@ -216,7 +212,7 @@ public class MapNumbersModel {
                 checkNumbersToBeFound( instructionsText ); // verificamos si aun hay mas numeros que buscar
             }
 
-        } else if( !toBeFound.containsKey(value) ){
+        } else if( !toBeFoundMap.containsKey(value) ){
 
             selectedValueButton.setBackgroundResource(R.drawable.mapnumbers_incorrectbtn);
 
@@ -227,6 +223,7 @@ public class MapNumbersModel {
                 }
             }, 1500);
 
+            gameProperties.penalty(0.5);
             System.out.println("El numero que elejiste no esta en la lista a encontrar");
 
         }
@@ -261,7 +258,6 @@ public class MapNumbersModel {
         return numbers;
     }
 
-
     public List<String> getOperationSigns(int numberOfNumbers){
         List<String> signs = new ArrayList<String>();
 
@@ -281,7 +277,6 @@ public class MapNumbersModel {
         return signs;
     }
 
-
     public int operationResult( List<Integer> listNumbers, List<String> listSigns, int indexNumbers, int indexSigns, int total ){
 
         if( indexNumbers  > listNumbers.size() - 1 ){
@@ -296,8 +291,6 @@ public class MapNumbersModel {
         return total;
     }
 
-
-
     public String assembleOperation( List<Integer> listNumbers, List<String> listSigns, int indexNumbers, int indexSigns, String total ) {
 
         if( indexNumbers  > listNumbers.size() - 1 ){
@@ -310,6 +303,8 @@ public class MapNumbersModel {
         }
         return total;
     }
+
+
 
     public  int generateOperationAndNumberToBeFound( int level ){
 
@@ -331,15 +326,7 @@ public class MapNumbersModel {
         // se envian o se muestran el texto en string de la operacion a ser resuelta por el usuario
         String operationStringAssembled = assembleOperation(listOfNumbers, signsForOperations, 1, 0, String.valueOf(listOfNumbers.get(0)));
         System.out.println("String de resultado: " + operationStringAssembled);
-
-
-
-        // .... junto con el boton a crear
-
-
-
-
-
+        operationString = operationStringAssembled;
 
         // eviamos el resultado a traves de una matriz (otra funcion )
 
@@ -347,15 +334,14 @@ public class MapNumbersModel {
 
     }
 
-
-    public int[] arrayNumberToFound = new int[1];
-
-
     public int[][] getRandomNumbersMatrixWithOperation() {
 
         int[] size = getTableButtonsSize(); // we get our table size
         int[][] matrix = new int[size[0]][size[1]]; // declare a matrix with size[1] and size[0] length.
-        int numberToFound =  generateOperationAndNumberToBeFound(5); // we generate our random numbers to find.
+
+
+        int numberToFound =  ( getDifficulty() > 125 ) ? generateOperationAndNumberToBeFound(5):
+                                        generateOperationAndNumberToBeFound(3); // we generate our random numbers to find.
 
 
         arrayNumberToFound[0] = numberToFound; //creamos el array, para poder mandar como parametro a fillHashMap
@@ -365,12 +351,8 @@ public class MapNumbersModel {
         int count = 0; //variable to handle 'numbers' array numbers push into the matrix.
 
         //calculamos el 20% por arriba y por abajo de nuestro nuemero a encontrar
-
-
         int min = numberToFound - 15;
         int max = numberToFound + 15;
-
-
 
         for( int i = 0; i < size[0] ; i++) {
             for(int j = 0; j < size[1] ; j++) {
@@ -383,8 +365,8 @@ public class MapNumbersModel {
                     // and then, we fill it out with random numbers between 0 and 9
                     matrix[i][j] = (int)(Math.random() * ((max - min) + 1)) + min; //generates between 0 - 9
 
-                    if(toBeFound.containsKey(String.valueOf(matrix[i][j]))){
-                        toBeFound.put( String.valueOf(matrix[i][j]), toBeFound.get(String.valueOf(matrix[i][j])) + 1 );
+                    if(toBeFoundMap.containsKey(String.valueOf(matrix[i][j]))){
+                        toBeFoundMap.put( String.valueOf(matrix[i][j]), toBeFoundMap.get(String.valueOf(matrix[i][j])) + 1 );
                     }
                 }
 
