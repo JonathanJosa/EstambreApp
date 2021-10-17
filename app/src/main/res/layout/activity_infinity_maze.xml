@@ -4,6 +4,129 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#2F3136"
     tools:context=".InfinityMazeActivity">
 
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/konfettiAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageButton
+        android:id="@+id/goBackBtn"
+        android:layout_width="29dp"
+        android:layout_height="43dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:contentDescription="@string/exitgame"
+        android:onClick="exitGameBtn"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.039"
+        app:srcCompat="@drawable/white_arrow"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/titleTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/encuentra_la_salida"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.054" />
+
+    <TableLayout
+        android:id="@+id/mazeTable"
+        android:layout_width="340dp"
+        android:layout_height="422dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTxt"
+        app:layout_constraintVertical_bias="0.175"/>
+
+    <ImageButton
+        android:id="@+id/arrowUpBtn"
+        android:layout_width="63dp"
+        android:layout_height="62dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:contentDescription="@string/button_to_go_up_on_maze"
+        android:onClick="onArrowClicked"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.823"
+        app:srcCompat="@drawable/maze_arrowbtn"
+        tools:ignore="SpeakableTextPresentCheck,RedundantDescriptionCheck" />
+
+    <ImageButton
+        android:id="@+id/arrowDownBtn"
+        android:layout_width="63dp"
+        android:layout_height="62dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:contentDescription="@string/button_to_go_down_on_maze"
+        android:onClick="onArrowClicked"
+        android:rotation="180"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arrowUpBtn"
+        app:layout_constraintVertical_bias="0.714"
+        app:srcCompat="@drawable/maze_arrowbtn"
+        tools:ignore="SpeakableTextPresentCheck,RedundantDescriptionCheck" />
+
+    <ImageButton
+        android:id="@+id/arrowRightBtn"
+        android:layout_width="63dp"
+        android:layout_height="62dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:contentDescription="@string/button_to_go_right_on_maze"
+        android:onClick="onArrowClicked"
+        android:rotation="90"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.67"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.899"
+        app:srcCompat="@drawable/maze_arrowbtn"
+        tools:ignore="SpeakableTextPresentCheck,RedundantDescriptionCheck" />
+
+    <ImageButton
+        android:id="@+id/arrowLeftBtn"
+        android:layout_width="63dp"
+        android:layout_height="62dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:contentDescription="@string/button_to_go_left_on_maze"
+        android:onClick="onArrowClicked"
+        android:rotation="270"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.318"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.899"
+        app:srcCompat="@drawable/maze_arrowbtn"
+        tools:ignore="SpeakableTextPresentCheck,RedundantDescriptionCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

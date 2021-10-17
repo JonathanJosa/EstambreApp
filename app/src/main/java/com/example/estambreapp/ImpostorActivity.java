@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -11,7 +12,6 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -56,8 +56,8 @@ public class ImpostorActivity extends AppCompatActivity {
         int sizeSideOfButton = Math.min(lenSidesTable[0]/numRows, lenSidesTable[1]/numColumns);
         // Then, we calculate the margin that each row and column should have according to the size of the side of the images
         // I used 20% of the size of the table if the margin left is too small
-        int marginBetweenRows = (int) Math.max(lenSidesTable[0] - sizeSideOfButton*numRows, 0.2*lenSidesTable[0]);
-        int marginBetweenColumns = (int) Math.max(lenSidesTable[1] - sizeSideOfButton*numColumns , 0.2*lenSidesTable[1]);
+        int marginBetweenRows = (int) Math.max(lenSidesTable[0] - sizeSideOfButton*numRows, 0.12*lenSidesTable[0]);
+        int marginBetweenColumns = (int) Math.max(lenSidesTable[1] - sizeSideOfButton*numColumns , 0.12*lenSidesTable[1]);
         // Then, we calculate the REAL length that each side of the images should have (including the margin)
         sizeSideOfButton = Math.min((lenSidesTable[0]-marginBetweenRows)/numRows, (lenSidesTable[1]-marginBetweenColumns)/numColumns);
         // Finally, we re-calculate the margin that each row and column should have according to the size of the side of the images
@@ -114,17 +114,18 @@ public class ImpostorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(impostorModel.positionsIndividualImages.containsKey(row+"-"+column)) {
-                    messageButtonClicked(true);
                     button.setBackgroundResource(R.drawable.impostor_check);
-                    if(impostorModel.positionsIndividualImages.get(row+"-"+column) != 1) { // != 1
+                    if(impostorModel.positionsIndividualImages.get(row+"-"+column) != 1) {
                         impostorModel.numOfIndividualImages--; // Decrease number of individual images to find
-                        impostorModel.positionsIndividualImages.put(row + "-" + column, 1); // insert 1
+                        impostorModel.positionsIndividualImages.put(row + "-" + column, 1);
                         if (impostorModel.numOfIndividualImages == 0)// If player selected all individual images
                             onSelectedAllCorrectImages();
                     }
                 }
-                else {
-                    messageButtonClicked(false);
+                else { // If player clicks an incorrect image
+                    Drawable buttonBackground = button.getBackground(); // Saving the original background
+                    button.setBackgroundResource(R.drawable.impostor_wrong); // Make that button an X
+                    (new Handler()).postDelayed(() -> button.setBackground(buttonBackground), 1500); // Make the image return to its original background after 1.5 secs
                     impostorModel.setPenalty(0.5); // Setting a penalty of 0.5 seconds
                 }
 
@@ -134,17 +135,10 @@ public class ImpostorActivity extends AppCompatActivity {
         });
     }
 
-    private void messageButtonClicked(boolean correctButton) {
-        // Function that shows the pop-up message (Java obligated me to create a separate function)
-        Toast.makeText(this, (correctButton ? "Bien hecho :)" : "Esa está repetida :("),
-                Toast.LENGTH_SHORT).show();
-    }
-
     private void onSelectedAllCorrectImages(){
         impostorModel.startOrEndGame(false); // Stopping timer count
         showKonfettiAnimation();
         indicationsTitle.setText("¡Bien hecho!\nEncontraste todas las imágenes");
-        Toast.makeText(this, "Excelente compañer@", Toast.LENGTH_SHORT).show();
         impostorModel.numOfGamesPlayed++;
         impostorModel.positionsIndividualImages = new HashMap<>(); // Restart the map
         if(impostorModel.numOfGamesPlayed == 3) endGame();
@@ -156,6 +150,11 @@ public class ImpostorActivity extends AppCompatActivity {
                 GameOptionsActivity.class).putExtra("game","Impostor")), 3000);
     }
 
+    public void exitOnGameBtn(View _v){ // Go to instructions when exit arrow is clicked (while playing)
+        startActivity(new Intent(this, GameInstructionsActivity.class).putExtra("game", "Impostor"));
+    }
+
+    // Konffetti animation that appears when the player wins
     private void showKonfettiAnimation(){
         konfettiView.build()
                 .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
