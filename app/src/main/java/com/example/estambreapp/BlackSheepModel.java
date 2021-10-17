@@ -55,15 +55,15 @@ public class BlackSheepModel {
         //La partida esta en progreso, inicia el conteo del juego
         if(started) gameProperties.startTimeCount();
         //La partida ha terminado, entonces el contador se termina y se hace el analisis de partida + guardado de dificultad
-        gameProperties.endGame();
+        else gameProperties.endGame();
     }
 
 
     //Calculo de cantidad adecuada de ovejas, tiempo, repeticiones y tamaño en base a la dificultad
-    private Integer getWhiteSheeps(){ return 2 + ((int) (difficulty/35)); }
-    private Integer getBlackSheeps(){ return 1 + ((int) (difficulty/80)); }
-    private Integer getTotalTime(){ return (int) (Math.random() * ((int) (difficulty/30) + 0.99) + 3); }
-    private Integer getVelocity(){ return Math.max(500 , 500 + (2500 - ((int) (Math.random() * ((int) (difficulty * 10)))))); }
+    private Integer getWhiteSheeps(){ return 2 + ((int) (difficulty/50)); }
+    private Integer getBlackSheeps(){ return 1 + ((int) (difficulty/85)); }
+    private Integer getTotalTime(){ return (int) (Math.random() * ((int) (difficulty/40) + 0.99) + 3); }
+    private Integer getVelocity(){ return Math.max(250 , 500 + (2000 - ((int) (Math.random() * ((int) (difficulty * 15)))))); }
     private float sheepSize(){ return Math.max(140 - (whiteSheeps * 5), 50); }
 
 
@@ -81,13 +81,13 @@ public class BlackSheepModel {
     public boolean sheepClicked(View v, String tp){
         //Si el juego ha iniciado
         if(started){
-            //Una vez se clickeo la ovje,a esta desaparece
+            //Una vez se clickeo la oveje desaparece
             v.setLayoutParams(new RelativeLayout.LayoutParams(0, 0));
             //Si la oveja es blanca
             if(tp.equals("sheepw")){
                 //Penalty
                 Toast.makeText(context, "Oveja equivocada :(", Toast.LENGTH_SHORT).show();
-                gameProperties.penalty(1500);
+                gameProperties.penalty(800);
             }else{
                 //La oveja es negra, reducir conteo de ovejas negras y return true si ya clickeo todas las ovejas negras
                 Toast.makeText(context, "Muy bien!!", Toast.LENGTH_SHORT).show();
