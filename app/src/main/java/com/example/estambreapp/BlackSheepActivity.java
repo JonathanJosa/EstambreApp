@@ -32,7 +32,7 @@ public class BlackSheepActivity extends AppCompatActivity{
         board = findViewById(R.id.LinearLayoutBoard);
         instruccion = findViewById(R.id.restante);
         //modelo
-        sheepModel  = new BlackSheepModel(this);
+        sheepModel = new BlackSheepModel(this);
         createBoard();
     }
 
