@@ -15,6 +15,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
+import nl.dionsegijn.konfetti.KonfettiView;
+
 
 public class MapNumbersActivity extends AppCompatActivity {
 
@@ -23,6 +27,7 @@ public class MapNumbersActivity extends AppCompatActivity {
     LinearLayout instructionsLayout;
     TableLayout tableNumbers;
     TextView operation;
+    KonfettiView konfettiView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,7 @@ public class MapNumbersActivity extends AppCompatActivity {
         operation = findViewById(R.id.textViewOperation);
         instructionsLayout = findViewById(R.id.numbersToBefound);
         tableNumbers = findViewById(R.id.mapNumbersButtons);
+        konfettiView = findViewById(R.id.viewKonfetti);
 
         operation.setText("");// initialize the operation label text as empty
         createTableButtonsNumbers(); // we initialize the game by creating the table of numbers and generating the numbers to find.
@@ -45,6 +51,7 @@ public class MapNumbersActivity extends AppCompatActivity {
 
     // function that creates our matrix table filled with numbers that the user is going to find.
     private void createTableButtonsNumbers() {
+        System.out.println("Difficulty: " + mapNumbersModel.getDifficulty());
         tableNumbers.removeAllViews(); // we clean the view to refresh elements.
         mapNumbersModel.startOrEndGame(true); // we start the timer to calculate difficulty.
         int[] sizeTable = mapNumbersModel.getTableButtonsSize(); // we get the size of our numbers table
@@ -204,6 +211,7 @@ public class MapNumbersActivity extends AppCompatActivity {
 
                 // we right away, generates another table and instructions set
                 mapNumbersModel.LevelNumber++;// increment the "games played" variable.
+                showKonfettiAnimation();
                 instructions.setText("¡ Excelente !, encontraste todos los números  "); // change text when user already found all numbers.
                 mapNumbersModel.startOrEndGame(false); // Stopping timer count
                 if( mapNumbersModel.LevelNumber > 4 ){ // if user just played 4 games, we finish the game.
@@ -220,6 +228,22 @@ public class MapNumbersActivity extends AppCompatActivity {
         (new Handler()).postDelayed(() -> startActivity(new Intent(this,
                 GameOptionsActivity.class).putExtra("game","MapNumbers")), 3000);
     }
+
+
+    // Konffetti animation that appears when the player wins
+    private void showKonfettiAnimation(){
+        konfettiView.build()
+                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                .setDirection(0.0, 359.0)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(2000L)
+                .addShapes(Shape.Square.INSTANCE, Shape.Circle.INSTANCE)
+                .addSizes(new Size(12, 5f))
+                .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                .streamFor(300, 2000L);
+    }
+
 
     @Override
     public void onWindowFocusChanged(boolean focused){

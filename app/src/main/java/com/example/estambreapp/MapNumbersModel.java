@@ -67,7 +67,7 @@ public class MapNumbersModel {
         return ( numDiffOfGame < 50 ) ? new int[]{ 3, 2 }:
                 ( numDiffOfGame < 75 ) ? new int[]{ 4, 3 }:
                 ( numDiffOfGame < 100) ? new int[]{ 4, 3 }:
-                ( numDiffOfGame < 125) ? new int[]{6, 4}:
+                ( numDiffOfGame < 125) ? new int[]{5, 4}:
                 ( numDiffOfGame < 150) ? new int[] { 6, 5 } : new int[]{ 7, 5 };
 
     }
