@@ -122,6 +122,7 @@ public class MapNumbersActivity extends AppCompatActivity {
             int[] specialArray = {0}; // creating a special array when we generate only one number ( result of mathematical operation)
             numbersToBeFound = specialArray; // assigning to our main array, the special array
             mapNumbersModel.numbers = specialArray; // we assign numbers variable the fake/special array.
+            instructions.setText("Resuelve la operación y encuentra el resultado en la tabla");
         }else {
             numbersToBeFound = mapNumbersModel.getNumbersToBeFound(); // assigning the array with numbers generated.
         }
