@@ -3,7 +3,9 @@ package com.example.estambreapp;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,7 +27,7 @@ public class MapNumbersModel {
     public String operationString = ""; // string where we store our operation string to show in our view.
 
 
-    public MapNumbersModel(Context context) {
+    public MapNumbersModel(MapNumbersActivity context) {
         gameProperties = new GamesModel(context, "MapNumbers");
     }
 
