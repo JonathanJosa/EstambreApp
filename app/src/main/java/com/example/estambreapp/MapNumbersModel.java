@@ -1,20 +1,13 @@
 package com.example.estambreapp;
 
-import android.app.appsearch.ReportSystemUsageRequest;
-import android.os.Looper;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Handler;
 
 public class MapNumbersModel {
 
