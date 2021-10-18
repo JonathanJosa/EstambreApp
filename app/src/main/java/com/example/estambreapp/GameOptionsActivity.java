@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 public class GameOptionsActivity extends AppCompatActivity {
 
@@ -16,19 +17,26 @@ public class GameOptionsActivity extends AppCompatActivity {
     View nullView;
     Handler handlerChange;
 
+    ProgressBar circularLoadingProgress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_options);
+
+        circularLoadingProgress = findViewById(R.id.progress_circular);
+
         //Creacion del handler que cambiará en 5 segs la pantalla
         handlerChange = new Handler();
+
         //Juego del que se llega y siguiente juego aleatorio evitando repetir.
         lastGame = (String) getIntent().getStringExtra("game");
         nextGame = (new GamesControllerModel()).getRandomGame(lastGame);
         //Establecer configuracion de pantalla
         setContextWindow(nextGame);
+
         //Asincrono, si no elige en 5 seg, se hace el cambio automatico de pantalla, deleteWaitingInstance cancela el cambio automatico
-        handlerChange.postDelayed(waitingInstance, 5000);
+        setCircularLoadingProgress(5000);
     }
 
     @Override
@@ -69,5 +77,17 @@ public class GameOptionsActivity extends AppCompatActivity {
             }
         }
     };
+
+    // Función que muestra el progreso en aumento del ProgressBar circular
+    private void setCircularLoadingProgress(int num) {
+        if(num <= 0) { // Si se completó el tiempo, automáticamente se envía al jugador al siguiente juego
+            circularLoadingProgress.setProgress(100);
+            handlerChange.postDelayed(waitingInstance, 0);
+            return;
+        }
+        float tmp = (float) (num)/5000; // Calclamos el porcentaje que llevamos
+        circularLoadingProgress.setProgress((int)  (100 - (tmp * 100))); // Mostramos el porcentaje
+        (new Handler()).postDelayed(() -> setCircularLoadingProgress(num-13), 10);
+    }
 
 }
