@@ -30,4 +30,5 @@
     <string name="textview" />
     <string name="ordenes_5">Ordenes: 5</string>
     <string name="observa_cuidadosamente_la_secuencia_que_sim_n_dice">Observa cuidadosamente la secuencia que simón dice...</string>
+    <string name="load">load</string>
 </resources>

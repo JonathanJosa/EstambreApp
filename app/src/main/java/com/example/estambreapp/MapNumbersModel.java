@@ -1,24 +1,15 @@
 package com.example.estambreapp;
 
-import android.app.appsearch.ReportSystemUsageRequest;
-import android.content.Context;
-import android.os.Looper;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Handler;
 
 public class MapNumbersModel {
 
@@ -36,7 +27,7 @@ public class MapNumbersModel {
     public String operationString = ""; // string where we store our operation string to show in our view.
 
 
-    public MapNumbersModel(Context context) {
+    public MapNumbersModel(MapNumbersActivity context) {
         gameProperties = new GamesModel(context, "MapNumbers");
     }
 

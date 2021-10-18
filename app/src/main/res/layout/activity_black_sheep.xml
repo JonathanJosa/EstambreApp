@@ -14,14 +14,14 @@
         android:fontFamily="@font/montserrat"
         android:text="@string/sigue_a_la_oveja_negra"
         android:textColor="#050505"
-        android:textSize="34sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.618"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.044"
+        app:layout_constraintVertical_bias="0.043"
         tools:ignore="TextContrastCheck" />
 
     <TextView
@@ -50,4 +50,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/restante"
         app:layout_constraintVertical_bias="0.449" />
+
+    <ImageButton
+        android:id="@+id/imageButton19"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:backgroundTint="#00FFFFFF"
+        android:contentDescription="@string/todo"
+        android:onClick="exit"
+        android:rotation="90"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/title"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/arrow"
+        tools:ignore="SpeakableTextPresentCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

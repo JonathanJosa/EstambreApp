@@ -77,7 +77,7 @@ public class BlackSheepActivity extends AppCompatActivity{
         //Sin tint de fondo
         btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00FFFFFF")));
         //On click -> ejecutar sheepClicked del modelo, si retorna un true, cambio de ronda, false -> sigue jugando
-        btn.setOnClickListener((View v) -> {if(sheepModel.sheepClicked(v, btnType)) nextRound();});
+        btn.setOnClickListener((View v) -> { if(sheepModel.sheepClicked(v, btnType)) nextRound();});
         //Layouts con margenes aleatorios y tamaños ajustado
         btn.setLayoutParams(sheepModel.randomLayouts());
         return btn;
@@ -104,5 +104,7 @@ public class BlackSheepActivity extends AppCompatActivity{
             instruccion.setText("Encuentra la oveja negra!!");
         }, (long) sheepModel.velocity * sheepModel.totalTime);
     }
+
+    public void exit(View _v) { startActivity(new Intent(this, GameInstructionsActivity.class).putExtra("game", "BlackSheep")); }
 
 }

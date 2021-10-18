@@ -4,42 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#a63d40"
+    android:backgroundTint="#A63D40"
     tools:context=".SimonSaysActivity">
+
+
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/viewKonfetti2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <TextView
         android:id="@+id/scoreLbl"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
         android:text="@string/ordenes_5"
         android:textAlignment="center"
         android:textAllCaps="true"
-        android:textColor="#000000"
-        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.195" />
+        app:layout_constraintVertical_bias="0.165" />
 
     <Button
         android:id="@+id/startBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#FFEDDA"
+        android:fontFamily="@font/montserrat"
         android:onClick="startGame"
-        android:text="@string/start"
+        android:text="INICIO"
+        android:textColor="#000000"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/yellowBtn"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="52dp"
         android:backgroundTint="@android:color/holo_orange_light"
         android:onClick="onTap"
@@ -67,14 +81,14 @@
         android:id="@+id/blueBtn"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="52dp"
+        android:layout_marginBottom="48dp"
         android:backgroundTint="@android:color/holo_blue_bright"
         android:onClick="onTap"
         app:layout_constraintBottom_toTopOf="@+id/startBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/yellowBtn"
-        app:layout_constraintVertical_bias="0.328"
+        app:layout_constraintVertical_bias="0.81"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
@@ -83,7 +97,7 @@
         android:layout_height="150dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="76dp"
-        android:backgroundTint="@android:color/holo_red_dark"
+        android:backgroundTint="@color/purple_200"
         android:onClick="onTap"
         app:layout_constraintEnd_toStartOf="@+id/yellowBtn"
         app:layout_constraintHorizontal_bias="0.518"
@@ -97,7 +111,8 @@
         android:layout_height="wrap_content"
         android:text="@string/textview"
         android:textAlignment="center"
-        android:textSize="34sp"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/redBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,9 +123,10 @@
         android:layout_width="364dp"
         android:layout_height="82dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat"
         android:text="@string/observa_cuidadosamente_la_secuencia_que_sim_n_dice"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/scoreLbl"

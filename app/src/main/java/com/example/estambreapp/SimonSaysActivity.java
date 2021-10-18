@@ -7,8 +7,11 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,10 +19,15 @@ import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
+
 public class SimonSaysActivity extends AppCompatActivity {
 
     // Instance to game model
-    SimonSaysModel model = new SimonSaysModel();
+
+    SimonSaysModel model;
     Button[] btn; // declare a buttons array, for our game buttons
 
     // we instance our labels and buttons
@@ -32,6 +40,8 @@ public class SimonSaysActivity extends AppCompatActivity {
     TextView gameState;
     TextView instructions;
 
+    KonfettiView konfettiView;
+
     // we create a instance to our MediaPlayers, one for each of our mp3 effect sounds.
     private MediaPlayer redPlayer;
     private MediaPlayer bluePlayer;
@@ -42,6 +52,8 @@ public class SimonSaysActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simon_says);
+
+        model = new SimonSaysModel(this);
 
         // we assign the object to our view component
         redBtn = findViewById(R.id.redBtn);
@@ -68,9 +80,21 @@ public class SimonSaysActivity extends AppCompatActivity {
         gameState.setText("");
         instructions.setText("Presiona el botón 'INICIO' para comenzar a jugar ");
 
+        konfettiView = findViewById(R.id.viewKonfetti2);
+
         //we desable our buttons before starting the game
         isEnabledBtn(false);
 
+        scorelbl.setText("Nivel: " + model.getDifficulty());
+
+    }
+
+
+    @Override
+    //Configuracion para pantalla completa
+    public void onWindowFocusChanged(boolean focused){
+        super.onWindowFocusChanged(focused);
+        if(focused) new ScreenConfig(getWindow().getDecorView());
     }
 
 
@@ -146,11 +170,6 @@ public class SimonSaysActivity extends AppCompatActivity {
         return selectedBtn;
     }
 
-    // we use this function to set in our score label the streak score so far.
-    public void score(){
-        scorelbl.setText(model.getScore());
-    }
-
     // we use this function to trigger the animation events and check the every clicked button
     // with the pattern that "simon" said.
     public void onTap(View v){
@@ -160,23 +179,21 @@ public class SimonSaysActivity extends AppCompatActivity {
         // we send the button key (index) as a parameter to clicked function in our model.
         model.clicked(flashAndPlay(0, tapped));
         // we assign temp as our result comparing the clicked button and the real pattern.
-        String temp = model.endGame();
+        String temp = model.checkedCick();
         // depending on the value of temp variable ...
         if(temp.equals("You Win")){
             //... we increment score and we goes to next level
-            gameState.setText(temp + ", press Next");
-            score();
+            instructions.setText("¡¡ Has completado correctamente la secuencia !!");
             isEnabledBtn(false); // we disable game buttons
-            startBtn.setEnabled(true); // we enabled the next/Start button
+            showKonfettiAnimation();
+            endGame();
 
         }else if( temp.equals("Wrong pattern") ){
             // ... we finish the game and restart the game.
-            gameState.setText(temp + ", press start to play again");
-            score();
-            startBtn.setText("Start");
-
+            instructions.setText("¡Ups!, botón equivocado. \n Fin del Juego.");
+            gameState.setText("Fin del juego");
             isEnabledBtn(false); // we disable game buttons
-            startBtn.setEnabled(true); // we enabled the next/Start button
+            endGame();
 
         }
 
@@ -196,7 +213,7 @@ public class SimonSaysActivity extends AppCompatActivity {
     public void startGame(View v){
         int n = 0;
 
-        gameState.setText("");
+        scorelbl.setText("Nivel: " + model.getDifficulty());
         instructions.setText("Observa ciudadosamente la secuencia que simón dice...");
 
         // disable the game buttons
@@ -212,7 +229,30 @@ public class SimonSaysActivity extends AppCompatActivity {
         }
 
         isEnabledBtn(true);
+        instructions.setText("¿Cuál fue el patrón que Simon dijo?");
 
+
+
+    }
+
+    // end game function, redirect to gameOptions Activity.
+    private void endGame() { // Go to GameOptionsActivity
+        (new Handler()).postDelayed(() -> startActivity(new Intent(this,
+                GameOptionsActivity.class).putExtra("game","SimonSays")), 3000);
+    }
+
+    // Konffetti animation that appears when the player wins
+    private void showKonfettiAnimation(){
+        konfettiView.build()
+                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                .setDirection(0.0, 359.0)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(2000L)
+                .addShapes(Shape.Square.INSTANCE, Shape.Circle.INSTANCE)
+                .addSizes(new Size(12, 5f))
+                .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                .streamFor(300, 2000L);
     }
 
 
