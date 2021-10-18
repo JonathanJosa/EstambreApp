@@ -15,11 +15,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
+    //Configuracion pantalla completa
     public void onWindowFocusChanged(boolean focused){
         super.onWindowFocusChanged(focused);
         if(focused) new ScreenConfig(getWindow().getDecorView());
     }
 
+    //Cambios de activity
     public void moveMindfulness(View v){ startActivity(new Intent(this, MindfulnessActivity.class)); }
     public void moveGames(View v){ startActivity(new Intent(this, GamesHomeActivity.class)); }
 

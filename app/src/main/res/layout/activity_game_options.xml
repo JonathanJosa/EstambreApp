@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".GameOptionsActivity">
 
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        style="@style/ProgressCircleLoadGame"
+        android:layout_width="194dp"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="@+id/nextGameImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nextGameImage"
+        app:layout_constraintVertical_bias="0.728"
+        tools:progress="0" />
+
     <ImageView
         android:id="@+id/nextGameImage"
         android:layout_width="wrap_content"

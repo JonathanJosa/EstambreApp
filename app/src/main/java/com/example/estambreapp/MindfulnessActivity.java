@@ -7,12 +7,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ListView;
-
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 
 public class MindfulnessActivity extends AppCompatActivity {
 
@@ -50,6 +45,7 @@ public class MindfulnessActivity extends AppCompatActivity {
     }
 
     @Override
+    //Configuracion de pantalla completa
     public void onWindowFocusChanged(boolean focused){
         super.onWindowFocusChanged(focused);
         if(focused) new ScreenConfig(getWindow().getDecorView());

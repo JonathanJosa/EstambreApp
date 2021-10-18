@@ -8,6 +8,10 @@
     android:backgroundTint="#3DB2FF"
     tools:context=".MapNumbersActivity">
 
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/viewKonfetti"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -52,19 +56,19 @@
 
     <TextView
         android:id="@+id/mapNumbersInstructions"
-        android:layout_width="207dp"
-        android:layout_height="78dp"
+        android:layout_width="221dp"
+        android:layout_height="81dp"
         android:fontFamily="@font/montserrat"
         android:text="Encuentra los siguientes números en la tabla"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.803"
+        app:layout_constraintHorizontal_bias="0.805"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.039" />
+        app:layout_constraintVertical_bias="0.046" />
 
     <LinearLayout
         android:id="@+id/numbersToBefound"
@@ -78,6 +82,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.304"></LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewOperation"
+        android:layout_width="196dp"
+        android:layout_height="46dp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/numbersToBefound"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.827"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapNumbersInstructions"
+        app:layout_constraintVertical_bias="0.59" />
+
+    <ImageButton
+        android:id="@+id/imageButton21"
+        android:layout_width="48dp"
+        android:layout_height="55dp"
+        android:backgroundTint="#00FFFFFF"
+        android:contentDescription="@string/regresar"
+        android:onClick="exit"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/viewKonfetti"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewKonfetti"
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/white_arrow" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

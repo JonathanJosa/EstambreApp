@@ -7,23 +7,28 @@
     android:background="#2F3136"
     tools:context=".InfinityMazeActivity">
 
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/konfettiAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <ImageButton
         android:id="@+id/goBackBtn"
-        android:layout_width="49dp"
-        android:layout_height="63dp"
+        android:layout_width="29dp"
+        android:layout_height="43dp"
         android:adjustViewBounds="true"
         android:background="@null"
         android:contentDescription="@string/exitgame"
-        android:onClick="exitGame"
+        android:onClick="exitGameBtn"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintHorizontal_bias="0.041"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.038"
+        app:layout_constraintVertical_bias="0.039"
         app:srcCompat="@drawable/white_arrow"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/titleTxt"

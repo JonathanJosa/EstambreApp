@@ -24,4 +24,12 @@
     <string name="button_to_go_left_on_maze">Button to go left on maze</string>
     <string name="button_to_go_up_on_maze">Button to go up on maze</string>
     <string name="exitgame">ExitGame</string>
+    <string name="elije_tu_favorito">Elije tu favorito!!!</string>
+    <string name="start">start</string>
+    <string name="score_0">score 0</string>
+    <string name="textview" />
+    <string name="ordenes_5">Ordenes: 5</string>
+    <string name="observa_cuidadosamente_la_secuencia_que_sim_n_dice">Observa cuidadosamente la secuencia que simón dice...</string>
+    <string name="load">load</string>
+    <string name="regresar">regresar</string>
 </resources>

@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -151,6 +150,11 @@ public class ImpostorActivity extends AppCompatActivity {
                 GameOptionsActivity.class).putExtra("game","Impostor")), 3000);
     }
 
+    public void exitOnGameBtn(View _v){ // Go to instructions when exit arrow is clicked (while playing)
+        startActivity(new Intent(this, GameInstructionsActivity.class).putExtra("game", "Impostor"));
+    }
+
+    // Konffetti animation that appears when the player wins
     private void showKonfettiAnimation(){
         konfettiView.build()
                 .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
