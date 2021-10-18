@@ -37,6 +37,7 @@ public class GameOptionsActivity extends AppCompatActivity {
 
         //Asincrono, si no elige en 5 seg, se hace el cambio automatico de pantalla, deleteWaitingInstance cancela el cambio automatico
         setCircularLoadingProgress(5000);
+        handlerChange.postDelayed(waitingInstance, 5000);
     }
 
     @Override
@@ -82,7 +83,6 @@ public class GameOptionsActivity extends AppCompatActivity {
     private void setCircularLoadingProgress(int num) {
         if(num <= 0) { // Si se completó el tiempo, automáticamente se envía al jugador al siguiente juego
             circularLoadingProgress.setProgress(100);
-            handlerChange.postDelayed(waitingInstance, 0);
             return;
         }
         float tmp = (float) (num)/5000; // Calclamos el porcentaje que llevamos
