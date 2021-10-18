@@ -9,9 +9,9 @@ public class GamesControllerModel {
     //Se puede añadir un nuevo juego colocando aqui solo sus parametros y nombre, crea la clase como "Nombre" + "Activity"
     //Tambien se deben crear sus imagenes correspondientes -> "instructions_nombre", "juego_nombre", "load_nombre"
     //El menu mostrará automaticamente el acceso a este nuevo juego, igual que GamesOptions y GameInstructions
-    String[] gamesArray = new String[]{"BlackSheep", "MapNumbers", "Impostor", "InfinityMaze"};
-    String[] colorGame = new String[]{"#F0D9FF", "#3DB2FF", "#CEE5D0", "#2F3136"};
-    Double[] situableTime = new Double[]{3.0, 10.0, 10.0, 80.0}; //seconds
+    String[] gamesArray = new String[]{"BlackSheep", "MapNumbers", "Impostor", "InfinityMaze", "SimonSays"};
+    String[] colorGame = new String[]{"#F0D9FF", "#3DB2FF", "#CEE5D0", "#2F3136", "#A63D40"};
+    Double[] situableTime = new Double[]{3.0, 10.0, 10.0, 80.0, 0.0}; //seconds
 
     //Regresar nombres de juegos
     public String[] getAllGames(){ return gamesArray; }
