@@ -250,4 +250,7 @@ public class MapNumbersActivity extends AppCompatActivity {
         super.onWindowFocusChanged(focused);
         if(focused) new ScreenConfig(getWindow().getDecorView());
     }
+
+
+    public void exit(View _v) { startActivity(new Intent(this, GameInstructionsActivity.class).putExtra("game", "MapNumbers")); }
 }

@@ -256,4 +256,6 @@ public class SimonSaysActivity extends AppCompatActivity {
     }
 
 
+    public void exit(View _v) { startActivity(new Intent(this, GameInstructionsActivity.class).putExtra("game", "SimonSays")); }
+
 }

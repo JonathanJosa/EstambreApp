@@ -96,5 +96,21 @@
         app:layout_constraintTop_toBottomOf="@+id/mapNumbersInstructions"
         app:layout_constraintVertical_bias="0.59" />
 
+    <ImageButton
+        android:id="@+id/imageButton21"
+        android:layout_width="48dp"
+        android:layout_height="55dp"
+        android:backgroundTint="#00FFFFFF"
+        android:contentDescription="@string/regresar"
+        android:onClick="exit"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/viewKonfetti"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewKonfetti"
+        app:layout_constraintVertical_bias="0.023"
+        app:srcCompat="@drawable/white_arrow" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
