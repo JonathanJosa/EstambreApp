@@ -63,8 +63,8 @@ public class BlackSheepModel {
     private Integer getWhiteSheeps(){ return 2 + ((int) (difficulty/50)); }
     private Integer getBlackSheeps(){ return 1 + ((int) (difficulty/85)); }
     private Integer getTotalTime(){ return (int) (Math.random() * ((int) (difficulty/40) + 0.99) + 3); }
-    private Integer getVelocity(){ return Math.max(250 , 500 + (2000 - ((int) (Math.random() * ((int) (difficulty * 15)))))); }
-    private float sheepSize(){ return Math.max(140 - (whiteSheeps * 5), 50); }
+    private Integer getVelocity(){ return Math.max(300 , 300 + (3000 - ((int) (Math.random() * ((int) (difficulty * 15)))))); }
+    private float sheepSize(){ return Math.max(140 - (whiteSheeps * 8), 50); }
 
 
     //Creacion de layouts random para ubicar aleatoriamente las ovejas
