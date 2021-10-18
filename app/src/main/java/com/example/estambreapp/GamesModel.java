@@ -17,16 +17,25 @@ public class GamesModel{
         gameName = game;
         //Conexion con preferences en gameName, posible aumento de parametros, ahora solo difficulty
         preferencesUser = context.getSharedPreferences(gameName, Context.MODE_PRIVATE);
-        setDifficulty();
+        setDifficultyVar();
+    }
+
+    //If the game requires an specifies difficulty, this function work
+    public void setDifficulty(String defaultValue){ difficulty = Double.parseDouble(preferencesUser.getString("Difficulty", defaultValue)); }
+
+    //Guardar la dificultad que desees guardar
+    public void saveMyDifficulty(double value){
+        preferencesUser.edit().putString("Difficulty", String.valueOf(value)).apply();
+        setDifficultyVar();
     }
 
     //Dificultad por defecto de 50.00 si es que no existe
-    private void setDifficulty(){ difficulty = Double.parseDouble(preferencesUser.getString("Difficulty", "50.0")); }
+    private void setDifficultyVar(){ difficulty = Double.parseDouble(preferencesUser.getString("Difficulty", "50.0")); }
 
     //Guardar la dificultad ajustada y reasignarla
     private void saveLastGame(double df){
         preferencesUser.edit().putString("Difficulty", String.valueOf(df)).apply();
-        setDifficulty();
+        setDifficultyVar();
     }
 
     //Ajustar la dificultad al tiempo de juego del jugador, usando situable time y totalTime
