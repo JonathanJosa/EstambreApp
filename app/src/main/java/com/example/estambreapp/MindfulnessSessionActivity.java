@@ -14,7 +14,7 @@ public class MindfulnessSessionActivity extends AppCompatActivity {
     ImageView load;
     View nullView;
     //Duraciones de cada actividad
-    long[] durations = new long[]{3000, 2000, 3000, 4000, 3000};
+    long[] durations = new long[]{30000, 30000, 30000, 30000, 5000};
     int imageNo = 1;
     Handler handlerChange;
 
