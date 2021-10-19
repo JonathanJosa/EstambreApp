@@ -17,7 +17,10 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            // Habilitando la ofuscación de código al generar los APK
+            minifyEnabled true
+            shrinkResources true
+
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
