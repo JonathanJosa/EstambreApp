@@ -25,4 +25,7 @@ public class HomeActivity extends AppCompatActivity {
     public void moveMindfulness(View v){ startActivity(new Intent(this, MindfulnessActivity.class)); }
     public void moveGames(View v){ startActivity(new Intent(this, GamesHomeActivity.class)); }
 
+    // Cambio a la pantalla de "Acerca de"
+    public void moveAbout(View v) { startActivity(new Intent(this, AboutActivity.class)); }
+
 }

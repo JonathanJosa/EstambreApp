@@ -68,4 +68,21 @@
         app:layout_constraintTop_toBottomOf="@+id/imageButton"
         app:layout_constraintVertical_bias="0.228"
         app:srcCompat="@drawable/mindfulness_boton" />
+
+    <ImageButton
+        android:id="@+id/imageButton23"
+        android:layout_width="50dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="29dp"
+        android:background="@null"
+        android:onClick="moveAbout"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.042"
+        app:srcCompat="@drawable/about_btn"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>
