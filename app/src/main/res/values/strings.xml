@@ -32,4 +32,8 @@
     <string name="observa_cuidadosamente_la_secuencia_que_sim_n_dice">Observa cuidadosamente la secuencia que simón dice...</string>
     <string name="load">load</string>
     <string name="regresar">regresar</string>
+    <string name="_0">0</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
 </resources>

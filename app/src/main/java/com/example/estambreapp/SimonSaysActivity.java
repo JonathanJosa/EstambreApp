@@ -2,22 +2,18 @@ package com.example.estambreapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TableRow;
 import android.widget.TextView;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
@@ -29,25 +25,28 @@ public class SimonSaysActivity extends AppCompatActivity {
 
     SimonSaysModel model;
     Button[] btn; // declare a buttons array, for our game buttons
+    MediaPlayer[] players; // declare a buttons array, for our media players
 
     // we instance our labels and buttons
-    Button redBtn;
+    Button purpleBtn;
     Button blueBtn;
     Button yellowBtn;
     Button greenBtn;
-    Button startBtn;
+    ImageButton startBtn;
     TextView scorelbl;
-    TextView gameState;
+    float dpi;
+
     TextView instructions;
 
     KonfettiView konfettiView;
 
     // we create a instance to our MediaPlayers, one for each of our mp3 effect sounds.
-    private MediaPlayer redPlayer;
+    private MediaPlayer purplePlayer;
     private MediaPlayer bluePlayer;
     private MediaPlayer yellowPlayer;
     private MediaPlayer greenPlayer;
 
+    @SuppressLint({"WrongViewCast", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,30 +54,36 @@ public class SimonSaysActivity extends AppCompatActivity {
 
         model = new SimonSaysModel(this);
 
+        //dpi = getResources().getDisplayMetrics().density;
+        dpi = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                1f,
+                getResources().getDisplayMetrics()
+        );
+
         // we assign the object to our view component
-        redBtn = findViewById(R.id.redBtn);
+        purpleBtn = findViewById(R.id.purpleBtn);
         blueBtn = findViewById(R.id.blueBtn);
         yellowBtn = findViewById(R.id.yellowBtn);
         greenBtn = findViewById(R.id.greenBtn);
         startBtn = findViewById(R.id.startBtn);
 
         scorelbl = findViewById(R.id.scoreLbl);
-        gameState = findViewById(R.id.statelbl);
         instructions = findViewById(R.id.instructionsText);
 
         //we assign our sound effects in our MediaPlayers
 
-        redPlayer = MediaPlayer.create(this, R.raw.red);
+        purplePlayer = MediaPlayer.create(this, R.raw.red);
         bluePlayer = MediaPlayer.create(this, R.raw.blue);
         yellowPlayer = MediaPlayer.create(this, R.raw.yellow);
         greenPlayer = MediaPlayer.create(this, R.raw.green);
 
         // we assign our buttons to our array of buttons
-        btn = new Button[]{ redBtn, blueBtn, yellowBtn, greenBtn };
+        btn = new Button[]{ purpleBtn, blueBtn, yellowBtn, greenBtn };
+        players = new MediaPlayer[]{purplePlayer, bluePlayer, yellowPlayer, greenPlayer};
 
         //set our game state label as empty.
-        gameState.setText("");
-        instructions.setText("Presiona el botón 'INICIO' para comenzar a jugar ");
+        instructions.setText("Presiona el botón para comenzar a jugar ");
 
         konfettiView = findViewById(R.id.viewKonfetti2);
 
@@ -102,7 +107,7 @@ public class SimonSaysActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        redPlayer.release();
+        purplePlayer.release();
         bluePlayer.release();
         yellowPlayer.release();
         greenPlayer.release();
@@ -111,87 +116,49 @@ public class SimonSaysActivity extends AppCompatActivity {
 
     // function that returns a integer that stands for the clicked button, in a list that
     // goes from 0 - 3 , which represents our 4 buttons.
+    private void sizeIncrease(int chn, Button button){
+        button.setLayoutParams(new TableRow.LayoutParams((int) (150 * dpi), (int) ((100 + chn) * dpi)));
+        (new Handler()).postDelayed(() -> {
+            if(chn <= 50) sizeIncrease(chn+3, button);
+        }, 1);
+    }
+
+    private void sizeReduce(int chn, Button button){
+        button.setLayoutParams(new TableRow.LayoutParams((int) (150 * dpi), (int) ((100 + chn) * dpi)));
+        (new Handler()).postDelayed(() -> {
+            if(chn <= 0) sizeIncrease(chn+3, button);
+            else sizeReduce(chn-3, button);
+        }, 1);
+    }
 
     // it also prepare and start the animation effect when a button is clicked.
-    private int flashAndPlay(int delay, Button button){
-
-        int selectedBtn = 0;
-        ObjectAnimator animator;
-        final MediaPlayer player;
-
-        if(button == redBtn){
-            player = redPlayer;
-            animator = ObjectAnimator.ofObject(redBtn,
-                    "backgroundColor",
-                    new ArgbEvaluator(),
-                    redBtn.getBackgroundTintList().getDefaultColor(),
-                    0xFFFFFFFF);
-            selectedBtn = 0;
-        } else  if(button == blueBtn){
-            player = bluePlayer;
-            animator = ObjectAnimator.ofObject(blueBtn,
-                    "backgroundColor",
-                    new ArgbEvaluator(),
-                    blueBtn.getBackgroundTintList().getDefaultColor(),
-                    0xFFFFFFFF);
-            selectedBtn = 1;
-        } else  if(button == yellowBtn){
-            player = yellowPlayer;
-            animator = ObjectAnimator.ofObject(yellowBtn,
-                    "backgroundColor",
-                    new ArgbEvaluator(),
-                    yellowBtn.getBackgroundTintList().getDefaultColor(),
-                    0xFFFFFFFF);
-            selectedBtn = 2;
-        } else {
-            player = greenPlayer;
-            animator = ObjectAnimator.ofObject(greenBtn,
-                    "backgroundColor",
-                    new ArgbEvaluator(),
-                    greenBtn.getBackgroundTintList().getDefaultColor(),
-                    0xFFFFFFFF);
-            selectedBtn = 3;
-        }
-
-        animator.setDuration(400);
-        animator.setRepeatCount(1);
-        animator.setRepeatMode(ValueAnimator.REVERSE); // turns button white and eventually, goes back to the original color.
-        animator.setStartDelay(delay); // we use our delay that receives the function
-
-        // when the animation starts, the player is going to start as well.
-        animator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                player.start();
-            }
-        });
-        animator.start();
+    private int flashAndPlay(Button button){
+        int selectedBtn = Integer.parseInt(button.getContentDescription().toString());
+        (players[selectedBtn]).start();
+        sizeReduce(50, button);
         return selectedBtn;
     }
 
     // we use this function to trigger the animation events and check the every clicked button
     // with the pattern that "simon" said.
+    @SuppressLint("SetTextI18n")
     public void onTap(View v){
 
-        Button tapped = (Button) v;
-
         // we send the button key (index) as a parameter to clicked function in our model.
-        model.clicked(flashAndPlay(0, tapped));
+        model.clicked(flashAndPlay((Button) v));
         // we assign temp as our result comparing the clicked button and the real pattern.
-        String temp = model.checkedCick();
+        int temp = model.checkedClick();
         // depending on the value of temp variable ...
-        if(temp.equals("You Win")){
+        if(temp == 1){
             //... we increment score and we goes to next level
             instructions.setText("¡¡ Has completado correctamente la secuencia !!");
             isEnabledBtn(false); // we disable game buttons
             showKonfettiAnimation();
             endGame();
 
-        }else if( temp.equals("Wrong pattern") ){
+        }else if(temp == -1){
             // ... we finish the game and restart the game.
             instructions.setText("¡Ups!, botón equivocado. \n Fin del Juego.");
-            gameState.setText("Fin del juego");
             isEnabledBtn(false); // we disable game buttons
             endGame();
 
@@ -200,38 +167,39 @@ public class SimonSaysActivity extends AppCompatActivity {
     }
 
     // function that either, disable or enable game buttons
+    @SuppressLint("SetTextI18n")
     public void isEnabledBtn(boolean option){
-        redBtn.setEnabled(option);
+        purpleBtn.setEnabled(option);
         yellowBtn.setEnabled(option);
         blueBtn.setEnabled(option);
         greenBtn.setEnabled(option);
+        if(option) instructions.setText("¿Cuál fue el patrón que Simon dijo?");
     }
 
 
 
     // function that start game or goes to next level
+    @SuppressLint("SetTextI18n")
     public void startGame(View v){
+
+        v.setVisibility(View.INVISIBLE);
+
         int n = 0;
-
-        scorelbl.setText("Nivel: " + model.getDifficulty());
         instructions.setText("Observa ciudadosamente la secuencia que simón dice...");
-
-        // disable the game buttons
-        startBtn.setEnabled(false);
-        // change the text button, originally Start button
-        startBtn.setText("INICIO");
 
         // we call the function flashAndPlay to give to our user, the pattern that
         // should be replicated.
-        for(int num:model.getRandomPattern()){
-            flashAndPlay(1000*n, btn[num]);
+        for(int num: model.getRandomPattern()){
+            //ColorDrawable color = (ColorDrawable) (btn[num]).getBackground();
+            (new Handler()).postDelayed(() -> {
+                (btn[num]).getBackground().setAlpha(180);
+                flashAndPlay(btn[num]);
+            }, 1000L * n);
             n++;
+            (new Handler()).postDelayed(() -> (btn[num]).getBackground().setAlpha(255), (1000L * n) - 200);
         }
 
-        isEnabledBtn(true);
-        instructions.setText("¿Cuál fue el patrón que Simon dijo?");
-
-
+        (new Handler()).postDelayed(() -> isEnabledBtn(true), 1000L * n);
 
     }
 
