@@ -20,9 +20,9 @@ import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
 
 public class SimonSaysActivity extends AppCompatActivity {
+    int rondas = 3;
 
     // Instance to game model
-
     SimonSaysModel model;
     Button[] btn; // declare a buttons array, for our game buttons
     MediaPlayer[] players; // declare a buttons array, for our media players
@@ -48,18 +48,14 @@ public class SimonSaysActivity extends AppCompatActivity {
 
     @SuppressLint({"WrongViewCast", "SetTextI18n"})
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simon_says);
 
         model = new SimonSaysModel(this);
 
         //dpi = getResources().getDisplayMetrics().density;
-        dpi = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                1f,
-                getResources().getDisplayMetrics()
-        );
+        dpi = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1f, getResources().getDisplayMetrics());
 
         // we assign the object to our view component
         purpleBtn = findViewById(R.id.purpleBtn);
@@ -72,7 +68,6 @@ public class SimonSaysActivity extends AppCompatActivity {
         instructions = findViewById(R.id.instructionsText);
 
         //we assign our sound effects in our MediaPlayers
-
         purplePlayer = MediaPlayer.create(this, R.raw.red);
         bluePlayer = MediaPlayer.create(this, R.raw.blue);
         yellowPlayer = MediaPlayer.create(this, R.raw.yellow);
@@ -89,9 +84,12 @@ public class SimonSaysActivity extends AppCompatActivity {
 
         //we desable our buttons before starting the game
         isEnabledBtn(false);
+        initGame();
+    }
 
+    private void initGame(){
         scorelbl.setText("Nivel: " + model.getDifficulty());
-
+        startBtn.setVisibility(View.VISIBLE);
     }
 
 
@@ -161,9 +159,7 @@ public class SimonSaysActivity extends AppCompatActivity {
             instructions.setText("¡Ups!, botón equivocado. \n Fin del Juego.");
             isEnabledBtn(false); // we disable game buttons
             endGame();
-
         }
-
     }
 
     // function that either, disable or enable game buttons
@@ -190,7 +186,6 @@ public class SimonSaysActivity extends AppCompatActivity {
         // we call the function flashAndPlay to give to our user, the pattern that
         // should be replicated.
         for(int num: model.getRandomPattern()){
-            //ColorDrawable color = (ColorDrawable) (btn[num]).getBackground();
             (new Handler()).postDelayed(() -> {
                 (btn[num]).getBackground().setAlpha(180);
                 flashAndPlay(btn[num]);
@@ -205,8 +200,12 @@ public class SimonSaysActivity extends AppCompatActivity {
 
     // end game function, redirect to gameOptions Activity.
     private void endGame() { // Go to GameOptionsActivity
-        (new Handler()).postDelayed(() -> startActivity(new Intent(this,
-                GameOptionsActivity.class).putExtra("game","SimonSays")), 3000);
+        if(rondas == 1){
+            (new Handler()).postDelayed(() -> startActivity(new Intent(this, GameOptionsActivity.class).putExtra("game","SimonSays")), 3000);
+        } else {
+            rondas--;
+            (new Handler()).postDelayed(this::initGame, 2000);
+        }
     }
 
     // Konffetti animation that appears when the player wins

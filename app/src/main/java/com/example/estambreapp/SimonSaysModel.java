@@ -31,7 +31,8 @@ public class SimonSaysModel {
     }
 
     public int getDifficulty(){
-        return (int) gameProperties.getDifficulty();
+        size = (int) gameProperties.getDifficulty();
+        return size;
     }
 
     // we check if the clicked button is equal to real pattern
@@ -48,15 +49,15 @@ public class SimonSaysModel {
     public int checkedClick(){
         if(isCorrect == -1){
             gameProperties.saveMyDifficulty((double) Math.max(3, size - 1));
+            currentPosition = 0;
             return -1;
         }else if(size == currentPosition+1){
             gameProperties.saveMyDifficulty((double) size+1);
+            currentPosition = 0;
             return 1;
         }else{
             currentPosition++;
             return 0;
         }
-
-
     }
 }
