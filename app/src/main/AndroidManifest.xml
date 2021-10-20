@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EstambreApp">
         <activity
+            android:name=".AboutActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:exported="true" />
+        <activity
             android:name=".SimonSaysActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:exported="true" />
