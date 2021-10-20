@@ -2,20 +2,15 @@ package com.example.estambreapp;
 
 import android.content.Context;
 
-import java.util.ConcurrentModificationException;
-
 public class SimonSaysModel {
 
 
     GamesModel gameProperties;
 
-    private int score = 0;
     public int size;
     private int[] pattern;
     private int isCorrect = 0;
-    private int curentPosition = 0;
-
-    private int numberGames = 1;
+    private int currentPosition = 0;
 
 
 
@@ -36,13 +31,13 @@ public class SimonSaysModel {
     }
 
     public int getDifficulty(){
-        return (int) gameProperties.getDifficulty();
+        size = (int) gameProperties.getDifficulty();
+        return size;
     }
 
     // we check if the clicked button is equal to real pattern
     public void clicked(int btn){
-
-        if( pattern[curentPosition] == btn ){
+        if(pattern[currentPosition] == btn ){
             isCorrect = 1;
         }else{
             isCorrect = -1;
@@ -51,38 +46,18 @@ public class SimonSaysModel {
 
 
     // we return a string that relays on the result of clicked function
-    public String checkedCick(){
+    public int checkedClick(){
         if(isCorrect == -1){
-            curentPosition = 0;
-            size = Math.max( 1, size - 1 );
-            score = 0;
-            gameProperties.saveMyDifficulty((double) size);
-            return "Wrong pattern";
-
-        }else if(size == curentPosition+1){
-            size++;
-            score++;
-            curentPosition = 0;
-            pattern = null;
-            gameProperties.saveMyDifficulty((double) size);
-            return "You Win";
-
-
-
-        }else {
-            curentPosition++;
-            return "Ok";
-
+            gameProperties.saveMyDifficulty((double) Math.max(3, size - 1));
+            currentPosition = 0;
+            return -1;
+        }else if(size == currentPosition+1){
+            gameProperties.saveMyDifficulty((double) size+1);
+            currentPosition = 0;
+            return 1;
+        }else{
+            currentPosition++;
+            return 0;
         }
-
-
     }
-
-    // getter for score value.
-    public String getScore(){
-        return "Score: " + String.valueOf(score);
-    }
-
-
-
 }
