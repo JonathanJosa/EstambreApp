@@ -152,13 +152,13 @@ public class SimonSaysActivity extends AppCompatActivity {
             instructions.setText("¡¡ Has completado correctamente la secuencia !!");
             isEnabledBtn(false); // we disable game buttons
             showKonfettiAnimation();
-            endGame();
+            (new Handler()).postDelayed(this::endGame, 2000);
 
         }else if(temp == -1){
             // ... we finish the game and restart the game.
             instructions.setText("¡Ups!, botón equivocado. \n Fin del Juego.");
             isEnabledBtn(false); // we disable game buttons
-            endGame();
+            (new Handler()).postDelayed(this::endGame, 500);
         }
     }
 
@@ -201,10 +201,10 @@ public class SimonSaysActivity extends AppCompatActivity {
     // end game function, redirect to gameOptions Activity.
     private void endGame() { // Go to GameOptionsActivity
         if(rondas == 1){
-            (new Handler()).postDelayed(() -> startActivity(new Intent(this, GameOptionsActivity.class).putExtra("game","SimonSays")), 3000);
+            (new Handler()).postDelayed(() -> startActivity(new Intent(this, GameOptionsActivity.class).putExtra("game","SimonSays")), 1500);
         } else {
             rondas--;
-            (new Handler()).postDelayed(this::initGame, 2000);
+            (new Handler()).postDelayed(this::initGame, 1500);
         }
     }
 
