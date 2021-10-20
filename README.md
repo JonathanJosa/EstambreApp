@@ -1,6 +1,6 @@
 ## Estambre
 
-### Aplicación movil infantíl para telefonos Android
+### Aplicación movil infantíl para teléfonos Android
 
 Estambre es una aplicación móvil para Android desarrollada en Java que tiene como objetivo ayudar a niños con Trastorno por Déficit de Atención e Hiperactividad a mejorar su concentración y atención a través de actividades y juegos. 
 
