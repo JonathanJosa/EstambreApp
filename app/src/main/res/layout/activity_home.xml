@@ -22,21 +22,6 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/panda" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="31dp"
-        android:layout_height="34dp"
-        android:backgroundTint="#00FFFFFF"
-        android:contentDescription="@string/todo"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-        app:layout_constraintEnd_toEndOf="@+id/imageView2"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.902"
-        app:srcCompat="@drawable/hola" />
-
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="280dp"
@@ -85,4 +70,19 @@
         app:layout_constraintVertical_bias="0.042"
         app:srcCompat="@drawable/about_btn"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="¿Qué hacemos hoy?"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.469" />
 </androidx.constraintlayout.widget.ConstraintLayout>
