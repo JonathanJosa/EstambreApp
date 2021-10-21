@@ -164,7 +164,7 @@ public class SongsApiManager {
 
     public void startFadeIn(MediaPlayer mediaPlayer){
         volume = 0;
-        final int FADE_DURATION = 2000; //The duration of the fade
+        final int FADE_DURATION = 1300; //The duration of the fade
         //The amount of time between volume changes. The smaller this is, the smoother the fade
         final int FADE_INTERVAL = 50;
         final int MAX_VOLUME = 1; //The volume will increase from 0 to 1
@@ -198,7 +198,7 @@ public class SongsApiManager {
 
     public void startFadeOut(MediaPlayer mediaPlayer, Context context, ImageButton btn){
         volume2 = 1f;
-        final int FADE_DURATION = 2000; //The duration of the fade
+        final int FADE_DURATION = 1300; //The duration of the fade
         //The amount of time between volume changes. The smaller this is, the smoother the fade
         final int FADE_INTERVAL = 50;
         final int MAX_VOLUME = 1; //The volume will increase from 0 to 1
