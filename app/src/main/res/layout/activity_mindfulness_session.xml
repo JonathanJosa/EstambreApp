@@ -46,8 +46,8 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="133dp"
-        android:layout_height="765dp"
+        android:layout_width="134dp"
+        android:layout_height="636dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/siguiente"
         android:onClick="changeButton"
