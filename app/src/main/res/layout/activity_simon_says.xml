@@ -33,91 +33,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.165" />
 
-    <Button
-        android:id="@+id/startBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:backgroundTint="#FFEDDA"
-        android:fontFamily="@font/montserrat"
-        android:onClick="startGame"
-        android:text="INICIO"
-        android:textColor="#000000"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/yellowBtn"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="52dp"
-        android:backgroundTint="@android:color/holo_orange_light"
-        android:onClick="onTap"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statelbl"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <Button
-        android:id="@+id/greenBtn"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="24dp"
-        android:backgroundTint="@android:color/holo_green_dark"
-        android:onClick="onTap"
-        app:layout_constraintBottom_toTopOf="@+id/startBtn"
-        app:layout_constraintEnd_toStartOf="@+id/blueBtn"
-        app:layout_constraintHorizontal_bias="0.518"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/redBtn"
-        app:layout_constraintVertical_bias="0.666"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <Button
-        android:id="@+id/blueBtn"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginEnd="52dp"
-        android:layout_marginBottom="48dp"
-        android:backgroundTint="@android:color/holo_blue_bright"
-        android:onClick="onTap"
-        app:layout_constraintBottom_toTopOf="@+id/startBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yellowBtn"
-        app:layout_constraintVertical_bias="0.81"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <Button
-        android:id="@+id/redBtn"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="76dp"
-        android:backgroundTint="@color/purple_200"
-        android:onClick="onTap"
-        app:layout_constraintEnd_toStartOf="@+id/yellowBtn"
-        app:layout_constraintHorizontal_bias="0.518"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scoreLbl"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/statelbl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/textview"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/redBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scoreLbl" />
-
     <TextView
         android:id="@+id/instructionsText"
         android:layout_width="364dp"
@@ -151,5 +66,82 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.01"
         app:srcCompat="@drawable/white_arrow" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/viewKonfetti2"
+        app:layout_constraintStart_toStartOf="@+id/viewKonfetti2"
+        app:layout_constraintTop_toBottomOf="@+id/scoreLbl">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/blueBtn"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="#3F51B5"
+                android:contentDescription="@string/_1"
+                android:onClick="onTap"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <Button
+                android:id="@+id/greenBtn"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="#4CAF50"
+                android:contentDescription="@string/_3"
+                android:onClick="onTap"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/yellowBtn"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="#FFC107"
+                android:contentDescription="@string/_2"
+                android:onClick="onTap"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <Button
+                android:id="@+id/purpleBtn"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="#C134E1"
+                android:contentDescription="@string/_0"
+                android:onClick="onTap"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </TableRow>
+
+    </TableLayout>
+
+    <ImageButton
+        android:id="@+id/startBtn"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:backgroundTint="#00FFFFFF"
+        android:contentDescription="@string/start"
+        android:onClick="startGame"
+        android:scaleType="fitCenter"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scoreLbl"
+        app:layout_constraintVertical_bias="0.923"
+        app:srcCompat="@drawable/play"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

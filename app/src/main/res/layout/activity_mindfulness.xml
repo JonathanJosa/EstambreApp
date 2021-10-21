@@ -12,45 +12,28 @@
         android:layout_width="301dp"
         android:layout_height="662dp"
         android:backgroundTint="#00FFFFFF"
+        android:contentDescription="@string/todo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.203"
         app:srcCompat="@drawable/mindfulness"
-        tools:ignore="ImageContrastCheck"
-        android:contentDescription="@string/todo" />
+        tools:ignore="ImageContrastCheck" />
+
 
     <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/todo"
-        android:scaleType="fitEnd"
+        android:id="@+id/imageView11"
+        android:layout_width="432dp"
+        android:layout_height="134dp"
+        android:scaleX="1"
+        android:scaleY="1.2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/border_rosa"
-        tools:ignore="ImageContrastCheck" />
-
-    <ImageButton
-        android:id="@+id/imageButton4"
-        android:layout_width="124dp"
-        android:layout_height="116dp"
-        android:layout_marginStart="304dp"
-        android:backgroundTint="#00FFFFFF"
-        android:contentDescription="@string/activities"
-        android:onClick="moveActivities"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.541"
-        app:srcCompat="@drawable/next_boton"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:srcCompat="@drawable/mindfulness_music_background" />
 
     <ImageButton
         android:id="@+id/imageButton5"
@@ -74,32 +57,34 @@
         android:id="@+id/imageButton15"
         android:layout_width="160dp"
         android:layout_height="90dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="#00FFFFFF"
         android:contentDescription="@string/presong"
         android:onClick="pressPlayBack"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.219"
+        app:layout_constraintHorizontal_bias="0.231"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.959"
+        app:layout_constraintTop_toTopOf="@+id/imageView11"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/pre_song" />
 
     <ImageButton
         android:id="@+id/imageButton14"
         android:layout_width="160dp"
         android:layout_height="90dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="#00FFFFFF"
         android:contentDescription="@string/nextsong"
         android:onClick="pressPlayNext"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.78"
+        app:layout_constraintHorizontal_bias="0.802"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.959"
+        app:layout_constraintTop_toTopOf="@+id/imageView11"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/next_song" />
 
     <ImageButton
@@ -110,12 +95,43 @@
         android:contentDescription="@string/pause"
         android:onClick="pressPausePlay"
         android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView11"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.988"
+        app:layout_constraintTop_toTopOf="@+id/imageView11"
         app:srcCompat="@drawable/pause"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="35dp"
+        android:layout_height="362dp"
+        android:scaleX="1.2"
+        android:scaleY="1.3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton4"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/mindfulness_vertical_rectangle" />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="99dp"
+        android:layout_height="104dp"
+        android:background="@null"
+        android:onClick="moveActivities"
+        android:scaleType="fitEnd"
+        android:scaleX="1.28"
+        android:scaleY="1.21"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/mindfulness_next"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

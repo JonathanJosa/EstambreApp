@@ -236,7 +236,7 @@ public class MapNumbersActivity extends AppCompatActivity {
     // Konffetti animation that appears when the player wins
     private void showKonfettiAnimation(){
         konfettiView.build()
-                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                .addColors(Color.WHITE, Color.GREEN, Color.rgb(255, 237, 218))
                 .setDirection(0.0, 359.0)
                 .setSpeed(1f, 5f)
                 .setFadeOutEnabled(true)

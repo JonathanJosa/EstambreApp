@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class GameOptionsActivity extends AppCompatActivity {
 
@@ -53,7 +54,14 @@ public class GameOptionsActivity extends AppCompatActivity {
         color = "#2F3136".equals(color) ? "#A0CED9" : color;
         ((View) this.getWindow().getDecorView()).setBackgroundColor( Color.parseColor(color));
         //Se coloca imagen del recurso (logo del siguiente juego), utiliza un objeto temporal
-        ((ImageView) findViewById(R.id.nextGameImage)).setImageResource(getResources().getIdentifier("load_" + gameName.toLowerCase(), "drawable", getPackageName()));
+
+        ((TextView) findViewById(R.id.nextGameNameTxt)).setText(
+                (gameName.charAt(0) == 'B') ? "Oveja Negra" :
+                (gameName.charAt(0) == 'M') ? "Map Numbers" :
+                (gameName.charAt(0) == 'S') ? "Simon Says" :
+                (gameName.charAt(1) == 'm') ? "Impostor" : "Infinity Maze"
+        );
+        ((ImageView) findViewById(R.id.nextGameIcon)).setImageResource(getResources().getIdentifier("load_icon_" + gameName.toLowerCase(), "drawable", getPackageName()));
     }
 
     //Usando el handler declarado y el waitingInstance, se elimina la tarea asincrona

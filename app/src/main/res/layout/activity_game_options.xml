@@ -9,29 +9,15 @@
     <ProgressBar
         android:id="@+id/progress_circular"
         style="@style/ProgressCircleLoadGame"
-        android:layout_width="194dp"
-        android:layout_height="200dp"
-        app:layout_constraintBottom_toBottomOf="@+id/nextGameImage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nextGameImage"
-        app:layout_constraintVertical_bias="0.728"
-        tools:progress="0" />
-
-    <ImageView
-        android:id="@+id/nextGameImage"
-        android:layout_width="wrap_content"
-        android:layout_height="491dp"
-        android:backgroundTint="#03FFFFFF"
-        android:contentDescription="@string/todo"
-        android:scaleType="centerInside"
+        android:layout_width="264dp"
+        android:layout_height="254dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.066"
-        app:srcCompat="@drawable/load_impostor" />
+        app:layout_constraintTop_toBottomOf="@+id/nextGameNameTxt"
+        app:layout_constraintVertical_bias="0.077"
+        tools:progress="0" />
 
     <ImageButton
         android:id="@+id/imageButton11"
@@ -83,5 +69,77 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.803"
         app:srcCompat="@drawable/next_game" />
+
+    <TextView
+        android:id="@+id/finJuegoTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:shadowColor="@color/text_shadow"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
+        android:text="Fin del juego"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.057" />
+
+    <TextView
+        android:id="@+id/preguntaFinalLoad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="¿Qué quieres hacer?"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/finJuegoTitle"
+        app:layout_constraintVertical_bias="0.04" />
+
+    <TextView
+        android:id="@+id/cargandoJuegoLoad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Cargando juego..."
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/preguntaFinalLoad"
+        app:layout_constraintVertical_bias="0.055" />
+
+    <TextView
+        android:id="@+id/nextGameNameTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="Impostor"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.29" />
+
+    <ImageView
+        android:id="@+id/nextGameIcon"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        app:layout_constraintBottom_toBottomOf="@+id/progress_circular"
+        app:layout_constraintEnd_toEndOf="@+id/progress_circular"
+        app:layout_constraintStart_toStartOf="@+id/progress_circular"
+        app:layout_constraintTop_toTopOf="@+id/progress_circular"
+        app:srcCompat="@drawable/load_icon_infinitymaze" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
