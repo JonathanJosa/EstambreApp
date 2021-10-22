@@ -12,43 +12,60 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EstambreApp">
         <activity
+            android:name=".AboutActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:exported="true" />
+        <activity
             android:name=".SimonSaysActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:exported="true" />
         <activity
             android:name=".ImpostorActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:exported="true" />
         <activity
             android:name=".MapNumbersActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:exported="true" />
         <activity
             android:name=".InfinityMazeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:exported="true" />
         <activity
             android:name=".BlackSheepActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:exported="true" />
         <activity
             android:name=".GameOptionsActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:exported="true" />
         <activity
             android:name=".GameInstructionsActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:exported="true" />
         <activity
             android:name=".GamesMenuActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:exported="true" />
         <activity
             android:name=".MindfulnessSessionActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:exported="true" />
         <activity
             android:name=".MindfulnessActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:exported="true" />
         <activity
             android:name=".GamesHomeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:exported="true" />
         <activity
             android:name=".HomeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:exported="true" />
         <activity
             android:name=".LoadingAppActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -175,9 +175,12 @@ public class MapNumbersActivity extends AppCompatActivity {
                     sizeButtons
             );
             // if we've got less than 4 elements in our array with numbers to find ....
-            if( numbersToBeFound.length <4 ){
-                tableRowLayoutParams.setMargins(0,0, 0,0);
-            } else {
+            if( numbersToBeFound.length == 1 ){
+                tableRowLayoutParams.setMargins(0,0,0,0);
+            } else if( numbersToBeFound.length == 2 || numbersToBeFound.length == 3 ){
+                tableRowLayoutParams.setMargins(( i != 0) ? 25 : 0,0,( i != numbersToBeFound.length-1) ? 0: 25,0);
+            }
+            else {
                 tableRowLayoutParams.setMargins((i+1 == 1) ? 0: marginBetweenColumns/(numbersToBeFound.length),0, (i+1 != numbersToBeFound.length)? 0 : marginBetweenColumns/(numbersToBeFound.length),0);
             }
             btn.setLayoutParams(tableRowLayoutParams);
@@ -233,7 +236,7 @@ public class MapNumbersActivity extends AppCompatActivity {
     // Konffetti animation that appears when the player wins
     private void showKonfettiAnimation(){
         konfettiView.build()
-                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                .addColors(Color.WHITE, Color.GREEN, Color.rgb(255, 237, 218))
                 .setDirection(0.0, 359.0)
                 .setSpeed(1f, 5f)
                 .setFadeOutEnabled(true)

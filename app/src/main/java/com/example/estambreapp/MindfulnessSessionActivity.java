@@ -10,11 +10,12 @@ import android.widget.ImageView;
 
 public class MindfulnessSessionActivity extends AppCompatActivity {
 
-    ImageView background;
+    ImageView backgroundImage;
+    ImageView backgroundDescription;
     ImageView load;
     View nullView;
     //Duraciones de cada actividad
-    long[] durations = new long[]{3000, 2000, 3000, 4000, 3000};
+    long[] durations = new long[]{30000, 30000, 30000, 30000, 5000};
     int imageNo = 1;
     Handler handlerChange;
 
@@ -24,7 +25,8 @@ public class MindfulnessSessionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mindfulness_session);
         handlerChange = new Handler();
         //Elementos importantes, background con las instrucciones de que hacer, load con la barra de el numero de actividad
-        background = findViewById(R.id.backgroundView);
+        backgroundImage = findViewById(R.id.ActMindfulnessImage);
+        backgroundDescription = findViewById(R.id.ActMindfulnessDescription);
         load = findViewById(R.id.loadBar);
         //Cambio de pantallas automatico con la duracion establecida en durations
         autoChange((long) durations[imageNo-1]);
@@ -57,7 +59,8 @@ public class MindfulnessSessionActivity extends AppCompatActivity {
         //Activar nuevo autoChange con tiempo correspondiente
         autoChange((long) durations[imageNo-1]);
         //Cambiar el fondo de la pantalla
-        background.setImageResource(getResources().getIdentifier("act" + imageNo, "drawable", getPackageName()));
+        backgroundImage.setImageResource(getResources().getIdentifier("mindfulness_img_act" + imageNo, "drawable", getPackageName()));
+        backgroundDescription.setImageResource(getResources().getIdentifier("mindfulness_bottom_act" + imageNo, "drawable", getPackageName()));
         load.setImageResource(getResources().getIdentifier("actload" + imageNo, "drawable", getPackageName()));
     }
 

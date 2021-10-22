@@ -6,12 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class HomeActivity extends AppCompatActivity {
+public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_about);
     }
 
     @Override
@@ -21,11 +21,5 @@ public class HomeActivity extends AppCompatActivity {
         if(focused) new ScreenConfig(getWindow().getDecorView());
     }
 
-    //Cambios de activity
-    public void moveMindfulness(View v){ startActivity(new Intent(this, MindfulnessActivity.class)); }
-    public void moveGames(View v){ startActivity(new Intent(this, GamesHomeActivity.class)); }
-
-    // Cambio a la pantalla de "Acerca de"
-    public void moveAbout(View v) { startActivity(new Intent(this, AboutActivity.class)); }
-
+    public void moveBackHome(View v) { startActivity(new Intent(this, HomeActivity.class)); }
 }

@@ -126,7 +126,7 @@ public class ImpostorActivity extends AppCompatActivity {
                     Drawable buttonBackground = button.getBackground(); // Saving the original background
                     button.setBackgroundResource(R.drawable.impostor_wrong); // Make that button an X
                     (new Handler()).postDelayed(() -> button.setBackground(buttonBackground), 1500); // Make the image return to its original background after 1.5 secs
-                    impostorModel.setPenalty(0.5); // Setting a penalty of 0.5 seconds
+                    impostorModel.setPenalty(1.5); // Setting a penalty of 1.5 seconds
                 }
 
                 System.out.println("Images left: " + impostorModel.numOfIndividualImages);

@@ -3,15 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_game_instructions.xml" value="0.2803442028985507" />
-        <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_game_options.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_games_home.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_games_menu.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_about.xml" value="0.25" />
+        <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_game_instructions.xml" value="0.25" />
+        <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_game_options.xml" value="0.2" />
+        <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_games_home.xml" value="0.22" />
+        <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_games_menu.xml" value="0.23157894736842105" />
+        <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_impostor.xml" value="0.33" />
         <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_infinity_maze.xml" value="0.33" />
         <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_loading_app.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_map_numbers.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_mindfulness.xml" value="0.23157894736842105" />
+        <entry key="..\:/Users/Daniel Maldonado/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_mindfulness_session.xml" value="0.23157894736842105" />
         <entry key="..\:/Users/danif/AndroidStudioProjects/EstambreApp/app/src/main/res/drawable/map_numbers_shape_instructions.xml" value="0.382051282051282" />
         <entry key="..\:/Users/danif/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_black_sheep.xml" value="0.2203125" />
         <entry key="..\:/Users/danif/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_game_instructions.xml" value="0.3686594202898551" />
@@ -36,6 +39,7 @@
         <entry key="..\:/Users/josaf/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_mindfulness_session.xml" value="0.3875" />
         <entry key="..\:/Users/josaf/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_next_game.xml" value="0.33" />
         <entry key="..\:/Users/josaf/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_oveja_negra.xml" value="0.3875" />
+        <entry key="..\:/Users/josaf/AndroidStudioProjects/EstambreApp/app/src/main/res/layout/activity_simon_says.xml" value="0.3161231884057971" />
       </map>
     </option>
   </component>
