@@ -14,6 +14,14 @@ Una característica importante con la que cuenta cada uno de los juegos es la di
 
 Ahora bien, en la otra sección de la aplicación conocida como Mindfulness, se encuentran una serie de actividades que ayudarán al niño a enfocar su atención en las cosas que está realizando en ese momento y también activarán su mente para completar exitosamente cada actividad que se le solicite.
 
+#### Video explicativo:
+
+https://youtu.be/ACb6UKnHTYc
+
+#### Prueba de usabilidad:
+
+https://youtu.be/c2m4XbsXnhM
+
 #### Equipo de desarrolladores:
 
 - Daniel Esteban Maldonado Espitia
